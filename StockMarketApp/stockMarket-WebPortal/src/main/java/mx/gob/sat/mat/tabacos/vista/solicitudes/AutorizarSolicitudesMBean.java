@@ -443,7 +443,6 @@ public class AutorizarSolicitudesMBean extends AbstractManagedBean {
             try {
                 resultado = autorizarSolicitudService.autorizarSolicitud(solicitudHelper.getSolicitud(), autorizarSolicitudHelper.getArchivoResolucion().getInputstream(),
                         autorizarSolicitudHelper.getRutaArchivoRes(), autorizarSolicitudHelper.getNombreArchivoRes());
-                registroMovimientoBitacora(getSession(), IdentificadorProcesoEnum.PE_AUTORIZAR_SOLICITUD, new Date(), new Date(), MovimientosBitacoraEnum.AUTORIZA_SOLICITUDES);
             } catch (ServiceException ex) {
                 resultado = 0;
             } catch (IOException ex) {

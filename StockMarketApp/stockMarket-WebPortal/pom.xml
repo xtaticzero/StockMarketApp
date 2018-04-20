@@ -254,7 +254,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>iText</groupId>
             <artifactId>js1</artifactId>
             <version>2.1.7</version>
@@ -324,6 +324,12 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.3</version>
+        </dependency>
+
         <!--        <dependency>
             <groupId>oracle.jdeveloper.library</groupId>
             <artifactId>JSP-Runtime</artifactId>
@@ -352,6 +358,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        
     </dependencies>
     <parent>
         <groupId>com.xtaticzero.systems</groupId>

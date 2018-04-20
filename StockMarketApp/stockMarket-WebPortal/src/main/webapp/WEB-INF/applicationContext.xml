@@ -29,6 +29,7 @@
     <!--<context:component-scan base-package="mx.gob.sat.siat.modelo.dao"/>-->
     <!--Inyecta los managedbean-->
     <context:component-scan base-package="mx.gob.sat.mat.tabacos.vista"/>
+    <context:component-scan base-package="stock.vista.vector"/>
      <!--Inyecta los managedbean RFC-->
     <!--<context:component-scan base-package="mx.gob.sat.mat.rfc"/>-->
     <!--<context:component-scan base-package="mx.gob.sat.mat.rfc.service.impl"/>-->

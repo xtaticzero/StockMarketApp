@@ -227,7 +227,6 @@ public class CambioProveedorMBean extends AbstractManagedBean {
                 }
                 super.msgInfo(MSGEXITOACTUALIZAR);
                 guardarSolicitudAcuse();
-                registroMovimientoBitacora(getSession(),IdentificadorProcesoEnum.PE_AUTORIZAR_REGISTRO,new Date(),new Date(),MovimientosBitacoraEnum.MODIFICACION_PROVEEDOR);
                 this.deshabilitaBtnGuardarCambio = true;
             }
         } catch (ProveedorServiceException e) {

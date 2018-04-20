@@ -2,9 +2,6 @@ package mx.gob.sat.mat.tabacos.vista;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
@@ -18,22 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import mx.gob.sat.mat.tabacos.constants.Constantes;
 import mx.gob.sat.mat.tabacos.constants.enums.FileExtensionEnum;
-import mx.gob.sat.mat.tabacos.constants.enums.IdentificadorProcesoEnum;
 import mx.gob.sat.mat.tabacos.constants.enums.MIMETypesEnum;
-import mx.gob.sat.mat.tabacos.constants.enums.MovimientosBitacoraEnum;
 import mx.gob.sat.mat.tabacos.modelo.dto.AccesoUsr;
-import mx.gob.sat.mat.tabacos.modelo.dto.Proveedor;
-import mx.gob.sat.mat.tabacos.negocio.BitacoraTbcService;
-import mx.gob.sat.mat.tabacos.negocio.ProveedorService;
-import mx.gob.sat.mat.tabacos.negocio.TabacaleraService;
-import mx.gob.sat.mat.tabacos.negocio.excepcion.ProveedorServiceException;
-import mx.gob.sat.mat.tabacos.negocio.excepcion.TabacaleraServiceException;
-import mx.gob.sat.mat.tabacos.negocio.util.web.Utilerias;
 
 import org.apache.log4j.Logger;
-import org.omnifaces.util.Faces;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 public abstract class AbstractManagedBean {
 
@@ -47,18 +32,6 @@ public abstract class AbstractManagedBean {
     public static final String INFO = "Información";
     public static final String WARN = "Atención";
     public static final String FATAL = "Error grave";
-
-    @Autowired
-    @Qualifier("proveedorServiceImpl")
-    private ProveedorService proveedorServiceImpl;
-
-    @Autowired
-    @Qualifier("tababacaleraService")
-    private TabacaleraService tababacaleraService;
-
-    @Autowired
-    @Qualifier("bitacoraTbcService")
-    private BitacoraTbcService bitacoraTbcService;
 
     /**
      * pistaAuditoriaService es la referencia del servicio de Pistas de
@@ -81,7 +54,7 @@ public abstract class AbstractManagedBean {
 
     public void validaAccesoProceso(String identificadorProceso) {
         try {
-            
+
         } catch (Exception e) {
             log.error("Error, acceso denegado: ", e);
             redireccionarPorOperacionDenegada(e);
@@ -108,7 +81,7 @@ public abstract class AbstractManagedBean {
 
     public String getRFCSession() {
         String rfc = "";
-        
+
         return rfc;
     }
 
@@ -249,51 +222,8 @@ public abstract class AbstractManagedBean {
         }
     }
 
-    public List<String> autocompletarRFC(String query) {
-        List<String> results = new ArrayList<String>();
-
-        try {
-            if ((query != null) && (query.length() > 0)) {
-                results.clear();
-                for (String rfcTmp:tababacaleraService.buscaTabacalerasLikeRfc(query)) {
-                    results.add(rfcTmp);
-                }
-            }
-        } catch (TabacaleraServiceException e) {
-            getLogger().error(e);
-        } catch (IndexOutOfBoundsException ex) {
-            getLogger().error(ex);
-        }
-
-        return results;
-    }
-
-    public List<String> autocompletarRfcProvedor(String query) {
-        List<String> results = new ArrayList<String>();
-
-        try {
-            if ((query != null) && (query.length() > 0)) {
-                results.clear();
-                for (Proveedor prov : proveedorServiceImpl.buscaProvedoresLikeRfc(query)) {
-                    results.add(prov.getRfc());
-                }
-            }
-        } catch (ProveedorServiceException e) {
-            getLogger().error(e);
-        }
-
-        return results;
-    }
-
     public Logger getLogger() {
         return log;
     }
 
-    public void registroMovimientoBitacora(HttpSession session, IdentificadorProcesoEnum identificadorModulo, Date fechaSesion, Date fechaTramite, MovimientosBitacoraEnum mov) {
-        try {
-            bitacoraTbcService.registroMovimientoBitacora(session, identificadorModulo, fechaSesion, fechaTramite, mov);
-        } catch (Exception e) {
-            getLogger().error("No se pudo insertar en la bitacora " + e.getMessage(), e);
-        }
-    }
 }

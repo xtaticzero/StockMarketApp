@@ -406,8 +406,6 @@ public class AutorizarMarcasMBean extends AbstractManagedBean {
                 url += PARAM_FILTRO + buscSel;
                 url += PARAM_BUSQUEDA + paramBusq;
                 
-                registroMovimientoBitacora(getSession(),IdentificadorProcesoEnum.PE_AUTORIZAR_MARCAS,new Date(),new Date(),MovimientosBitacoraEnum.AUTORIZAR_MARCAS);
-
                 try {
                     FacesContext.getCurrentInstance().getExternalContext().redirect(url);
                     addMessage(INFO, "Se almaceno correctamente la autorizacion de marca.");

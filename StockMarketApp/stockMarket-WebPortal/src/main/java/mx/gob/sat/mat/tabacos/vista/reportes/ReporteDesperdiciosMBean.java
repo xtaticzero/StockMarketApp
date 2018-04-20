@@ -191,7 +191,7 @@ public class ReporteDesperdiciosMBean extends AbstractManagedBean {
         }
     }
 
-    @Override
+    
     public List<String> autocompletarRFC(String query) {
         List<String> results = new ArrayList<String>();
         try {

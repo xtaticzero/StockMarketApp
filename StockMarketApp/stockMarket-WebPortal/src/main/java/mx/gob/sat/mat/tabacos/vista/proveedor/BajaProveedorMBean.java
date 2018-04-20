@@ -168,7 +168,6 @@ public class BajaProveedorMBean extends AbstractManagedBean {
                 proveedor = proveedorService.deleteProveedor(proveedor, null, baja, relacionProveedor);
                 super.msgInfo(MSGEXITOBAJA);
                 guardarSolicitudAcuse();
-                registroMovimientoBitacora(getSession(), IdentificadorProcesoEnum.PE_AUTORIZAR_REGISTRO, new Date(), new Date(), MovimientosBitacoraEnum.BAJA_PROVEEDOR);
                 this.deshabilitaBtnGuardarBaja = true;
             }
         } catch (ProveedorServiceException e) {

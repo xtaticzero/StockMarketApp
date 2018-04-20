@@ -237,7 +237,6 @@ public class IngresaCodigosMBean extends AbstractManagedBean {
                 this.visiblePanelCodigos = true;
                 this.visiblePanelAcuse = false;
                 inicializar();
-                registroMovimientoBitacora(getSession(), IdentificadorProcesoEnum.PE_AUTORIZAR_REGISTRO, new Date(), new Date(), MovimientosBitacoraEnum.CODIGOS_FALSOS_NO_VALIDOS_PE);
             } else {
                 this.visiblePanelExito = false;
             }
@@ -271,7 +270,6 @@ public class IngresaCodigosMBean extends AbstractManagedBean {
             visiblePanelCodigos = false;
             visiblePanelAcuse = true;
 
-            registroMovimientoBitacora(getSession(), IdentificadorProcesoEnum.PE_AUTORIZAR_REGISTRO, new Date(), new Date(), MovimientosBitacoraEnum.CODIGOS_FALSOS_NO_VALIDOS_PE);
         } catch (RangosException e) {
             this.errorGeneral = e.getMessage();
             LOGGER.error("ERROR: asignarRangosFolios", e);

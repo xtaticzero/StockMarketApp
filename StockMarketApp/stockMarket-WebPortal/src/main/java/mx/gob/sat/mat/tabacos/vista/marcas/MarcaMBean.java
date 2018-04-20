@@ -366,7 +366,6 @@ public class MarcaMBean extends AbstractManagedBean {
                 addErrorMessage(ERROR, "No se almaceno la marca");
             } else {
                 addMessage(INFO, "Se almaceno correctamente la marca");
-                registroMovimientoBitacora(getSession(),IdentificadorProcesoEnum.PE_AUTORIZAR_REGISTRO,new Date(),new Date(),MovimientosBitacoraEnum.REGISTRO_MARCA);
                 String url = "acuseAltaMarca.jsf?rfc=";
                 url += movimiento.getRfc();
                 url += "&marca=" + movimiento.getMarca();
@@ -393,7 +392,6 @@ public class MarcaMBean extends AbstractManagedBean {
             if (retorno == 0) {
                 addErrorMessage(ERROR, "No se borro la marca");
             } else {
-                registroMovimientoBitacora(getSession(),IdentificadorProcesoEnum.PE_AUTORIZAR_REGISTRO,new Date(),new Date(),MovimientosBitacoraEnum.BAJA_MARCA);
                 addMessage(INFO, "La marca fue dada de baja correctamente.");
                 habilitarAcuse();
             }
@@ -415,7 +413,6 @@ public class MarcaMBean extends AbstractManagedBean {
                 habilitaForm();
             } else {
                 habilitarAcuse();
-                registroMovimientoBitacora(getSession(),IdentificadorProcesoEnum.PE_AUTORIZAR_REGISTRO,new Date(),new Date(),MovimientosBitacoraEnum.MODIFICACION_MARCA);
                 addMessage(INFO, getMessageResourceString("msg.actualizar.marca.exitoso"));
             }
         } catch (MarcaServiceException ex) {
