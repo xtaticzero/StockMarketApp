@@ -358,7 +358,11 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        
+        <dependency>
+            <groupId>uk.co.jemos.podam</groupId>
+            <artifactId>podam</artifactId>
+            <version>7.1.0.RELEASE</version>
+        </dependency>
     </dependencies>
     <parent>
         <groupId>com.xtaticzero.systems</groupId>

@@ -1,16 +1,94 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <h:outputStylesheet library="css" name="estilo.css"  />
+    </h:head>
+    <h:body>
+        <h:form>
+
+            <h1>Horizontal</h1>
+            <h2>Fondo - Resumen De Operaciones del: 01-ene-18 al: 19-abr-18</h2>
+            <p:tabView scrollable="true">
+                <p:tab title="Existencia Inicial" >
+                    <p:dataTable value="#{horizontalMB.existencias}" var="existencia">
+                        <p:column headerText=""> 
+                            <h:outputText value="#{existencia.emisora}" />
+                        </p:column>
+                        <p:column headerText="Acciones"> 
+                            <h:outputText value="#{existencia.acciones}"  style="float:right"/>
+                        </p:column>
+                        <p:column headerText="Costo De Adquisiciones"> 
+                            <h:outputText value="#{existencia.costoAdquisicion}"  style="float:right"/>
+                        </p:column>
+                        <p:column headerText="Importe"> 
+                            <h:outputText value="#{existencia.importe}"  style="float:right"/>
+                        </p:column>
+                        <p:columnGroup type="footer">
+                            <p:row>
+                                <p:column footerText="Total:" style="text-align:right"/>
+                                <p:column footerText="#{horizontalMB.sumaAccionesExistencias}" style="text-align:right"/>
+                                <p:column />
+                                <p:column footerText="#{horizontalMB.sumaImportesExistencias}" style="text-align:right" />
+                            </p:row>
+                        </p:columnGroup>
+                    </p:dataTable> 
+                </p:tab>
+                <p:tab title="Utilidad (Perdida) Por Realizar">
+                    <p:dataTable value="#{horizontalMB.utilidades}" var="utilidad">
+                        <p:column headerText=""> 
+                            <h:outputText value="#{utilidad.emisora}" />
+                        </p:column>
+                        <p:column headerText="Acciones"> 
+                            <h:outputText value="#{utilidad.acciones}"  style="float:right"/>
+                        </p:column>
+                        <p:column headerText="Utilidad Por Accion"> 
+                            <h:outputText value="#{utilidad.utilidadXAccion}"  style="float:right"/>
+                        </p:column>
+                        <p:column headerText="Importe"> 
+                            <h:outputText value="#{utilidad.importe}"  style="float:right"/>
+                        </p:column>
+                        <p:columnGroup type="footer">
+                            <p:row>
+                                <p:column footerText="Total:" style="text-align:right"/>
+                                <p:column footerText="#{horizontalMB.sumaAccionesUtilidades}" style="text-align:right"/>
+                                <p:column />
+                                <p:column footerText="#{horizontalMB.sumaImportesUtilidades}" style="text-align:right" />
+                            </p:row>
+                        </p:columnGroup>
+                    </p:dataTable>     
+                </p:tab>
+                <p:tab title="Existencia Inicial A Valor De Mercado">
+                    Tabla    
+                </p:tab>
+                <p:tab title="Compras">
+                    Tabla    
+                </p:tab>
+                <p:tab title="Ventas">
+                    Tabla    
+                </p:tab>
+                <p:tab title="Costo De Ventas">
+                    Tabla    
+                </p:tab>
+                <p:tab title="Utilidad (Perdida) Realizada">
+                    Tabla    
+                </p:tab>
+                <p:tab title="Existencia A Costo De Adquisicion">
+                    Tabla    
+                </p:tab>
+                <p:tab title="Existencia A Valor De Mercado">
+                    Tabla    
+                </p:tab>
+                <p:tab title="Utilidad (Perdida) Por Realizar">
+                    Tabla    
+                </p:tab>
+                <p:tab title="Utilidad (Perdida) Neta">
+                    Tabla    
+                </p:tab>
+            </p:tabView>
+        </h:form>
+
+    </h:body>
 </html>

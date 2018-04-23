@@ -19,6 +19,8 @@ import mx.gob.sat.mat.tabacos.constants.enums.MIMETypesEnum;
 import mx.gob.sat.mat.tabacos.modelo.dto.AccesoUsr;
 
 import org.apache.log4j.Logger;
+import uk.co.jemos.podam.api.PodamFactory;
+import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 public abstract class AbstractManagedBean {
 
@@ -27,6 +29,9 @@ public abstract class AbstractManagedBean {
      */
     private final Logger log;
     private HttpSession session;
+    
+    /** The constant factory. */
+    private final PodamFactory factory = new PodamFactoryImpl();
 
     public static final String ERROR = "Error";
     public static final String INFO = "Información";
@@ -225,5 +230,11 @@ public abstract class AbstractManagedBean {
     public Logger getLogger() {
         return log;
     }
+
+    public PodamFactory getFactory() {
+        return factory;
+    }
+    
+    
 
 }
