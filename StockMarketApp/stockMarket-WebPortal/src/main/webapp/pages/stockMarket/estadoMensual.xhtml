@@ -1,16 +1,157 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <h:outputStylesheet library="css" name="estilo.css"  />
+    </h:head>
+
+    <h:body>
+        <h:form>
+            <h:form >
+
+                <h3>Fondo Resumen de operaciones</h3>
+                <p:tabView orientation="left">
+                    <p:tab title="Enero">                    
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value= "Alex"/>
+
+                            <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
+
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column colspan="5" headerText="Capital Inicial" />
+                                        
+                                        
+                                    </p:row>
+                                    <p:row>
+                                        <p:column headerText="Sales" />
+                                        <p:column headerText="Profit" />
+                                        <p:column headerText="1" />
+                                        <p:column headerText="2" />
+                                        <p:column headerText="3" />
+                                        
+                                    </p:row>
+                                    
+                                </p:columnGroup>
+
+                                <p:column headerText="Efectivo">
+                                    <h:outputText value="#{fondo.efectivo}" />
+                                </p:column>
+
+                                <p:column headerText="Costo de Adquisicion">
+                                    <h:outputText value="#{fondo.accionesCostoAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Utilidad Perdida por Realizar">
+                                    <h:outputText value="#{fondo.utilidadPerdidaRealizar}" />
+                                </p:column>
+
+                                <p:column headerText="Acciones Valor Mercado">
+                                    <h:outputText value="#{fondo.accionesValorMercado}" />
+                                </p:column>
+
+                                <p:column headerText="Capital Inicial">
+                                    <h:outputText value="#{fondo.capitalInicial}" />
+                                </p:column>
+                            </p:dataTable>
+
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Febrero">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value= "Alex" />
+
+                            <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
+
+                                <p:column headerText="Efectivo">
+                                    <h:outputText value="#{fondo.efectivo}" />
+                                </p:column>
+
+                                <p:column headerText="Costo de Adquisicion">
+                                    <h:outputText value="#{fondo.accionesCostoAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Utilidad Perdida por Realizar">
+                                    <h:outputText value="#{fondo.utilidadPerdidaRealizar}" />
+                                </p:column>
+
+                                <p:column headerText="Acciones Valor Mercado">
+                                    <h:outputText value="#{fondo.accionesValorMercado}" />
+                                </p:column>
+
+                                <p:column headerText="Capital Inicial">
+                                    <h:outputText value="#{fondo.capitalInicial}" />
+                                </p:column>
+                            </p:dataTable>
+
+
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Marzo">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value= "Alex"/>
+
+                            <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
+
+                                <p:column headerText="Efectivo">
+                                    <h:outputText value="#{fondo.efectivo}" />
+                                </p:column>
+
+                                <p:column headerText="Costo de Adquisicion">
+                                    <h:outputText value="#{fondo.accionesCostoAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Utilidad Perdida por Realizar">
+                                    <h:outputText value="#{fondo.utilidadPerdidaRealizar}" />
+                                </p:column>
+
+                                <p:column headerText="Acciones Valor Mercado">
+                                    <h:outputText value="#{fondo.accionesValorMercado}" />
+                                </p:column>
+
+                                <p:column headerText="Capital Inicial">
+                                    <h:outputText value="#{fondo.capitalInicial}" />
+                                </p:column>
+                            </p:dataTable>
+
+
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Abril">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value="#{fondo.mes}" />
+
+                            <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
+
+                                <p:column headerText="Efectivo">
+                                    <h:outputText value="#{fondo.efectivo}" />
+                                </p:column>
+
+                                <p:column headerText="Costo de Adquisicion">
+                                    <h:outputText value="#{fondo.accionesCostoAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Utilidad Perdida por Realizar">
+                                    <h:outputText value="#{fondo.utilidadPerdidaRealizar}" />
+                                </p:column>
+
+                                <p:column headerText="Acciones Valor Mercado">
+                                    <h:outputText value="#{fondo.accionesValorMercado}" />
+                                </p:column>
+
+                                <p:column headerText="Capital Inicial">
+                                    <h:outputText value="#{fondo.capitalInicial}" />
+                                </p:column>
+                            </p:dataTable>
+
+                        </h:panelGrid>
+                    </p:tab>
+                </p:tabView>
+
+            </h:form>
+        </h:form>
+    </h:body>
 </html>
