@@ -4,7 +4,13 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <h:outputStylesheet library="css" name="estilo.css"  />
+        <style type="text/css">
+            .ui-growl-image-info ~ .ui-growl-message, .ui-growl-item, .ui-growl-item-container{
+                border: #e4e4e4;    
+                background: #e4e4e4;
+                color:#0073ea;
+            }
+        </style>
     </h:head>
 
     <h:body>
@@ -16,7 +22,7 @@
                               mode="advanced" update="display" sizeLimit="10000000"
                               allowTypes="/(\.|\/)(xls|xlsx)$/" label="Examinar ..."/>
 
-                <p:growl id="display" showDetail="true" />
+                <p:growl id="display" showDetail="true" life="99999" />
             </h:form>
         </h:form>
     </h:body>

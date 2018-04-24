@@ -6,6 +6,14 @@
     <version>1.0</version>
     <description>Contiene la capa de presentacion de StockMarketApp para el personal operativo</description>
     <packaging>war</packaging>
+    <repositories>   
+        <repository>
+            <id>prime-repo</id>
+            <name>PrimeFaces Maven Repository</name>
+            <url>http://repository.primefaces.org</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
     <build>
         <finalName>stockMarket-WebPortal</finalName>
         <plugins>
@@ -357,6 +365,13 @@
             <version>1.8</version>
             <type>jar</type>
             <scope>compile</scope>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/org.primefaces.themes/ui-lightness -->
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>flick</artifactId>
+            <version>1.0.10</version>
         </dependency>
         <dependency>
             <groupId>uk.co.jemos.podam</groupId>
