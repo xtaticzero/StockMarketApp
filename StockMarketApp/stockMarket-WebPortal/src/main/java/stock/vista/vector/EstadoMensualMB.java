@@ -6,7 +6,6 @@ import javax.annotation.PostConstruct;
 import mx.gob.sat.mat.tabacos.vista.AbstractManagedBean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import stock.horizontal.dto.ExistenciaInicial;
 import stock.market.dto.Fondo;
 
 /**

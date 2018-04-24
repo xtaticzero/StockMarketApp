@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.ServletContext;
 import org.primefaces.PrimeFaces;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -52,6 +53,13 @@ public class UserLoginView {
         if (username != null && username.equals("admin") && password != null && password.equals("admin")) {
             loggedIn = true;
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect(
+                ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getContextPath()+
+                        "/pages/menu.jsf");
+            } catch (Exception e) {
+                System.err.println("error al redireccionar"+e.getMessage());
+            }
         } else {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
