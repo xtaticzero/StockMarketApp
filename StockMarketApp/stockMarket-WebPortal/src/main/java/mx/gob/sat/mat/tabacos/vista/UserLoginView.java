@@ -56,7 +56,7 @@ public class UserLoginView {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(
                 ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getContextPath()+
-                        "/pages/menu.jsf");
+                        "/pages/index.html");
             } catch (Exception e) {
                 System.err.println("error al redireccionar"+e.getMessage());
             }
