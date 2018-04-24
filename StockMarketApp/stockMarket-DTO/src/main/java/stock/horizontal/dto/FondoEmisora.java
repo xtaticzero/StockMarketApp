@@ -6,9 +6,6 @@
 package stock.horizontal.dto;
 
 import java.io.Serializable;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 /**
  *
@@ -17,13 +14,13 @@ import javax.validation.constraints.Min;
 public class FondoEmisora implements Serializable{
     
     private String emisora;
-    @Digits(integer = 3, fraction = 0)
-    @Min(value = 001)
-    @Max(value = 999)
+//    @Digits(integer = 3, fraction = 0)
+//    @Min(value = 001)
+//    @Max(value = 999)
     private Integer acciones;
-    @Digits(integer = 3, fraction = 2)
-    @Min(value = 01)
-    @Max(value = 999)
+//    @Digits(integer = 3, fraction = 2)
+//    @Min(value = 01)
+//    @Max(value = 999)
     private Double importe;
 
     public String getEmisora() {

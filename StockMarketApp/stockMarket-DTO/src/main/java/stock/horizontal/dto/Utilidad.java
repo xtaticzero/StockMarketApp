@@ -5,19 +5,15 @@
  */
 package stock.horizontal.dto;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
 /**
  *
  * @author Juan
  */
 public class Utilidad extends FondoEmisora{
     
-    @Digits(integer = 3, fraction = 0)
-    @Min(value = 01)
-    @Max(value = 999)
+//    @Digits(integer = 3, fraction = 0)
+//    @Min(value = 01)
+//    @Max(value = 999)
     private Integer utilidadXAccion;
 
     public Integer getUtilidadXAccion() {

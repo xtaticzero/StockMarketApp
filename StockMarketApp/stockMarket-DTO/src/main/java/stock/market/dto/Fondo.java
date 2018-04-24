@@ -5,10 +5,6 @@
  */
 package stock.market.dto;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
 /**
  *
  * @author Alejandro Hernandez
@@ -16,30 +12,29 @@ import javax.validation.constraints.Min;
 public class Fondo {
 
     //Capital Inicial
-    @Digits(integer = 3, fraction = 2)
-    @Min(value = 01)
-    @Max(value = 999)
-
+//    @Digits(integer = 3, fraction = 2)
+//    @Min(value = 01)
+//    @Max(value = 999)
     private Double efectivo;
-    @Digits(integer = 3, fraction = 2)
-    @Min(value = 01)
-    @Max(value = 999)
 
+//    @Digits(integer = 3, fraction = 2)
+//    @Min(value = 01)
+//    @Max(value = 999)
     private Double accionesCostoAdquisicion;
-    @Digits(integer = 3, fraction = 2)
-    @Min(value = 01)
-    @Max(value = 999)
-
+    
+//    @Digits(integer = 3, fraction = 2)
+//    @Min(value = 01)
+//    @Max(value = 999)
     private Double utilidadPerdidaRealizar;
-    @Digits(integer = 3, fraction = 2)
-    @Min(value = 01)
-    @Max(value = 999)
-
+    
+//    @Digits(integer = 3, fraction = 2)
+//    @Min(value = 01)
+//    @Max(value = 999)
     private Double accionesValorMercado;
-    @Digits(integer = 3, fraction = 2)
-    @Min(value = 01)
-    @Max(value = 999)
-
+    
+//    @Digits(integer = 3, fraction = 2)
+//    @Min(value = 01)
+//    @Max(value = 999)
     private Double capitalInicial;
 
     public Double getEfectivo() {
