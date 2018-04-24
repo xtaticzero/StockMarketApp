@@ -16,24 +16,22 @@
                     <p:tab title="Enero">                    
                         <h:panelGrid columns="2" cellpadding="10">
                             <h:outputText value= "Alex"/>
-
                             <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
 
                                 <p:columnGroup type="header">
                                     <p:row>
                                         <p:column colspan="5" headerText="Capital Inicial" />
-                                        
-                                        
+
+
                                     </p:row>
                                     <p:row>
-                                        <p:column headerText="Sales" />
-                                        <p:column headerText="Profit" />
-                                        <p:column headerText="1" />
-                                        <p:column headerText="2" />
-                                        <p:column headerText="3" />
-                                        
+                                        <p:column headerText="Efectivo" />
+                                        <p:column headerText="Acciones a Costo de Adquisicion" />
+                                        <p:column headerText="Utilidad (Perdida) por Realizar" />
+                                        <p:column headerText="Acciones a Valor de Mercado" />
+                                        <p:column headerText="Capital Inicial" />
+
                                     </p:row>
-                                    
                                 </p:columnGroup>
 
                                 <p:column headerText="Efectivo">
@@ -60,10 +58,28 @@
                         </h:panelGrid>
                     </p:tab>
                     <p:tab title="Febrero">
-                        <h:panelGrid columns="2" cellpadding="10">
+                        <h:panelGrid columns="2" cellpadding="5">
                             <h:outputText value= "Alex" />
 
+
                             <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
+
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column colspan="5" headerText="Capital Inicial" />
+
+
+                                    </p:row>
+                                    <p:row>
+                                        <p:column headerText="Efectivo" />
+                                        <p:column headerText="Acciones a Costo de Adquisicion" />
+                                        <p:column headerText="Utilidad (Perdida) por Realizar" />
+                                        <p:column headerText="Acciones a Valor de Mercado" />
+                                        <p:column headerText="Capital Inicial" />
+
+
+                                    </p:row>
+                                </p:columnGroup>
 
                                 <p:column headerText="Efectivo">
                                     <h:outputText value="#{fondo.efectivo}" />
@@ -145,10 +161,370 @@
                                 <p:column headerText="Capital Inicial">
                                     <h:outputText value="#{fondo.capitalInicial}" />
                                 </p:column>
+                            </p:dataTable>                                                       
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Mayo">                    
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value= "Alex"/>
+                            <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
+
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column colspan="5" headerText="Capital Inicial" />
+
+
+                                    </p:row>
+                                    <p:row>
+                                        <p:column headerText="Efectivo" />
+                                        <p:column headerText="Acciones a Costo de Adquisicion" />
+                                        <p:column headerText="Utilidad (Perdida) por Realizar" />
+                                        <p:column headerText="Acciones a Valor de Mercado" />
+                                        <p:column headerText="Capital Inicial" />
+
+                                    </p:row>
+                                </p:columnGroup>
+
+                                <p:column headerText="Efectivo">
+                                    <h:outputText value="#{fondo.efectivo}" />
+                                </p:column>
+
+                                <p:column headerText="Costo de Adquisicion">
+                                    <h:outputText value="#{fondo.accionesCostoAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Utilidad Perdida por Realizar">
+                                    <h:outputText value="#{fondo.utilidadPerdidaRealizar}" />
+                                </p:column>
+
+                                <p:column headerText="Acciones Valor Mercado">
+                                    <h:outputText value="#{fondo.accionesValorMercado}" />
+                                </p:column>
+
+                                <p:column headerText="Capital Inicial">
+                                    <h:outputText value="#{fondo.capitalInicial}" />
+                                </p:column>
+                            </p:dataTable>
+
+                        </h:panelGrid>
+                    </p:tab>  
+                    
+                    <p:tab title="Junio">                    
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value= "Alex"/>
+                            <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
+
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column colspan="5" headerText="Capital Inicial" />
+
+
+                                    </p:row>
+                                    <p:row>
+                                        <p:column headerText="Efectivo" />
+                                        <p:column headerText="Acciones a Costo de Adquisicion" />
+                                        <p:column headerText="Utilidad (Perdida) por Realizar" />
+                                        <p:column headerText="Acciones a Valor de Mercado" />
+                                        <p:column headerText="Capital Inicial" />
+
+                                    </p:row>
+                                </p:columnGroup>
+
+                                <p:column headerText="Efectivo">
+                                    <h:outputText value="#{fondo.efectivo}" />
+                                </p:column>
+
+                                <p:column headerText="Costo de Adquisicion">
+                                    <h:outputText value="#{fondo.accionesCostoAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Utilidad Perdida por Realizar">
+                                    <h:outputText value="#{fondo.utilidadPerdidaRealizar}" />
+                                </p:column>
+
+                                <p:column headerText="Acciones Valor Mercado">
+                                    <h:outputText value="#{fondo.accionesValorMercado}" />
+                                </p:column>
+
+                                <p:column headerText="Capital Inicial">
+                                    <h:outputText value="#{fondo.capitalInicial}" />
+                                </p:column>
                             </p:dataTable>
 
                         </h:panelGrid>
                     </p:tab>
+                    
+                    <p:tab title="Julio">                    
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value= "Alex"/>
+                            <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
+
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column colspan="5" headerText="Capital Inicial" />
+
+
+                                    </p:row>
+                                    <p:row>
+                                        <p:column headerText="Efectivo" />
+                                        <p:column headerText="Acciones a Costo de Adquisicion" />
+                                        <p:column headerText="Utilidad (Perdida) por Realizar" />
+                                        <p:column headerText="Acciones a Valor de Mercado" />
+                                        <p:column headerText="Capital Inicial" />
+
+                                    </p:row>
+                                </p:columnGroup>
+
+                                <p:column headerText="Efectivo">
+                                    <h:outputText value="#{fondo.efectivo}" />
+                                </p:column>
+
+                                <p:column headerText="Costo de Adquisicion">
+                                    <h:outputText value="#{fondo.accionesCostoAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Utilidad Perdida por Realizar">
+                                    <h:outputText value="#{fondo.utilidadPerdidaRealizar}" />
+                                </p:column>
+
+                                <p:column headerText="Acciones Valor Mercado">
+                                    <h:outputText value="#{fondo.accionesValorMercado}" />
+                                </p:column>
+
+                                <p:column headerText="Capital Inicial">
+                                    <h:outputText value="#{fondo.capitalInicial}" />
+                                </p:column>
+                            </p:dataTable>
+
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                    <p:tab title="Agosto">                    
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value= "Alex"/>
+                            <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
+
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column colspan="5" headerText="Capital Inicial" />
+
+
+                                    </p:row>
+                                    <p:row>
+                                        <p:column headerText="Efectivo" />
+                                        <p:column headerText="Acciones a Costo de Adquisicion" />
+                                        <p:column headerText="Utilidad (Perdida) por Realizar" />
+                                        <p:column headerText="Acciones a Valor de Mercado" />
+                                        <p:column headerText="Capital Inicial" />
+
+                                    </p:row>
+                                </p:columnGroup>
+
+                                <p:column headerText="Efectivo">
+                                    <h:outputText value="#{fondo.efectivo}" />
+                                </p:column>
+
+                                <p:column headerText="Costo de Adquisicion">
+                                    <h:outputText value="#{fondo.accionesCostoAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Utilidad Perdida por Realizar">
+                                    <h:outputText value="#{fondo.utilidadPerdidaRealizar}" />
+                                </p:column>
+
+                                <p:column headerText="Acciones Valor Mercado">
+                                    <h:outputText value="#{fondo.accionesValorMercado}" />
+                                </p:column>
+
+                                <p:column headerText="Capital Inicial">
+                                    <h:outputText value="#{fondo.capitalInicial}" />
+                                </p:column>
+                            </p:dataTable>
+
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                    <p:tab title="Septiembre">                    
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value= "Alex"/>
+                            <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
+
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column colspan="5" headerText="Capital Inicial" />
+
+
+                                    </p:row>
+                                    <p:row>
+                                        <p:column headerText="Efectivo" />
+                                        <p:column headerText="Acciones a Costo de Adquisicion" />
+                                        <p:column headerText="Utilidad (Perdida) por Realizar" />
+                                        <p:column headerText="Acciones a Valor de Mercado" />
+                                        <p:column headerText="Capital Inicial" />
+
+                                    </p:row>
+                                </p:columnGroup>
+
+                                <p:column headerText="Efectivo">
+                                    <h:outputText value="#{fondo.efectivo}" />
+                                </p:column>
+
+                                <p:column headerText="Costo de Adquisicion">
+                                    <h:outputText value="#{fondo.accionesCostoAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Utilidad Perdida por Realizar">
+                                    <h:outputText value="#{fondo.utilidadPerdidaRealizar}" />
+                                </p:column>
+
+                                <p:column headerText="Acciones Valor Mercado">
+                                    <h:outputText value="#{fondo.accionesValorMercado}" />
+                                </p:column>
+
+                                <p:column headerText="Capital Inicial">
+                                    <h:outputText value="#{fondo.capitalInicial}" />
+                                </p:column>
+                            </p:dataTable>
+
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                    <p:tab title="Octubre">                    
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value= "Alex"/>
+                            <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
+
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column colspan="5" headerText="Capital Inicial" />
+
+
+                                    </p:row>
+                                    <p:row>
+                                        <p:column headerText="Efectivo" />
+                                        <p:column headerText="Acciones a Costo de Adquisicion" />
+                                        <p:column headerText="Utilidad (Perdida) por Realizar" />
+                                        <p:column headerText="Acciones a Valor de Mercado" />
+                                        <p:column headerText="Capital Inicial" />
+
+                                    </p:row>
+                                </p:columnGroup>
+
+                                <p:column headerText="Efectivo">
+                                    <h:outputText value="#{fondo.efectivo}" />
+                                </p:column>
+
+                                <p:column headerText="Costo de Adquisicion">
+                                    <h:outputText value="#{fondo.accionesCostoAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Utilidad Perdida por Realizar">
+                                    <h:outputText value="#{fondo.utilidadPerdidaRealizar}" />
+                                </p:column>
+
+                                <p:column headerText="Acciones Valor Mercado">
+                                    <h:outputText value="#{fondo.accionesValorMercado}" />
+                                </p:column>
+
+                                <p:column headerText="Capital Inicial">
+                                    <h:outputText value="#{fondo.capitalInicial}" />
+                                </p:column>
+                            </p:dataTable>
+
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                    <p:tab title="Noviembre">                    
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value= "Alex"/>
+                            <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
+
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column colspan="5" headerText="Capital Inicial" />
+
+
+                                    </p:row>
+                                    <p:row>
+                                        <p:column headerText="Efectivo" />
+                                        <p:column headerText="Acciones a Costo de Adquisicion" />
+                                        <p:column headerText="Utilidad (Perdida) por Realizar" />
+                                        <p:column headerText="Acciones a Valor de Mercado" />
+                                        <p:column headerText="Capital Inicial" />
+
+                                    </p:row>
+                                </p:columnGroup>
+
+                                <p:column headerText="Efectivo">
+                                    <h:outputText value="#{fondo.efectivo}" />
+                                </p:column>
+
+                                <p:column headerText="Costo de Adquisicion">
+                                    <h:outputText value="#{fondo.accionesCostoAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Utilidad Perdida por Realizar">
+                                    <h:outputText value="#{fondo.utilidadPerdidaRealizar}" />
+                                </p:column>
+
+                                <p:column headerText="Acciones Valor Mercado">
+                                    <h:outputText value="#{fondo.accionesValorMercado}" />
+                                </p:column>
+
+                                <p:column headerText="Capital Inicial">
+                                    <h:outputText value="#{fondo.capitalInicial}" />
+                                </p:column>
+                            </p:dataTable>
+
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                    <p:tab title="Diciembre">                    
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value= "Alex"/>
+                            <p:dataTable var="fondo" value="#{estadoMensualMB.fondos}">
+
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column colspan="5" headerText="Capital Inicial" />
+
+
+                                    </p:row>
+                                    <p:row>
+                                        <p:column headerText="Efectivo" />
+                                        <p:column headerText="Acciones a Costo de Adquisicion" />
+                                        <p:column headerText="Utilidad (Perdida) por Realizar" />
+                                        <p:column headerText="Acciones a Valor de Mercado" />
+                                        <p:column headerText="Capital Inicial" />
+
+                                    </p:row>
+                                </p:columnGroup>
+
+                                <p:column headerText="Efectivo">
+                                    <h:outputText value="#{fondo.efectivo}" />
+                                </p:column>
+
+                                <p:column headerText="Costo de Adquisicion">
+                                    <h:outputText value="#{fondo.accionesCostoAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Utilidad Perdida por Realizar">
+                                    <h:outputText value="#{fondo.utilidadPerdidaRealizar}" />
+                                </p:column>
+
+                                <p:column headerText="Acciones Valor Mercado">
+                                    <h:outputText value="#{fondo.accionesValorMercado}" />
+                                </p:column>
+
+                                <p:column headerText="Capital Inicial">
+                                    <h:outputText value="#{fondo.capitalInicial}" />
+                                </p:column>
+                            </p:dataTable>
+
+                        </h:panelGrid>
+                    </p:tab>
+                    
                 </p:tabView>
 
             </h:form>
