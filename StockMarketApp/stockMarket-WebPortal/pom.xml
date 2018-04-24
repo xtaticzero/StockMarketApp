@@ -370,7 +370,7 @@
         <!-- https://mvnrepository.com/artifact/org.primefaces.themes/ui-lightness -->
         <dependency>
             <groupId>org.primefaces.themes</groupId>
-            <artifactId>flick</artifactId>
+            <artifactId>ui-lightness</artifactId>
             <version>1.0.10</version>
             <scope>compile</scope>
         </dependency>
