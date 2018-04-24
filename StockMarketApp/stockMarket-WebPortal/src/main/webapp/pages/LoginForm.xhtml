@@ -18,30 +18,60 @@
             </script>
         </h:head>
         <h:body>
-            <ui:include src="body.xhtml"/>
-            <h:form>
-                <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-                <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
-                    <h:panelGrid style="left: 40%; top: 150px; position: relative;">
-                        <p:graphicImage  value="/resources/images/user-login.png" height="200" width="200" />
-                        <h:outputText value="Login" style="font-weight:bold;text-decoration: #222222"/>
-                    </h:panelGrid>
-                </h:outputLink>
-                <p:dialog header="Login" widgetVar="dlg" resizable="false">
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputLabel for="username" value="Username:" />
-                        <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
+            <!-- HEADER -->
+            <div id="header">
+                <div class="tail-top-right"></div>
+                <div class="tail-top">
+                    <div class="tail-bottom">
+                        <div class="header">
+                            <div class="row-1">
+                                <ul>
+                                    <li><a href="inicio.html" class="active"><em><b>Página de inicio</b></em></a></li>
+                                    <li><a href="/app/stockMarket/pages/stockMarket/cotizaciones.jsf"><em><b>Cotizaciones</b></em></a></li>
+                                    <li><a href="/app/stockMarket/pages/stockMarket/estadoMensual.jsf"><em><b>Estado Mensual</b></em></a></li>
+                                    <li><a href="/app/stockMarket/pages/stockMarket/horizontal.jsf"><em><b>Horizontal</b></em></a></li>
+                                    <li><a href="/app/stockMarket/pages/stockMarket/ordenes.jsf"><em><b>Órdenes</b></em></a></li>
+                                    <li><a href="/app/stockMarket/pages/stockMarket/vector.jsf"><em><b>Argentina - Cotización de Acciones</b></em></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- CONTENT -->
+                <div style="position: absolute;
+                     top: 50px;
+                     right: 50%;
+                     width: 200px;
+                     height: 100px;">
 
-                        <h:outputLabel for="password" value="Password:" />
-                        <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
+                    <h:form>
+                        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                        <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
+                            <h:panelGrid style="left: 40%; top: 150px; position: relative;">
+                                <p:graphicImage  value="/resources/images/user-login.png" height="200" width="200" />
+                                <h:outputText value="Login" style="font-weight:bold;text-decoration: #222222"/>
+                            </h:panelGrid>
+                        </h:outputLink>
+                        <p:dialog header="Login" widgetVar="dlg" resizable="false">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="username" value="Username:" />
+                                <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
 
-                        <f:facet name="footer">
-                            <p:commandButton value="Login" update="growl" actionListener="#{userLoginView.login}"
-                                             oncomplete="handleLoginRequest(xhr, status, args)"/>
-                        </f:facet>  
-                    </h:panelGrid>
-                </p:dialog>
-            </h:form>
+                                <h:outputLabel for="password" value="Password:" />
+                                <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Login" update="growl" actionListener="#{userLoginView.login}"
+                                                     oncomplete="handleLoginRequest(xhr, status, args)"/>
+                                </f:facet>  
+                            </h:panelGrid>
+                        </p:dialog>
+                    </h:form>
+                </div>
+            </div>
+            <ui:include src="body.xhtml"/>           
         </h:body>
     </html>
 </f:view>
+
+
