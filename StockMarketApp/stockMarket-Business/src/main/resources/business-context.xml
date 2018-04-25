@@ -29,5 +29,8 @@
         <property name="dataSource" ref="dataSourceTBC"></property> 
     </bean>-->
     
+    <tx:annotation-driven/>
+    <context:component-scan base-package="com.xtaticzero.systems.business"/>
+    
 </beans>
 

@@ -4,6 +4,25 @@
         xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:pe="http://primefaces.org/ui/extensions">
     <html>
         <h:head>
+            <style>
+                .redColor{
+                    background-color:red!important;
+                    background-image:none!important;
+                }
+
+                .bluesColor{
+                    background-color: blue!important;
+                    background-image:none!important;
+                }
+                .moradoColor{
+                    background-color: blueviolet!important;
+                    background-image:none!important;
+                }
+                .brounColor{
+                    background-color: #FC0!important;
+                    background-image:none!important;
+                }
+            </style>
         </h:head>
         <h:body>
             <ui:include src="../background.xhtml"/>
@@ -19,9 +38,41 @@
                  margin-right:auto;">
 
                 <h:form>
-                    <h:panelGrid columns="3">
-                        
-                    </h:panelGrid>
+                    <p:panel style="width: 1090.0px;
+                             margin-left:auto;
+                             margin-right:auto;">
+                        <h:panelGrid columns="1">
+                            <p:dataTable var="car" 
+                                         value="#{estatusOrdenesMB.lstCotizacionDTO}" 
+                                         rowStyleClass="#{car.porcentaje le 20 ? 'redColor' : car.porcentaje le 40? 'bluesColor': car.porcentaje le 70? 'moradoColor': null}"
+                                         paginator="true"
+                                         rows="10"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15,50"
+                                         style="width: 1050px">
+                                <p:column headerText="Folio">
+                                    <h:outputText value="#{car.id}" />
+                                </p:column>
+
+                                <p:column headerText="Emisora">
+                                    <h:outputText value="#{car.emisora}" />
+                                </p:column>
+
+                                <p:column headerText="Origen">
+                                    <h:outputText value="#{car.nombreAccion}" />
+                                </p:column>
+
+                                <p:column headerText="Instrucción">
+                                    <h:outputText value="#{car.importe}" />
+                                </p:column>
+                            </p:dataTable>
+                            <h:panelGroup>
+                                <p:commandLink action="#{estatusOrdenesMB.btnImprimirAcuse}" ajax="false" immediate="true">
+                                    <h:graphicImage value="/resources/images/pdf.png" />
+                                </p:commandLink>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </p:panel>
                 </h:form>
             </div>
         </h:body>
