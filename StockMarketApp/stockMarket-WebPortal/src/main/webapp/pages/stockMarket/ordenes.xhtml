@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+        xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:pe="http://primefaces.org/ui/extensions">
+    <html>
+        <h:head>
+        </h:head>
+        <h:body>
+            <ui:include src="../background.xhtml"/>
+            <ui:include src="menuHeder.xhtml"/>
+            <div id="panelCentral" 
+                 style="position: absolute;
+                 top: 75px;
+                 height: 200px;
+                 /*                 border: 3px solid #73AD21;*/
+                 align-content: center;
+                 width: 1533.0px;
+                 margin-left:auto;
+                 margin-right:auto;">
+
+                <h:form>
+                    <h:panelGrid columns="3">
+                        
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </h:body>
+    </html>
+</f:view>

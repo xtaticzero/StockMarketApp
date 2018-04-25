@@ -15,6 +15,8 @@ import javax.validation.constraints.Min;
  * @author Juan
  */
 public class FondoEmisora implements Serializable{
+
+    private static final long serialVersionUID = -8542564322085244063L;
     
     private String emisora;
     @Digits(integer = 3, fraction = 0)

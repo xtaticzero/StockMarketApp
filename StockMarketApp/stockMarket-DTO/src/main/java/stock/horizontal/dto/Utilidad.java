@@ -15,6 +15,8 @@ import javax.validation.constraints.Min;
  */
 public class Utilidad extends FondoEmisora {
 
+    private static final long serialVersionUID = -8100585362650096805L;
+
     @Digits(integer = 3, fraction = 0)
     @Min(value = 01)
     @Max(value = 999)

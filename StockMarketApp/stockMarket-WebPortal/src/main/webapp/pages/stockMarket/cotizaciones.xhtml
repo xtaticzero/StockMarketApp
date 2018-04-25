@@ -6,8 +6,140 @@
         <h:head>
         </h:head>
         <h:body>
+            <ui:include src="../background.xhtml"/>
             <ui:include src="menuHeder.xhtml"/>
-            <ui:include src="../background.xhtml"/>           
+            <div id="panelCentral" 
+                 style="position: absolute;
+                 top: 75px;
+                 height: 200px;
+                 /*                 border: 3px solid #73AD21;*/
+                 align-content: center;
+                 width: 1533.0px;
+                 margin-left:auto;
+                 margin-right:auto;">
+
+                <h:form>
+                    <h:panelGrid columns="3">
+                        <p:accordionPanel style="width: 1529.0px;">
+                            <p:tab title="Tasa de Porcentaje Anual">
+                                <h:panelGrid columns="2" cellpadding="10">
+                                    <p:dataTable var="car" value="#{cotizacionesMB.lstCotizacionDTO}" rows="10"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15" style="width: 500px">
+                                        <p:column headerText="Id" style="width: 30px;">
+                                            <div style="text-align: right;">
+                                                <h:outputText value="#{car.id}" /> 
+                                            </div>
+                                        </p:column>
+                                        <p:column headerText="Fecha">
+                                            <div style="text-align: center;">
+                                                <h:outputText value="#{car.fecha}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                </h:outputText>
+                                            </div>
+                                        </p:column>
+
+                                        <p:column headerText="Costo">
+                                            <div style="text-align: right;">
+                                                <h:outputText value="#{car.importe}">
+                                                    <f:convertNumber pattern="#,##0.00" />
+                                                </h:outputText>
+                                            </div>                                            
+                                        </p:column>
+
+                                        <p:column headerText="Porcentaje">
+                                            <div style="text-align: right;">
+                                                <h:outputText value="#{car.costoAdquisicion}" style="text-decoration: red; background-color:red; background-image:none;" rendered="#{car.isRed}">
+                                                    <f:convertNumber type="percent" />
+                                                </h:outputText>
+                                                <h:outputText value="#{car.costoAdquisicion}" style="text-decoration: black;" rendered="#{!car.isRed}">
+                                                    <f:convertNumber type="percent" />
+                                                </h:outputText>
+                                            </div>
+                                        </p:column>
+                                    </p:dataTable>    
+                                </h:panelGrid>
+                            </p:tab>
+                            <p:tab title="Cotizaciones">
+                                <h:panelGrid columns="2" cellpadding="10">
+                                    <p:dataTable var="car" value="#{cotizacionesMB.lstCotizacionAcciones}" rows="10"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,20,50" style="width: 1000px">
+                                        <p:column headerText="Id" style="width: 30px;">
+                                            <div style="text-align: right;">
+                                                <h:outputText value="#{car.id}" /> 
+                                            </div>
+                                        </p:column>
+                                        <p:column headerText="Dia de la semana">
+                                            <div style="text-align: center;">
+                                                <h:outputText value="#{car.fecha}">
+                                                    <f:convertDateTime pattern="EEEE" />
+                                                </h:outputText>
+                                            </div>
+                                        </p:column>
+                                        <p:column headerText="Fecha">
+                                            <div style="text-align: center;">
+                                                <h:outputText value="#{car.fecha}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                </h:outputText>
+                                            </div>
+                                        </p:column>
+
+                                        <p:column headerText="Costo">
+                                            <div style="text-align: right;">
+                                                <h:outputText value="#{car.importe}">
+                                                    <f:convertNumber pattern="#,##0.00" />
+                                                </h:outputText>
+                                            </div>                                            
+                                        </p:column>
+
+                                        <p:column headerText="Porcentaje">
+                                            <div style="text-align: right;">
+                                                <h:outputText value="#{car.costoAdquisicion}" style="text-decoration: red; background-color:red; background-image:none;" rendered="#{car.isRed}">
+                                                    <f:convertNumber type="percent" />
+                                                </h:outputText>
+                                                <h:outputText value="#{car.costoAdquisicion}" style="text-decoration: black;" rendered="#{!car.isRed}">
+                                                    <f:convertNumber type="percent" />
+                                                </h:outputText>
+                                            </div>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2" cellpadding="10">
+                                    <p:dataTable var="car" value="#{cotizacionesMB.lstCotizacionAcciones}" rows="10"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,20,50" style="width: 1000px">
+                                        <p:column headerText="ALFA">
+                                            <div style="text-align: right;">
+                                                <h:outputText value="#{car.importe}">
+                                                    <f:convertNumber pattern="#,##0.00" />
+                                                </h:outputText>
+                                            </div>                                            
+                                        </p:column>
+                                        <p:column headerText="AMX">
+                                            <div style="text-align: right;">
+                                                <h:outputText value="#{car.costoAdquisicion}">
+                                                    <f:convertNumber pattern="#,##0.00" />
+                                                </h:outputText>
+                                            </div>                                            
+                                        </p:column>
+                                        <p:column headerText="BIMBO">
+                                            <div style="text-align: right;">
+                                                <h:outputText value="#{car.costoAdquisicion}">
+                                                    <f:convertNumber pattern="#,##0.00" />
+                                                </h:outputText>
+                                            </div>                                            
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGrid>
+                            </p:tab>
+                        </p:accordionPanel>
+                    </h:panelGrid>
+                </h:form>
+            </div>
         </h:body>
     </html>
 </f:view>
