@@ -1,6 +1,7 @@
 package mx.gob.sat.mat.tabacos.vista;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -22,15 +23,19 @@ import org.apache.log4j.Logger;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-public abstract class AbstractManagedBean {
+public abstract class AbstractManagedBean implements Serializable {
+
+    private static final long serialVersionUID = -954717909755577329L;
 
     /**
      * Objeto del log.
      */
     private final Logger log;
     private HttpSession session;
-    
-    /** The constant factory. */
+
+    /**
+     * The constant factory.
+     */
     private final PodamFactory factory = new PodamFactoryImpl();
 
     public static final String ERROR = "Error";
@@ -234,7 +239,5 @@ public abstract class AbstractManagedBean {
     public PodamFactory getFactory() {
         return factory;
     }
-    
-    
 
 }

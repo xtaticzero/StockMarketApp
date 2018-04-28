@@ -18,6 +18,7 @@ import stock.market.dto.Fondo;
 public class EstadoMensualMB extends AbstractManagedBean {
 
     private List<Fondo> fondos;
+    private List<Fondo> fondos2;
 
     @PostConstruct
     public void init() {
@@ -26,6 +27,12 @@ public class EstadoMensualMB extends AbstractManagedBean {
             Fondo fondo = getFactory().manufacturePojo(Fondo.class);
             fondos.add(fondo);
         }
+        
+        fondos2 = new ArrayList<>();                
+        for (int i = 1; i <= 9; i++) {
+            Fondo fondo = getFactory().manufacturePojo(Fondo.class);
+            fondos2.add(fondo);
+        }
 
     }
 
@@ -33,4 +40,9 @@ public class EstadoMensualMB extends AbstractManagedBean {
         return fondos;
     }
 
+    public List<Fondo> getFondos2() {
+        return fondos2;
+    }
+
+    
 }

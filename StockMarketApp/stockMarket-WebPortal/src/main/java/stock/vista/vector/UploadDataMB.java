@@ -5,10 +5,17 @@
  */
 package stock.vista.vector;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import stock.horizontal.dto.Vector;
+import javax.annotation.PostConstruct;
+import mx.gob.sat.mat.tabacos.util.FechaUtil;
 import mx.gob.sat.mat.tabacos.vista.AbstractManagedBean;
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import stock.market.dto.Fondo;
 
 /**
  *
@@ -18,10 +25,27 @@ import org.springframework.stereotype.Controller;
 @Scope(value = "view")
 public class UploadDataMB extends AbstractManagedBean {
 
-   
-    public void upload(FileUploadEvent event) {
-            addMessage("Éxito!", event.getFile().getFileName() + " se proceso correctamente.");   
+    private List<Vector> vector;
+
+    @PostConstruct
+    public void init() {
+        vector = new ArrayList<>();
+        for (int i = 1; i <= 9; i++) {
+            Vector fondo = getFactory().manufacturePojo(Vector.class);
+            fondo.setFecha(FechaUtil.formatFecha(new Date()));
+            fondo.setConcepto("xxx00" + i);
+            fondo.setAcciones("Emisora " + i);
+            fondo.setAccionesVenta("Emisora 12" + i);
+            vector.add(fondo);
+        }
     }
 
-   
+    public void upload(FileUploadEvent event) {
+        addMessage("Éxito!", event.getFile().getFileName() + " se proceso correctamente.");
+    }
+
+    public List<Vector> getVector() {
+        return vector;
+    }
+
 }

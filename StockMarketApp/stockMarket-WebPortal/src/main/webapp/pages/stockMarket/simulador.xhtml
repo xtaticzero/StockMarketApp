@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+        xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:pe="http://primefaces.org/ui/extensions">
+    <html>
+
+        <h:head>
+            <style type="text/css">
+                .ui-growl-image-info ~ .ui-growl-message, .ui-growl-item, .ui-growl-item-container{
+                    border: #e4e4e4;    
+                    background: #e4e4e4;
+                    color:#0073ea;
+                }
+            </style>
+        </h:head>
+
+        <h:body>
+            <h:form id="form">
+                <h3>Simulador</h3>
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-7">
+                        <p:dataTable value="#{simuladorMB.capas}" var="capa" 
+                                     selection="#{simuladorMB.selectedCapas}" rowKey="#{capa.id}" >
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:ajax event="rowSelectCheckbox" update=":form:tblSelected" />
+                            <p:ajax event="rowUnselectCheckbox" update=":form:tblSelected" />
+                            <!--<p:ajax event="rowSelect" update="@all" />-->
+                            <!--<p:ajax event="rowUnselect" update="@all" />-->
+                            <p:column style="width:16px">
+                                <p:rowToggler />
+                            </p:column>
+                            <p:column headerText="CEMEX">
+                                <h:outputText value="#{capa.id}" />
+                            </p:column>
+                            <p:rowExpansion>
+                                <p:dataTable value="#{capa.acciones}" var="acc">
+                                    <p:column headerText="ID">
+                                        <h:outputText value="#{acc.id}" />
+                                    </p:column>
+                                    <p:column headerText="Fecha">
+                                        <h:outputText value="#{acc.fecha}" />
+                                    </p:column>
+                                    <p:column headerText="Compra">
+                                        <h:outputText value="#{acc.compra}" />
+                                    </p:column>
+                                    <p:column headerText="Venta">
+                                        <h:outputText value="#{acc.venta}" />
+                                    </p:column>
+                                    <p:column headerText="Precio Compra">
+                                        <h:outputText value="#{acc.precioCompra}" />
+                                    </p:column>
+                                    <p:column headerText="Importe">
+                                        <h:outputText value="#{acc.importe}" />
+                                    </p:column>
+                                    <p:column headerText="Costo Unitario">
+                                        <h:outputText value="#{acc.costoUnitario}" />
+                                    </p:column>
+                                    <p:column headerText="Costo Total">
+                                        <h:outputText value="#{acc.costoTotal}" />
+                                    </p:column>
+                                    <p:column headerText="Utilidad">
+                                        <h:outputText value="#{acc.utilidad}" />
+                                    </p:column>
+                                    <p:column headerText="% Venta">
+                                        <h:outputText value="#{acc.porcentajeVenta}" />
+                                    </p:column>
+                                </p:dataTable>        
+                            </p:rowExpansion>
+                        </p:dataTable>
+
+                    </div>
+                    <div class="ui-g-12 ui-md-5 ui-g-nopad">
+                        PRECIO ACTUAL <h:inputText value="ALGO" />
+                        <br/>
+                        <p:dataTable id="tblSelected" value="#{simuladorMB.selectedCapas}" var="capa">
+                            <p:column style="width:16px">
+                                <p:rowToggler />
+                            </p:column>
+                            <p:column headerText="A VENDER">
+                                <h:outputText value="#{capa.id}" />
+                            </p:column>
+                            <p:rowExpansion>
+                                <p:dataTable value="#{capa.acciones}" var="acc" editable="true" editMode="cell">
+                                    <p:column headerText="ID">
+                                        <h:outputText value="#{acc.id}" />
+                                    </p:column>
+                                    <p:column headerText="Compra">
+                                        <h:outputText value="#{acc.compra}" />
+                                    </p:column>
+                                    <p:column headerText="Costo Total">
+                                        <h:outputText value="#{acc.costoTotal}" />
+                                    </p:column>
+                                    <p:column headerText="Utilidad">
+                                        <h:outputText value="#{acc.utilidad}" />
+                                    </p:column>
+                                    <p:column headerText="% Venta">
+                                        <h:outputText value="#{acc.porcentajeVenta}" />
+                                    </p:column>
+                                    <p:column headerText="# a vender">
+                                        <p:cellEditor>
+                                            <f:facet name="output"><h:outputText value="#{acc.compra}" /></f:facet>
+                                            <f:facet name="input"><p:inputText value="#{acc.compra}" style="width:96%" label="# a vender"/></f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                </p:dataTable>        
+                            </p:rowExpansion>
+                        </p:dataTable>
+                        <br/>
+                        TOTAL <h:inputText value="ALGO" />
+                    </div>
+                </div>  
+                <p:growl id="display" showDetail="true"/>
+
+
+
+            </h:form>
+        </h:body>
+    </html>
+</f:view>

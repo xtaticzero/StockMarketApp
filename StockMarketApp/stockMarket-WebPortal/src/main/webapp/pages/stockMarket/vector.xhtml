@@ -17,12 +17,55 @@
         <h:form>
             <h:form enctype="multipart/form-data">
 
+                <p:growl id="display" showDetail="true"/>
                 <p:fileUpload fileUploadListener="#{uploadDataMB.upload}"
                               dragDropSupport="false" auto="true"
                               mode="advanced" update="display" sizeLimit="10000000"
                               allowTypes="/(\.|\/)(xls|xlsx)$/" label="Examinar ..."/>
-
-                <p:growl id="display" showDetail="true" life="99999" />
+                <br/>
+                <p:dataTable var="v" value="#{uploadDataMB.vector}">
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column rowspan="2" headerText="Fecha" />
+                            <p:column colspan="3" headerText="Compra" />
+                            <p:column colspan="2" headerText="Venta" />
+                            <p:column colspan="2" headerText="Precio" />
+                        </p:row>
+                        <p:row>
+                            <p:column headerText="Concepto" />
+                            <p:column headerText="Titulos" />
+                            <p:column headerText="Acciones" />
+                            <p:column headerText="Titulo" />
+                            <p:column headerText="Acciones" />
+                            <p:column headerText="Bruto" />
+                            <p:column headerText="Neto" />
+                        </p:row>
+                    </p:columnGroup>
+                    <p:column>
+                        <h:outputText value="#{v.fecha}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{v.concepto}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{v.titulos}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{v.acciones}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{v.titulosVenta}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{v.accionesVenta}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{v.bruto}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{v.neto}" />
+                    </p:column>
+                </p:dataTable>
             </h:form>
         </h:form>
     </h:body>
