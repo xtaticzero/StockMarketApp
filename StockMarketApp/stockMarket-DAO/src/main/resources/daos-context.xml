@@ -16,6 +16,17 @@
         http://www.springframework.org/schema/jee
         http://www.springframework.org/schema/jee/spring-jee-3.2.xsd">
     
+<!--    <tx:annotation-driven/>
+    <context:component-scan base-package="com.xtaticzero.systems.dao"/>
+    
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSourceTBC"/>
+    </bean>
+    
+    <bean id="jdbcTemplateTBC" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSourceTBC"/>
+    </bean>-->
+    
     <!--<util:properties id="tbc_prop" location="file:///siat/configuracion/tbc/tbc.properties"/>-->
     
 <!--    <jee:jndi-lookup id="dataSourceTBC" jndi-name="#{tbc_prop['aplicacion.jndi']}"/>
