@@ -5,6 +5,7 @@
  */
 package com.xtaticzero.systems.business.util.impl;
 
+import com.xtaticzero.systems.business.exception.ReporterJasperException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import mx.gob.sat.mat.tabacos.constants.enums.TipoReportesJasperEnum;
-import mx.gob.sat.mat.tabacos.negocio.excepcion.ConfiguracionJasperException;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -70,6 +70,8 @@ public class ReporteJasperUtil {
     private static final int CASE_TXT = 10;
     private static final int CASE_HTML = 11;
     private static final int CASE_XML = 12;
+    
+    private static final String MSG_ERROR = "jasper.exception.general";
 
     private String reporteJasper;
     private List<?> datosReporte;
@@ -152,7 +154,7 @@ public class ReporteJasperUtil {
     }
 
     public byte[] generarBytesReporte()
-            throws ConfiguracionJasperException {
+            throws ReporterJasperException {
         JRExporter exporter = prepararReporte();
         ByteArrayOutputStream exporterOS = new ByteArrayOutputStream();
         try {
@@ -161,15 +163,15 @@ public class ReporteJasperUtil {
             exporter.exportReport();
         } catch (JRException e) {
             LOG.error(e);
-            throw new ConfiguracionJasperException("Ocurrió un error al intentar generar el reporte.", e);
+            throw new ReporterJasperException(MSG_ERROR, e);
         }
         return exporterOS.toByteArray();
     }
 
     public void generarArchivoReporte()
-            throws ConfiguracionJasperException {
+            throws ReporterJasperException {
         if ((this.nombreReporte == null) || (this.nombreReporte.trim().equals(""))) {
-            throw new ConfiguracionJasperException("No se ha definido un nombre para el reporte.");
+            throw new ReporterJasperException(MSG_ERROR);
         }
         JRExporter exporter = prepararReporte();
         exporter.setParameter(JRExporterParameter.JASPER_PRINT, this.jasperPrint);
@@ -178,7 +180,7 @@ public class ReporteJasperUtil {
             exporter.exportReport();
         } catch (JRException e) {
             LOG.error(e);
-            throw new ConfiguracionJasperException("Ocurrió un error al intentar generar el reporte.", e);
+            throw new ReporterJasperException(MSG_ERROR, e);
         }
     }
 
@@ -206,9 +208,9 @@ public class ReporteJasperUtil {
         this.formatoReporte = formatoReporte;
     }
 
-    private JRExporter prepararReporte() throws ConfiguracionJasperException {
+    private JRExporter prepararReporte() throws ReporterJasperException {
         if (((this.formatoReporte == null)) || (this.formatoReporte.trim().equals(""))) {
-            throw new ConfiguracionJasperException("No se ha definido un formato para el reporte.");
+            throw new ReporterJasperException(MSG_ERROR);
         }
         if (this.reporteJasperIS == null) {
             reporteJasperIS = leerReporteJasper();
@@ -219,7 +221,7 @@ public class ReporteJasperUtil {
             this.jasperPrint = JasperFillManager.fillReport(reporteJasperIS, this.parametrosReporte, datosReporteJ);
         } catch (JRException e) {
             LOG.error(e.toString());
-            throw new ConfiguracionJasperException("Ocurrió un error al intentar generar el reporte.", e);
+            throw new ReporterJasperException(MSG_ERROR, e);
         }
 
         TipoReportesJasperEnum tipoRep = obtenerTipoReporte(formatoReporte);
@@ -227,7 +229,7 @@ public class ReporteJasperUtil {
         return evalualTipoReporte(tipoRep);
     }
 
-    private JRExporter evalualTipoReporte(TipoReportesJasperEnum tipoRep) throws ConfiguracionJasperException {
+    private JRExporter evalualTipoReporte(TipoReportesJasperEnum tipoRep) throws ReporterJasperException {
         JRExporter exporter = null;
 
         switch (tipoRep.getId()) {
@@ -268,14 +270,14 @@ public class ReporteJasperUtil {
                 exporter = new JRXmlExporter();
                 break;
             default:
-                throw new ConfiguracionJasperException("El formato para el reporte no es válido.");
+                throw new ReporterJasperException(MSG_ERROR);
 
         }
 
         return exporter;
     }
 
-    private TipoReportesJasperEnum obtenerTipoReporte(String tipoReporte) throws ConfiguracionJasperException {
+    private TipoReportesJasperEnum obtenerTipoReporte(String tipoReporte) throws ReporterJasperException {
 
         for (TipoReportesJasperEnum tipo : TipoReportesJasperEnum.values()) {
             if (tipoReporte.equals(tipo.getDescripcion())) {
@@ -283,12 +285,12 @@ public class ReporteJasperUtil {
             }
         }
 
-        throw new ConfiguracionJasperException("El formato para el reporte no es válido.");
+        throw new ReporterJasperException(MSG_ERROR);
     }
 
-    private InputStream leerReporteJasper() throws ConfiguracionJasperException {
+    private InputStream leerReporteJasper() throws ReporterJasperException {
         if ((this.reporteJasper == null) || (this.reporteJasper.trim().equals(""))) {
-            throw new ConfiguracionJasperException("No se ha definido una ruta para leer el archivo jasper.");
+            throw new ReporterJasperException(MSG_ERROR);
         }
         InputStream reporteJasperISTmp = null;
         String reporteJasperTmp = this.reporteJasper.trim();
@@ -296,7 +298,7 @@ public class ReporteJasperUtil {
             reporteJasperTmp = reporteJasperTmp.replace("classpath:", "").trim();
             reporteJasperISTmp = ReporteJasperUtil.class.getResourceAsStream(reporteJasperTmp);
             if (reporteJasperISTmp == null) {
-                throw new ConfiguracionJasperException("La ruta del archivo jasper no es una ruta válida.");
+                throw new ReporterJasperException(MSG_ERROR);
             }
             this.rutaReporte = ReporteJasperUtil.class.getResource(reporteJasperTmp).getFile();
         } else {
@@ -306,10 +308,10 @@ public class ReporteJasperUtil {
                 this.rutaReporte = reporteJasperF.getPath();
             } catch (FileNotFoundException e) {
                 LOG.error(e);
-                throw new ConfiguracionJasperException("La ruta del archivo jasper no es una ruta válida.", e);
+                throw new ReporterJasperException(MSG_ERROR, e);
             } catch (SecurityException e) {
                 LOG.error(e);
-                throw new ConfiguracionJasperException("No se puede leer el archivo jasper.", e);
+                throw new ReporterJasperException(MSG_ERROR, e);
             }
         }
         this.rutaReporte = ("/" + this.rutaReporte).replace("\\\\", "/");

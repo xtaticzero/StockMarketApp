@@ -14,7 +14,6 @@ import stock.market.dto.Fondo;
  */
 @Controller("estadoMensualMB")
 @Scope(value = "view")
-
 public class EstadoMensualMB extends AbstractManagedBean {
 
     private List<Fondo> fondos;

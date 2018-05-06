@@ -16,7 +16,8 @@
         http://www.springframework.org/schema/jee
         http://www.springframework.org/schema/jee/spring-jee-3.2.xsd">
     
-    <!--<util:properties id="tbc_prop" location="file:///siat/configuracion/tbc/tbc.properties"/>-->
+    <import resource="classpath*:daos-context-test.xml"/>
+    
     <tx:annotation-driven/>
     <context:component-scan base-package="com.xtaticzero.systems.business"/>    
 </beans>

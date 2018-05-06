@@ -6,11 +6,9 @@
 package com.xtaticzero.systems.business.util;
 
 import com.xtaticzero.systems.base.enums.ReportsEnum;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import com.xtaticzero.systems.business.exception.ReporterJasperException;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  *
@@ -18,7 +16,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  */
 public interface ReporterService {
     
-    String MSG_ERROR = "No se pudo generar el reporte";
+    String MSG_ERROR = "jasper.exception.general";
 
     byte[] makeReport(ReportsEnum reporteEnum, String nombreReporte,
                                       Map<String, Object> parametros,

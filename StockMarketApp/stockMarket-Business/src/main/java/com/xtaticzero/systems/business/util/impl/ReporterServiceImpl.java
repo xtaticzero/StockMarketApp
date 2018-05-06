@@ -6,12 +6,11 @@
 package com.xtaticzero.systems.business.util.impl;
 
 import com.xtaticzero.systems.base.enums.ReportsEnum;
-import com.xtaticzero.systems.business.BaseBusinessAbstract;
+import com.xtaticzero.systems.business.BaseBusinessServices;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import com.xtaticzero.systems.business.util.ReporterService;
-import mx.gob.sat.mat.tabacos.negocio.excepcion.ConfiguracionJasperException;
 import com.xtaticzero.systems.business.exception.ReporterJasperException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Qualifier("reporterService")
-public class ReporterServiceImpl extends BaseBusinessAbstract implements ReporterService {
+public class ReporterServiceImpl extends BaseBusinessServices implements ReporterService {
 
     private static final long serialVersionUID = -1858592023847363133L;
 
@@ -33,7 +32,7 @@ public class ReporterServiceImpl extends BaseBusinessAbstract implements Reporte
         try {
             InputStream fileIS = this.getClass().getClassLoader().getResourceAsStream((reporteEnum.getPath()));
             return GeneradorReportes.crearReporte(fileIS, nombreReporte, parametros, detalle);
-        } catch (ConfiguracionJasperException cje) {
+        } catch (ReporterJasperException cje) {
             logger.error(cje.getCause(),cje);
             throw new ReporterJasperException(MSG_ERROR, cje);
         }

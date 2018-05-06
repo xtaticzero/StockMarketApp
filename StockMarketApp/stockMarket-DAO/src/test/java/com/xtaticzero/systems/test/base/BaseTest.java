@@ -9,13 +9,17 @@ import org.apache.log4j.Logger;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author xtati
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:/**/business-context-test.xml"})
+@ContextConfiguration(locations = "classpath*:/**/daos-context-test.xml")
+@Transactional
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 public abstract class BaseTest {
     protected final Logger logger;
     public BaseTest() {

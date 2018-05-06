@@ -9,6 +9,7 @@ import com.xtaticzero.systems.base.constants.excepcion.BusinessException;
 import com.xtaticzero.systems.base.enums.ReportsEnum;
 import com.xtaticzero.systems.business.logging.UserLogginService;
 import com.xtaticzero.systems.business.util.ReporterService;
+import com.xtaticzero.systems.dao.PruebaDao;
 import com.xtaticzero.systems.test.base.BaseTest;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,8 +32,17 @@ public class ReporteTest extends BaseTest {
     @Qualifier("reporterService")
     private ReporterService reporterService;
     
+    @Autowired
+    @Qualifier("pruebaDao")
+    private PruebaDao pruebaDao;
+    
     @Before
     public void init(){
+        
+        if(pruebaDao!=null){
+            System.out.println("todo ok "+pruebaDao.getTime());
+        }
+        
         File files = new File("/WebApps/tmp");
         if (!files.exists()) {
             if (files.mkdirs()) {

@@ -157,6 +157,32 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        
+        <!--aspectj-->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>aopalliance</groupId>
+            <artifactId>aopalliance</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        
         <dependency>
             <groupId>aopalliance</groupId>
             <artifactId>aopalliance</artifactId>

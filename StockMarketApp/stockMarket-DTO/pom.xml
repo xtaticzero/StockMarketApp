@@ -18,6 +18,13 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <build>
         <testResources>

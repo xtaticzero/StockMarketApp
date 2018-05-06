@@ -5,11 +5,11 @@
  */
 package com.xtaticzero.systems.business.util.impl;
 
+import com.xtaticzero.systems.business.exception.ReporterJasperException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import mx.gob.sat.mat.tabacos.constants.Constantes;
-import mx.gob.sat.mat.tabacos.negocio.excepcion.ConfiguracionJasperException;
 
 /**
  *
@@ -20,7 +20,7 @@ public final class GeneradorReportes {
     /**
      * String de error para formato no soportado.
      */
-    public static final String ERROR_TIPO_REPORTE_NO_SOPORTADO = "Tipo de reporte no soportado (pdf/xls) ";
+    public static final String ERROR_TIPO_REPORTE_NO_SOPORTADO = "jasper.exception.general";
 
     private GeneradorReportes() {
 
@@ -36,12 +36,11 @@ public final class GeneradorReportes {
      * @param detalle Lista de mapas para insertar en la banda detail del
      * reporte.
      * @return arreglo de bytes del reporte generado.
-     * @throws ConfiguracionJasperException en caso de haber un problema al
-     * generar el reporte.
+     * @throws com.xtaticzero.systems.business.exception.ReporterJasperException
      */
     public static byte[] crearReporte(InputStream reportIS, String nombreReporte,
             Map<String, Object> parametros,
-            List<?> detalle) throws ConfiguracionJasperException {
+            List<?> detalle) throws ReporterJasperException {
 
         ReporteJasperUtil reporte = new ReporteJasperUtil();
         reporte.setReporteJasper(reportIS);
@@ -54,18 +53,18 @@ public final class GeneradorReportes {
         } else if (nombreReporte.endsWith(Constantes.ARCHIVO_CSV)) {
             reporte.setFormatoReporte(ReporteJasperUtil.CSV);
         } else {
-            throw new ConfiguracionJasperException(GeneradorReportes.ERROR_TIPO_REPORTE_NO_SOPORTADO);
+            throw new ReporterJasperException(GeneradorReportes.ERROR_TIPO_REPORTE_NO_SOPORTADO);
         }
 
         reporte.setParametrosReporte(parametros);
         reporte.setDatosReporte(detalle);
         try {
             return reporte.generarBytesReporte();
-        } catch (ConfiguracionJasperException cex) {
-            if(cex.getMessage()!=null){
-                throw new ConfiguracionJasperException(cex.getMessage(),cex);
-            }else{
-                throw new ConfiguracionJasperException("No se pudo generar el reporte",cex);
+        } catch (ReporterJasperException cex) {
+            if (cex.getMessage() != null) {
+                throw new ReporterJasperException(ERROR_TIPO_REPORTE_NO_SOPORTADO, cex);
+            } else {
+                throw new ReporterJasperException(ERROR_TIPO_REPORTE_NO_SOPORTADO, cex);
             }
         }
     }
