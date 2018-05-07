@@ -14,8 +14,8 @@
         <commons-lang3.version>3.1</commons-lang3.version>
         <mysql.driver>5.1.6</mysql.driver>
         <!--  spring  -->
-        <!--<spring.version>4.0.2.RELEASE</spring.version>-->
-        <spring.version>3.2.14.RELEASE</spring.version>
+        <spring.version>4.0.2.RELEASE</spring.version>
+        <!--<spring.version>3.2.14.RELEASE</spring.version>-->
         <spring.ws-core.version>2.2.0.RELEASE</spring.ws-core.version>
         <aspectj.version>1.8.7</aspectj.version>
         <!-- Test -->
