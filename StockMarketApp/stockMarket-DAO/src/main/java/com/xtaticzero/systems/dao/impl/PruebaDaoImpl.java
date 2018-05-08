@@ -5,7 +5,7 @@
  */
 package com.xtaticzero.systems.dao.impl;
 
-import com.xtaticzero.systems.base.dto.BaseModel;
+import com.xtaticzero.systems.base.BaseModel;
 import com.xtaticzero.systems.dao.BaseJDBCDao;
 import com.xtaticzero.systems.dao.PruebaDao;
 import org.springframework.stereotype.Repository;

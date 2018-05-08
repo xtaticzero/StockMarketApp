@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.xtaticzero.systems.base.dto;
+package com.xtaticzero.systems.base;
 
+import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -12,7 +13,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
-public class BaseModel {
+public class BaseModel implements Serializable{
+
+    private static final long serialVersionUID = -418349510501149490L;
 
     @Override
     public String toString() {

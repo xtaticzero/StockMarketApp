@@ -6,7 +6,7 @@
 package com.xtaticzero.systems.dao;
 
 import com.xtaticzero.systems.base.constants.excepcion.DAOException;
-import com.xtaticzero.systems.base.dto.BaseModel;
+import com.xtaticzero.systems.base.BaseModel;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
