@@ -6,6 +6,7 @@
 package com.xtaticzero.systems.test.impl;
 
 import com.xtaticzero.systems.base.constants.excepcion.BusinessException;
+import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.base.enums.ReportsEnum;
 import com.xtaticzero.systems.business.logging.UserLogginService;
 import com.xtaticzero.systems.business.util.ReporterService;
@@ -36,8 +37,14 @@ public class ReporteTest extends BaseTest {
     @Qualifier("pruebaDao")
     private PruebaDao pruebaDao;
     
+    private UsuarioDTO usr;
+    
     @Before
     public void init(){
+        usr = new UsuarioDTO();
+        
+        usr.setDisplay_name("admin");
+        usr.setPassword("paaa");
         
         if(pruebaDao!=null){
             System.out.println("todo ok "+pruebaDao.getTime());
@@ -57,7 +64,7 @@ public class ReporteTest extends BaseTest {
     public void pruebaReportePDF() throws Exception {
         try {
             if (userService != null && reporterService != null) {
-                logger.info(userService.userName());
+                logger.info(userService.logginUser(usr));
 
                 byte[] byt = reporterService.makeReport(ReportsEnum.REPORTE_PRUEBA, "prueba.pdf", null, null);
 

@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
  *
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
-public class BaseBusinessServices implements Serializable {
+public abstract class BaseBusinessServices implements Serializable {
 
     private static final long serialVersionUID = -7658743465565989215L;
     protected final Logger logger;

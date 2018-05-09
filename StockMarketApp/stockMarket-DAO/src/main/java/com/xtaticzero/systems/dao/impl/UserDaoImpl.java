@@ -14,11 +14,14 @@ import com.xtaticzero.systems.dao.mapper.UsuarioMapper;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
+@Repository("userDao")
 public class UserDaoImpl extends BaseJDBCDao<UsuarioDTO> implements UserDao, UsuarioSQL {
 
     private static final long serialVersionUID = -6351443720713415227L;
@@ -143,6 +146,8 @@ public class UserDaoImpl extends BaseJDBCDao<UsuarioDTO> implements UserDao, Usu
 
             return getJdbcTemplateBase().queryForObject(UsuarioSQL.SQL_LOGGIN, params.toArray(), new UsuarioMapper());
 
+        } catch (EmptyResultDataAccessException emty) {
+            return null;
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
             throw new DAOException(ERR_GENERAL, ex.getMessage(), ex);

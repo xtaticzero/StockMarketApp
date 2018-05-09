@@ -5,10 +5,15 @@
  */
 package com.xtaticzero.systems.business.logging;
 
+import com.xtaticzero.systems.base.constants.excepcion.BusinessException;
+import com.xtaticzero.systems.base.dto.UsuarioDTO;
+
 /**
  *
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
 public interface UserLogginService {
-    String userName();
+    String ERR_LOGGIN = "usr.invalido";
+
+    UsuarioDTO logginUser(UsuarioDTO usuario) throws BusinessException;
 }

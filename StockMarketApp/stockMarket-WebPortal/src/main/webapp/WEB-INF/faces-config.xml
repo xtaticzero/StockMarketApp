@@ -3,12 +3,8 @@
     <application>
         <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
         <resource-bundle>
-            <base-name>mx.gob.sat.mat.tabacos.mensajes</base-name>
-            <var>tbcMsj</var>
-        </resource-bundle>
-        <resource-bundle>
-            <base-name>mx.gob.sat.mat.tabacos.versionPortalEmpleado</base-name>
-            <var>version</var>
+            <base-name>mx.gob.sat.siat.feagace.mensajes</base-name>
+            <var>msj</var>
         </resource-bundle>
     </application>
     <validator>
