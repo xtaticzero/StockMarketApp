@@ -9,6 +9,7 @@ import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
@@ -34,6 +35,7 @@ public abstract class BaseAbstractMB implements Serializable {
     private static final long serialVersionUID = 4094548849617062158L;
 
     private static final String DEVELOP = "develop";
+    private UsuarioDTO usuario;
 
     /**
      * Propiedad para llevar a cabo un registro de eventos.
@@ -49,6 +51,16 @@ public abstract class BaseAbstractMB implements Serializable {
 
     protected BaseAbstractMB() {
         super();
+    }
+
+    protected void validateUsuarioValido() throws IOException {
+        if (getUserProfile() != null) {
+            usuario = getUserProfile();
+        } else {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(
+                    ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getContextPath()
+                    + "/error/indexError.jsf");
+        }
     }
 
     /**
@@ -75,6 +87,11 @@ public abstract class BaseAbstractMB implements Serializable {
     public HttpSession getSession() {
         return (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
+    }
+
+    public HttpSession getNewSession() {
+        return (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(true);
     }
 
     public void setUserProfile(UsuarioDTO userProfile) {
@@ -319,6 +336,14 @@ public abstract class BaseAbstractMB implements Serializable {
                 .getCurrentInstance().getExternalContext().getContext();
 
         return Boolean.parseBoolean(servletContext.getInitParameter(DEVELOP));
+    }
+
+    public UsuarioDTO getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioDTO usuario) {
+        this.usuario = usuario;
     }
 
 }

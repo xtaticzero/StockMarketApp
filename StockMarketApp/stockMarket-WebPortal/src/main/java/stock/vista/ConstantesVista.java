@@ -10,5 +10,7 @@ package stock.vista;
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
 public interface ConstantesVista {
+
     String USER_PROFILE = "USER_PROFILE";
+    String MSG_ERROR_SESSION = "mensaje";
 }

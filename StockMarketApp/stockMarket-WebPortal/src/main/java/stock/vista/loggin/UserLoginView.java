@@ -32,14 +32,11 @@ public class UserLoginView extends BaseAbstractMB {
     @Qualifier("userLogginService")
     private UserLogginService logginService;
 
-    private UsuarioDTO usuario;
-
     @PostConstruct
     protected void init() {
-        usuario = new UsuarioDTO();
+        setUsuario(new UsuarioDTO());
         if (getNameSession() != null) {
             logger.info("Usuario firmado : ".concat(getNameSession()));
-
         }
         setUserProfile(null);
         logger.info("Loggin page");
@@ -48,21 +45,21 @@ public class UserLoginView extends BaseAbstractMB {
     public void login(ActionEvent event) {
         boolean loggedIn = false;
 
-        if (usuario.getDisplay_name() != null && usuario.getPassword() != null) {
+        if (getUsuario().getDisplay_name() != null && getUsuario().getPassword() != null) {
 
             try {
-                UsuarioDTO correctUser = logginService.logginUser(usuario);
+                UsuarioDTO correctUser = logginService.logginUser(getUsuario());
                 if (correctUser != null) {
                     loggedIn = true;
-                    setUserProfile(usuario);
+                    setUserProfile(getUsuario());
                     try {
                         FacesContext.getCurrentInstance().getExternalContext().redirect(
                                 ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getContextPath()
                                 + "/pages/inicio.html");
                     } catch (Exception e) {
                         logger.error(getMessageResourceString("msj.loggin.err"));
-                        logger.error(e.getMessage(),e);
-                        
+                        logger.error(e.getMessage(), e);
+
                     }
                 }
             } catch (BusinessException ex) {
@@ -76,14 +73,6 @@ public class UserLoginView extends BaseAbstractMB {
         }
 
         PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
-    }
-
-    public UsuarioDTO getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(UsuarioDTO usuario) {
-        this.usuario = usuario;
     }
 
 }
