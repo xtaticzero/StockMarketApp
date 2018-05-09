@@ -5,7 +5,10 @@
  */
 package com.xtaticzero.systems.dao;
 
+import com.xtaticzero.systems.base.constants.excepcion.DAOException;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  *
@@ -13,5 +16,16 @@ import com.xtaticzero.systems.base.dto.UsuarioDTO;
  */
 public interface UserDao {
 
-    int insert(UsuarioDTO usuario);
+    int insert(UsuarioDTO usuario) throws DAOException;
+
+    int update(UsuarioDTO usuario) throws DAOException;
+
+    int delete(UsuarioDTO usuario) throws DAOException;
+
+    UsuarioDTO findName(String name) throws DAOException;
+
+    List<UsuarioDTO> findRol(BigInteger idRol) throws DAOException;
+
+    UsuarioDTO passwordValido(UsuarioDTO usuario) throws DAOException;
+
 }

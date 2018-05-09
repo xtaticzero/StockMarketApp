@@ -21,6 +21,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
  * @param <T>
  */
 public abstract class BaseJDBCDao<T extends BaseModel> extends BaseRepository<T> {
+    
+    protected final String ERR_GENERAL = "general";
 
     /**
      * Numero de version
