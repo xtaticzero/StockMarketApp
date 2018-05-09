@@ -9,7 +9,6 @@ import com.xtaticzero.systems.base.constants.excepcion.BusinessException;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.business.logging.UserLogginService;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.ServletContext;
@@ -36,13 +35,17 @@ public class UserLoginView extends BaseAbstractMB {
     private UsuarioDTO usuario;
 
     @PostConstruct
-    private void init() {
-        logger.info("Loggin page");
+    protected void init() {
         usuario = new UsuarioDTO();
+        if (getNameSession() != null) {
+            logger.info("Usuario firmado : ".concat(getNameSession()));
+
+        }
+        setUserProfile(null);
+        logger.info("Loggin page");
     }
 
     public void login(ActionEvent event) {
-        FacesMessage message = null;
         boolean loggedIn = false;
 
         if (usuario.getDisplay_name() != null && usuario.getPassword() != null) {
@@ -57,7 +60,9 @@ public class UserLoginView extends BaseAbstractMB {
                                 ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getContextPath()
                                 + "/pages/inicio.html");
                     } catch (Exception e) {
-                        System.err.println("error al redireccionar" + e.getMessage());
+                        logger.error(getMessageResourceString("msj.loggin.err"));
+                        logger.error(e.getMessage(),e);
+                        
                     }
                 }
             } catch (BusinessException ex) {
@@ -67,10 +72,9 @@ public class UserLoginView extends BaseAbstractMB {
 
         } else {
             loggedIn = false;
-            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
+
         }
 
-        FacesContext.getCurrentInstance().addMessage(null, message);
         PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
     }
 

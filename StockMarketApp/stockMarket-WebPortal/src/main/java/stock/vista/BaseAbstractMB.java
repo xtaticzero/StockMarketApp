@@ -55,7 +55,10 @@ public abstract class BaseAbstractMB implements Serializable {
      * Obtiene el Nombre del usuario autenticado
      */
     public String getNameSession() {
-        return getUserProfile().getDisplay_name();
+        if (getUserProfile() != null) {
+            return getUserProfile().getDisplay_name();
+        }
+        return null;
     }
 
     /**
