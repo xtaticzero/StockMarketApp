@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 public class EmisoraServiceImpl extends BaseBusinessServices implements EmisoraService {
 
     private static final long serialVersionUID = -5176742198684916246L;
-    
+
     @Autowired
     @Qualifier("emisoraDAO")
     private EmisoraDAO emisoraDAO;
@@ -35,30 +35,59 @@ public class EmisoraServiceImpl extends BaseBusinessServices implements EmisoraS
             if (nuevaEmisora == null) {
                 return nuevaEmisora;
             }
-            
+
             emisoraDAO.insert(nuevaEmisora);
-            
+
             return nuevaEmisora;
-            
+
         } catch (DAOException daoEx) {
             logger.error(daoEx.getMessage());
-            throw new BusinessException(ERR_GENERAL_DESCRIPCION,daoEx,"No se pudo guardar la emisora con nombre : ".concat(nuevaEmisora.getNombre()));
+            throw new BusinessException(ERR_GENERAL_DESCRIPCION, daoEx, "No se pudo guardar la emisora con nombre : ".concat(nuevaEmisora.getNombre()));
         }
     }
 
     @Override
-    public Boolean desactivarEmisora(EmisoraDTO nuevaEmisora) throws BusinessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Boolean desactivarEmisora(EmisoraDTO emisora) throws BusinessException {
+        try {
+            if (emisora == null) {
+                return false;
+            }
+
+            int numDesActivado = emisoraDAO.delete(emisora);
+
+            return numDesActivado != 0;
+
+        } catch (DAOException daoEx) {
+            logger.error(daoEx.getMessage());
+            throw new BusinessException(ERR_GENERAL_DESCRIPCION, daoEx, "No se pudo desactivar la emisora con nombre : ".concat(emisora.getNombre()));
+        }
     }
 
     @Override
-    public Boolean actualizarEmisora(EmisoraDTO nuevaEmisora) throws BusinessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Boolean actualizarEmisora(EmisoraDTO emisora) throws BusinessException {
+        try {
+            if (emisora == null) {
+                return false;
+            }
+
+            int numDesActivado = emisoraDAO.update(emisora);
+
+            return numDesActivado != 0;
+
+        } catch (DAOException daoEx) {
+            logger.error(daoEx.getMessage());
+            throw new BusinessException(ERR_GENERAL_DESCRIPCION, daoEx, "No se pudo actualizar la emisora con nombre : ".concat(emisora.getNombre()));
+        }
     }
 
     @Override
     public List<EmisoraDTO> obtenerEmisoras() throws BusinessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return emisoraDAO.findAllEmisoras();            
+        } catch (DAOException daoEx) {
+            logger.error(daoEx.getMessage());
+            throw new BusinessException(ERR_GENERAL_DESCRIPCION, daoEx, "No se puede obtener liste de emisoras ");
+        }
     }
 
 }

@@ -17,9 +17,9 @@ public interface EmisoraService {
 
     EmisoraDTO guardarEmisora(EmisoraDTO nuevaEmisora) throws BusinessException;
 
-    Boolean desactivarEmisora(EmisoraDTO nuevaEmisora) throws BusinessException;
+    Boolean desactivarEmisora(EmisoraDTO emisora) throws BusinessException;
 
-    Boolean actualizarEmisora(EmisoraDTO nuevaEmisora) throws BusinessException;
+    Boolean actualizarEmisora(EmisoraDTO emisora) throws BusinessException;
 
     List<EmisoraDTO> obtenerEmisoras() throws BusinessException;
 
