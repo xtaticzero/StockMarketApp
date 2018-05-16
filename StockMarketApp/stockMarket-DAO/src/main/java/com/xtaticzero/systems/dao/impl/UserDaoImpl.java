@@ -9,7 +9,7 @@ import com.xtaticzero.systems.base.constants.excepcion.DAOException;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.dao.BaseJDBCDao;
 import com.xtaticzero.systems.dao.UserDao;
-import com.xtaticzero.systems.dao.UsuarioSQL;
+import com.xtaticzero.systems.dao.sql.UsuarioSQL;
 import com.xtaticzero.systems.dao.mapper.UsuarioMapper;
 import java.math.BigInteger;
 import java.util.ArrayList;
