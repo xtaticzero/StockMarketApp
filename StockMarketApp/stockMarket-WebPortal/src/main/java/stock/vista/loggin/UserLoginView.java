@@ -5,7 +5,7 @@
  */
 package stock.vista.loggin;
 
-import com.xtaticzero.systems.base.constants.excepcion.BusinessException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.business.logging.UserLogginService;
 import javax.annotation.PostConstruct;

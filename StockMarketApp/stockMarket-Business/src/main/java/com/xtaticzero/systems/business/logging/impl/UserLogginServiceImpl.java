@@ -5,8 +5,8 @@
  */
 package com.xtaticzero.systems.business.logging.impl;
 
-import com.xtaticzero.systems.base.constants.excepcion.BusinessException;
-import com.xtaticzero.systems.base.constants.excepcion.DAOException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.business.BaseBusinessServices;
 import com.xtaticzero.systems.business.logging.UserLogginService;

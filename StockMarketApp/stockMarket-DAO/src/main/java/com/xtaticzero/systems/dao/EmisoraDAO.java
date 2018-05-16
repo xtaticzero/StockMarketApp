@@ -5,7 +5,7 @@
  */
 package com.xtaticzero.systems.dao;
 
-import com.xtaticzero.systems.base.constants.excepcion.DAOException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.EmisoraDTO;
 import java.util.List;
 
@@ -15,5 +15,12 @@ import java.util.List;
  */
 public interface EmisoraDAO {
 
+    int insert(EmisoraDTO nuevaEmisora) throws DAOException;
+    
+    int delete(EmisoraDTO emisora) throws DAOException;
+    
+    int update(EmisoraDTO emisora) throws DAOException;
+
     List<EmisoraDTO> findAllEmisoras() throws DAOException;
+
 }

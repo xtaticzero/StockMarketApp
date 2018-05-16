@@ -5,7 +5,7 @@
  */
 package com.xtaticzero.systems.dao.impl;
 
-import com.xtaticzero.systems.base.constants.excepcion.DAOException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.dao.BaseJDBCDao;
 import com.xtaticzero.systems.dao.UserDao;

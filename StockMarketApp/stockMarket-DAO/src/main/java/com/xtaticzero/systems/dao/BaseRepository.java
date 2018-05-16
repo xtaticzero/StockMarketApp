@@ -5,7 +5,7 @@
  */
 package com.xtaticzero.systems.dao;
 
-import com.xtaticzero.systems.base.constants.excepcion.DAOException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.BaseModel;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
@@ -60,7 +60,7 @@ public abstract class BaseRepository<T extends BaseModel> implements Serializabl
      * Metodo encargado de obtener el RowMapper dada la entidad.
      *
      * @return RowMapper de la entidad.
-     * @throws com.xtaticzero.systems.base.constants.excepcion.DAOException
+     * @throws com.xtaticzero.systems.base.constants.excepcion.impl.DAOException
      */
     @SuppressWarnings("unchecked")
     protected final RowMapper<T> getRowMapper() throws DAOException {

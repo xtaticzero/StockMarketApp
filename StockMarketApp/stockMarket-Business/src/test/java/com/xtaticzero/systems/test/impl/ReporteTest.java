@@ -5,7 +5,7 @@
  */
 package com.xtaticzero.systems.test.impl;
 
-import com.xtaticzero.systems.base.constants.excepcion.BusinessException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.base.enums.ReportsEnum;
 import com.xtaticzero.systems.business.logging.UserLogginService;

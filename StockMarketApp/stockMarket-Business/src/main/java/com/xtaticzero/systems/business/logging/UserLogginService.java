@@ -5,7 +5,7 @@
  */
 package com.xtaticzero.systems.business.logging;
 
-import com.xtaticzero.systems.base.constants.excepcion.BusinessException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 
 /**

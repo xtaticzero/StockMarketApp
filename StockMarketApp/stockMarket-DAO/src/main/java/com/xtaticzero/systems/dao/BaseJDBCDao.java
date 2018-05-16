@@ -5,7 +5,7 @@
  */
 package com.xtaticzero.systems.dao;
 
-import com.xtaticzero.systems.base.constants.excepcion.DAOException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.BaseModel;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +63,7 @@ public abstract class BaseJDBCDao<T extends BaseModel> extends BaseRepository<T>
      * @param sql SQL de la consulta a realizar.
      * @param args Argumentos para la consulta.
      * @return Listado de objetos de la entidad.
-     * @throws com.xtaticzero.systems.base.constants.excepcion.DAOException
+     * @throws com.xtaticzero.systems.base.constants.excepcion.impl.DAOException
      */
     protected final List<T> findByQuery(final String sql, final Object... args) throws DAOException {
         return this.jdbcTemplateBase.query(sql, super.getRowMapper(), args);
@@ -75,7 +75,7 @@ public abstract class BaseJDBCDao<T extends BaseModel> extends BaseRepository<T>
      * @param sql SQL de la consulta a realizar.
      * @param args Argumentos para la consulta.
      * @return Objeto de la entidad.
-     * @throws com.xtaticzero.systems.base.constants.excepcion.DAOException
+     * @throws com.xtaticzero.systems.base.constants.excepcion.impl.DAOException
      */
     protected final T findOne(final String sql, final Object... args) throws DAOException {
         return this.jdbcTemplateBase.queryForObject(sql, super.getRowMapper(),

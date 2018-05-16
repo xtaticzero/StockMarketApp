@@ -5,7 +5,7 @@
  */
 package com.xtaticzero.systems.dao;
 
-import com.xtaticzero.systems.base.constants.excepcion.DAOException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import java.math.BigInteger;
 import java.util.List;

@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.xtaticzero.systems.base.constants.excepcion;
+package com.xtaticzero.systems.base.constants.excepcion.impl;
+
+import com.xtaticzero.systems.base.constants.excepcion.BaseException;
 
 /**
  *
