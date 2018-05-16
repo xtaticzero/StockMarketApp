@@ -68,8 +68,7 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
             
-    <!-- Transaction Manager para conexion a BD -->
-    
+    <!-- Transaction Manager para conexion a BD -->    
     <tx:annotation-driven transaction-manager="transactionManager" />
     <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
         <tx:attributes>

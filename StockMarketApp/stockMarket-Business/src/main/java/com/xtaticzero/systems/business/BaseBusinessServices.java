@@ -15,6 +15,9 @@ import org.apache.log4j.Logger;
 public abstract class BaseBusinessServices implements Serializable {
 
     private static final long serialVersionUID = -7658743465565989215L;
+    
+    protected final String ERR_GENERAL_DESCRIPCION = "general.descripcion";
+    
     protected final Logger logger;
 
     public BaseBusinessServices() {

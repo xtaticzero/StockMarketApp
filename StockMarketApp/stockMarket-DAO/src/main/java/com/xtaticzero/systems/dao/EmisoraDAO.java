@@ -15,12 +15,14 @@ import java.util.List;
  */
 public interface EmisoraDAO {
 
-    int insert(EmisoraDTO nuevaEmisora) throws DAOException;
+    EmisoraDTO insert(EmisoraDTO nuevaEmisora) throws DAOException;
     
     int delete(EmisoraDTO emisora) throws DAOException;
     
     int update(EmisoraDTO emisora) throws DAOException;
 
     List<EmisoraDTO> findAllEmisoras() throws DAOException;
+    
+    EmisoraDTO findEmisoraByName(EmisoraDTO emisora) throws DAOException;
 
 }

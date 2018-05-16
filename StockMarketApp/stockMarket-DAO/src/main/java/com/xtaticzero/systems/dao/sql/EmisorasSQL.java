@@ -11,7 +11,8 @@ package com.xtaticzero.systems.dao.sql;
  */
 public interface EmisorasSQL {
 
-    String INSERT_EMISORA = "INSERT EMISORA(nombre,fechaEntrada) VALUES(?,SYSDATE())";
+    String TABLE_EMISORA = "EMISORA";
+    String INSERT_EMISORA = "INSERT ".concat(TABLE_EMISORA).concat("(nombre,fechaEntrada) VALUES(?,SYSDATE())");
 
     String DELETE_EMISORA = "UPDATE EMISORA \n"
             + "SET fechaBaja = SYSDATE() \n"
@@ -28,5 +29,14 @@ public interface EmisorasSQL {
             + "EMI.fechaEntrada,\n"
             + "EMI.fechaBaja\n"
             + "FROM EMISORA EMI\n"
+            + "ORDER BY EMI.emisora_id";
+    
+    String FIND_EMISORA_BY_NAME = "SELECT \n"
+            + "EMI.emisora_id,\n"
+            + "EMI.nombre,\n"
+            + "EMI.fechaEntrada,\n"
+            + "EMI.fechaBaja\n"
+            + "FROM EMISORA EMI\n"
+            + "WHERE EMI.nombre = ?\n"
             + "ORDER BY EMI.emisora_id";
 }
