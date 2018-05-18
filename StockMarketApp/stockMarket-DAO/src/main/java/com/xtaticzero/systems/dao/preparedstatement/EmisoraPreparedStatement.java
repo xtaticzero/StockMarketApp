@@ -21,7 +21,7 @@ public class EmisoraPreparedStatement implements PreparedStatementCreator {
     
     protected final Logger logger = Logger.getLogger(getClass());
 
-    private static final int PARAMETRO_INICIAL = 1;
+        private static final int PARAMETRO_INICIAL = 1;
     private EmisoraDTO emisora;
 
     public EmisoraPreparedStatement(EmisoraDTO emisora) {

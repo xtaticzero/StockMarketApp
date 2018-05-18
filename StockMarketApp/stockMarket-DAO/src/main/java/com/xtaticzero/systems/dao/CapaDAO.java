@@ -7,6 +7,7 @@ package com.xtaticzero.systems.dao;
 
 import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.CapaDTO;
+import java.math.BigInteger;
 
 /**
  *
@@ -14,9 +15,13 @@ import com.xtaticzero.systems.base.dto.CapaDTO;
  */
 public interface CapaDAO {
 
-    int insert(CapaDTO nuevaCapa) throws DAOException;
+    CapaDTO insert(CapaDTO nuevaCapa) throws DAOException;
 
     int delete(CapaDTO viejaCapa) throws DAOException;
 
     int update(CapaDTO capa) throws DAOException;
+    
+    Integer existeCapaActiva(BigInteger idEmisora) throws DAOException;
+    
+    CapaDTO findEmisoraById(CapaDTO emisora) throws DAOException;
 }
