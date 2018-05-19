@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository;
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
 @Repository("userDao")
-public class UserDaoImpl extends BaseJDBCDao<UsuarioDTO> implements UserDao, UsuarioSQL {
+public class UserDAOImpl extends BaseJDBCDao<UsuarioDTO> implements UserDao, UsuarioSQL {
 
     private static final long serialVersionUID = -6351443720713415227L;
 

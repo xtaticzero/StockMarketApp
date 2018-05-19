@@ -22,6 +22,7 @@ public class AccionDTO extends BaseModel {
     private Date fechaCompra;
     private Date fechaVenta;
     private BigDecimal costoUnitario;
+    private Integer existencia;
 
     public BigInteger getAccion_id() {
         return accion_id;
@@ -53,6 +54,14 @@ public class AccionDTO extends BaseModel {
 
     public void setCostoUnitario(BigDecimal costoUnitario) {
         this.costoUnitario = costoUnitario;
+    }
+
+    public Integer getExistencia() {
+        return existencia;
+    }
+
+    public void setExistencia(Integer existencia) {
+        this.existencia = existencia;
     }
 
 }

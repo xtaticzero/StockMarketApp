@@ -12,7 +12,7 @@ package com.xtaticzero.systems.dao.sql;
 public interface CapaSQL {
 
     String TABLE_CAPA = "CAPA";
-    String INSERT_CAPA = "INSERT ".concat(TABLE_CAPA).concat("(accion_id,emisora_id,activo) VALUES(?,?,1)");
+    String INSERT_CAPA = "INSERT ".concat(TABLE_CAPA).concat("(emisora_id,activo) VALUES(?,1)");
 
     String EXISTE_CAPA_ACTIVA = "select capa_id\n"
             + "from capa capa\n"

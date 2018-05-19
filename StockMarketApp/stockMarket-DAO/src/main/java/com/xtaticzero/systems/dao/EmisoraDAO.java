@@ -7,6 +7,7 @@ package com.xtaticzero.systems.dao;
 
 import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.EmisoraDTO;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -24,5 +25,7 @@ public interface EmisoraDAO {
     List<EmisoraDTO> findAllEmisoras() throws DAOException;
     
     EmisoraDTO findEmisoraByName(EmisoraDTO emisora) throws DAOException;
+    
+    EmisoraDTO findEmisoraById(BigInteger idEmisora) throws DAOException;
 
 }

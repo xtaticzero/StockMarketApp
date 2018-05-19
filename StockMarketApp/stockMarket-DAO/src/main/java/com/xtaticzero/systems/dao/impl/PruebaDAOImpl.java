@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
 @Repository("pruebaDao")
-public class PruebaDaoImpl extends BaseJDBCDao<BaseModel> implements PruebaDao {
+public class PruebaDAOImpl extends BaseJDBCDao<BaseModel> implements PruebaDao {
 
     private static final long serialVersionUID = 4522424596591392227L;
 

@@ -25,7 +25,7 @@ import org.springframework.stereotype.Repository;
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
 @Repository("emisoraDAO")
-public class EmisoraDaoImpl extends BaseJDBCDao<EmisoraDTO> implements EmisoraDAO, EmisorasSQL {
+public class EmisoraDAOImpl extends BaseJDBCDao<EmisoraDTO> implements EmisoraDAO, EmisorasSQL {
 
     private static final long serialVersionUID = 1124202868363386253L;
 
@@ -79,7 +79,6 @@ public class EmisoraDaoImpl extends BaseJDBCDao<EmisoraDTO> implements EmisoraDA
         if (emisora == null) {
             return 0;
         }
-
         try {
             List<Object> params = new ArrayList<>();
 
@@ -109,6 +108,20 @@ public class EmisoraDaoImpl extends BaseJDBCDao<EmisoraDTO> implements EmisoraDA
     public EmisoraDTO findEmisoraByName(EmisoraDTO emisora) throws DAOException {
         try {
             List<EmisoraDTO> lstResult = getJdbcTemplateBase().query(FIND_EMISORA_BY_NAME, new EmisoraMapper(), emisora.getNombre());
+            if (lstResult != null && !lstResult.isEmpty()) {
+                return lstResult.get(0);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new DAOException(ERR_GENERAL, e.getMessage(), e);
+        }
+        return null;
+    }
+
+    @Override
+    public EmisoraDTO findEmisoraById(BigInteger idEmisora) throws DAOException {
+        try {
+            List<EmisoraDTO> lstResult = getJdbcTemplateBase().query(FIND_EMISORA_BY_ID, new EmisoraMapper(), idEmisora);
             if (lstResult != null && !lstResult.isEmpty()) {
                 return lstResult.get(0);
             }

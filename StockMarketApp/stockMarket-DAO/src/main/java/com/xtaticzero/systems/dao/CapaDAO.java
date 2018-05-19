@@ -21,7 +21,7 @@ public interface CapaDAO {
 
     int update(CapaDTO capa) throws DAOException;
     
-    Integer existeCapaActiva(BigInteger idEmisora) throws DAOException;
+    BigInteger existeCapaActiva(BigInteger idEmisora) throws DAOException;
     
-    CapaDTO findEmisoraById(CapaDTO emisora) throws DAOException;
+    CapaDTO findEmisoraById(BigInteger idCapa) throws DAOException;
 }

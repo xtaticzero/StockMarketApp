@@ -30,7 +30,7 @@ public interface EmisorasSQL {
             + "EMI.fechaBaja\n"
             + "FROM EMISORA EMI\n"
             + "ORDER BY EMI.emisora_id";
-    
+
     String FIND_EMISORA_BY_NAME = "SELECT \n"
             + "EMI.emisora_id,\n"
             + "EMI.nombre,\n"
@@ -39,4 +39,12 @@ public interface EmisorasSQL {
             + "FROM EMISORA EMI\n"
             + "WHERE EMI.nombre = ?\n"
             + "ORDER BY EMI.emisora_id";
+
+    String FIND_EMISORA_BY_ID = "SELECT \n"
+            + "EMI.emisora_id,\n"
+            + "EMI.nombre,\n"
+            + "EMI.fechaEntrada,\n"
+            + "EMI.fechaBaja\n"
+            + "FROM EMISORA EMI\n"
+            + "WHERE EMI.emisora_id = ?";
 }

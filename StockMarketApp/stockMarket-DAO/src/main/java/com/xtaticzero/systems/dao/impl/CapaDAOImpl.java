@@ -15,6 +15,7 @@ import static com.xtaticzero.systems.dao.sql.CapaSQL.EXISTE_CAPA_ACTIVA;
 import static com.xtaticzero.systems.dao.sql.CapaSQL.FIND_CAPA_BY_ID;
 import java.math.BigInteger;
 import java.util.List;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -56,12 +57,11 @@ public class CapaDAOImpl extends BaseJDBCDao<CapaDTO> implements CapaDAO {
     }
 
     @Override
-    public Integer existeCapaActiva(BigInteger idEmisora) throws DAOException {
+    public BigInteger existeCapaActiva(BigInteger idEmisora) throws DAOException {
         try {
-            Integer id = getJdbcTemplateBase().queryForObject(EXISTE_CAPA_ACTIVA, new Object[]{idEmisora}, Integer.class);
-            if (id != null) {
-                return id;
-            }
+            return getJdbcTemplateBase().queryForObject(EXISTE_CAPA_ACTIVA, new Object[]{idEmisora}, BigInteger.class);
+        } catch (EmptyResultDataAccessException erdae) {
+            logger.error(erdae.getMessage());
             return null;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -70,9 +70,9 @@ public class CapaDAOImpl extends BaseJDBCDao<CapaDTO> implements CapaDAO {
     }
 
     @Override
-    public CapaDTO findEmisoraById(CapaDTO emisora) throws DAOException {
+    public CapaDTO findEmisoraById(BigInteger idCapa) throws DAOException {
         try {
-            List<CapaDTO> lstResult = getJdbcTemplateBase().query(FIND_CAPA_BY_ID, new CapaMapper(), emisora.getCapa_id());
+            List<CapaDTO> lstResult = getJdbcTemplateBase().query(FIND_CAPA_BY_ID, new CapaMapper(), idCapa);
             if (lstResult != null && !lstResult.isEmpty()) {
                 return lstResult.get(0);
             }

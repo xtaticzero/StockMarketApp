@@ -7,7 +7,6 @@ package com.xtaticzero.systems.base.dto;
 
 import com.xtaticzero.systems.base.BaseModel;
 import java.math.BigInteger;
-import java.util.List;
 
 /**
  *
@@ -18,7 +17,6 @@ public class CapaDTO extends BaseModel {
     private static final long serialVersionUID = 4149393039959250570L;
 
     private BigInteger capa_id;
-    private List<AccionDTO> lstAccion;
     private EmisoraDTO emisora;
     private Boolean activo;
 
@@ -28,14 +26,6 @@ public class CapaDTO extends BaseModel {
 
     public void setCapa_id(BigInteger capa_id) {
         this.capa_id = capa_id;
-    }
-
-    public List<AccionDTO> getLstAccion() {
-        return lstAccion;
-    }
-
-    public void setLstAccion(List<AccionDTO> lstAccion) {
-        this.lstAccion = lstAccion;
     }
 
     public EmisoraDTO getEmisora() {
