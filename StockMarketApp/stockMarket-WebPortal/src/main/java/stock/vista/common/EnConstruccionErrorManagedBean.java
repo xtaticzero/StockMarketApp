@@ -17,7 +17,7 @@ import stock.vista.ConstantesVista;
  *
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
-@Controller("userLoginView")
+@Controller("enConstruccionErrorMB")
 @Scope(value = "view")
 public class EnConstruccionErrorManagedBean implements Serializable {
 

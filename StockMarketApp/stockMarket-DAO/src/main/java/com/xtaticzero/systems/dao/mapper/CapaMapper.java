@@ -16,21 +16,17 @@ import org.springframework.jdbc.core.RowMapper;
  *
  * @author Juan Antonio Perez Ramos | dev.juan.perez@gmail.com
  */
-public class CapaMapper implements RowMapper<CapaDTO> {
+public class CapaMapper extends BaseAbstractMapper implements RowMapper<CapaDTO> {
 
     @Override
     public CapaDTO mapRow(ResultSet rs, int i) throws SQLException {
 
         CapaDTO capa = new CapaDTO();
 
-        capa.setCapa_id(new BigInteger(rs.getString("CAPA_ID")));
-//        capa.set(rs.getString("ACCION_ID")));
-
-        EmisoraDTO emisora = new EmisoraDTO();
-        emisora.setEmisora_id(new BigInteger(rs.getString("EMISORA_ID")));
-        capa.setEmisora(emisora);
-
-        capa.setActivo(rs.getBoolean("ACTIVO"));
+        capa.setCapa_id(new BigInteger(rs.getString(CAPA_ID)));
+        capa.setActivo(rs.getBoolean(CAPA_ACTIVO));
+        capa.setAccion(new AccionMapper().mapRow(rs, i));
+        capa.setEmisora(new EmisoraMapper().mapRow(rs, i));
 
         return capa;
     }

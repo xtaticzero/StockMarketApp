@@ -19,6 +19,20 @@
                  margin-right:auto;">
 
                 <h:form>
+<!--                    <p:fileUpload fileUploadListener="{cotizacionesMB.handleFileUpload}" 
+                                  mode="advanced" 
+                                  dragDropSupport="true"
+                                  sizeLimit="100000" 
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                  accept=".csv, .xml, .tsv"
+                                  label="archivo"/>-->
+                    <p:fileUpload fileUploadListener="#{cotizacionesMB.handleFileUpload}" 
+                                  mode="advanced" 
+                                  dragDropSupport="true"
+                                  sizeLimit="100000" 
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                  
+                                  label="archivo"/>
                     <h:panelGrid columns="3">
                         <p:accordionPanel style="width: 1529.0px;">
                             <p:tab title="Tasa de Porcentaje Anual">

@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import mx.gob.sat.mat.tabacos.vista.VistaAbstractMB;
+import org.primefaces.event.FileUploadEvent;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import stock.horizontal.dto.CotizacionDTO;
@@ -77,6 +80,11 @@ public class CotizacionesMB extends VistaAbstractMB {
             cotizacion.setIsRed(cotizacion.getPorcentaje() <= 50);
             lstCotizacionDTO.add(cotizacion);
         }
+    }
+
+    public void handleFileUpload(FileUploadEvent event) {
+        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     public List<ExistenciaInicial> getExistencias() {
