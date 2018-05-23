@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.xtaticzero.systems.dao.preparedstatement;
 
 import com.xtaticzero.systems.base.dto.CapaAccionDTO;
@@ -11,20 +10,16 @@ import com.xtaticzero.systems.dao.sql.CapaAccionSQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 
 /**
  *
  * @author Juan Antonio Perez Ramos | dev.juan.perez@gmail.com
  */
-public class CapaAccionPreparedStatement implements PreparedStatementCreator {
-    
-    protected final Logger logger = Logger.getLogger(getClass());
+public class CapaAccionPreparedStatement extends PreparedStatementBase implements PreparedStatementCreator {
 
-    private static final int PARAMETRO_INICIAL = 1;
-    private CapaAccionDTO accion;
-    
+    private final CapaAccionDTO accion;
+
     public CapaAccionPreparedStatement(CapaAccionDTO accion) {
         super();
         this.accion = accion;
@@ -38,8 +33,8 @@ public class CapaAccionPreparedStatement implements PreparedStatementCreator {
         try {
             ps = connection.prepareStatement(CapaAccionSQL.INSERT_ACCION, new String[]{CapaAccionSQL.TABLE_ACCION});
             //Se asignan id's de la propuesta
-            ps.setObject(numParametro++,accion.getAccion().getAccion_id());
-            ps.setObject(numParametro++,accion.getCapa().getCapa_id());
+            ps.setObject(numParametro++, accion.getAccion().getAccion_id());
+            ps.setObject(numParametro++, accion.getCapa().getCapa_id());
             fail = false;
         } catch (SQLException ex) {
             logger.error("No se pudo realizar la incercion:");
@@ -58,6 +53,10 @@ public class CapaAccionPreparedStatement implements PreparedStatementCreator {
             }
         }
         return ps;
+    }
+
+    public CapaAccionDTO getAccion() {
+        return accion;
     }
 
 }

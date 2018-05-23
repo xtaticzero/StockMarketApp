@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.xtaticzero.systems.dao.preparedstatement;
 
 import com.xtaticzero.systems.base.dto.AccionDTO;
@@ -11,36 +10,31 @@ import com.xtaticzero.systems.dao.sql.AccionSQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 
 /**
  *
  * @author Juan Antonio Perez Ramos | dev.juan.perez@gmail.com
  */
-public class AccionPreparedStatement implements PreparedStatementCreator {
+public class AccionPreparedStatement extends PreparedStatementBase implements PreparedStatementCreator {
 
-    protected final Logger logger = Logger.getLogger(getClass());
+    private final AccionDTO accion;
 
-    private static final int PARAMETRO_INICIAL = 1;
-    private AccionDTO accion;
-    
     public AccionPreparedStatement(AccionDTO accion) {
         super();
         this.accion = accion;
     }
 
-
     @Override
     public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-     boolean fail = true;
+        boolean fail = true;
         PreparedStatement ps = null;
         int numParametro = PARAMETRO_INICIAL;
         try {
             ps = connection.prepareStatement(AccionSQL.INSERT_ACCION, new String[]{AccionSQL.TABLE_ACCION});
             //Se asignan id's de la propuesta
-            ps.setObject(numParametro++,accion.getCostoUnitario());
-            ps.setObject(numParametro++,accion.getExistencia());
+            ps.setObject(numParametro++, accion.getCostoUnitario());
+            ps.setObject(numParametro++, accion.getExistencia());
             fail = false;
         } catch (SQLException ex) {
             logger.error("No se pudo realizar la incercion:");
@@ -59,6 +53,10 @@ public class AccionPreparedStatement implements PreparedStatementCreator {
             }
         }
         return ps;
+    }
+
+    public AccionDTO getAccion() {
+        return accion;
     }
 
 }

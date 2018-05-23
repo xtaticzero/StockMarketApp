@@ -10,19 +10,15 @@ import com.xtaticzero.systems.dao.sql.EmisorasSQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 
 /**
  *
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
-public class EmisoraPreparedStatement implements PreparedStatementCreator {
-    
-    protected final Logger logger = Logger.getLogger(getClass());
+public class EmisoraPreparedStatement extends PreparedStatementBase implements PreparedStatementCreator {
 
-        private static final int PARAMETRO_INICIAL = 1;
-    private EmisoraDTO emisora;
+    private final EmisoraDTO emisora;
 
     public EmisoraPreparedStatement(EmisoraDTO emisora) {
         super();
@@ -37,7 +33,7 @@ public class EmisoraPreparedStatement implements PreparedStatementCreator {
         try {
             ps = connection.prepareStatement(EmisorasSQL.INSERT_EMISORA, new String[]{EmisorasSQL.TABLE_EMISORA});
             //Se asignan id's de la propuesta
-            ps.setObject(numParametro++, emisora.getNombre());            
+            ps.setObject(numParametro++, emisora.getNombre());
             fail = false;
         } catch (SQLException ex) {
             logger.error("No se pudo realizar la incercion:");
@@ -56,6 +52,10 @@ public class EmisoraPreparedStatement implements PreparedStatementCreator {
             }
         }
         return ps;
+    }
+
+    public EmisoraDTO getEmisora() {
+        return emisora;
     }
 
 }

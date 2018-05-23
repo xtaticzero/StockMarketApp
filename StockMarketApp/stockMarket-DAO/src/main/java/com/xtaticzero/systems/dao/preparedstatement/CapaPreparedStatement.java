@@ -10,19 +10,15 @@ import com.xtaticzero.systems.dao.sql.CapaSQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 
 /**
  *
  * @author Juan Antonio Perez Ramos | dev.juan.perez@gmail.com
  */
-public class CapaPreparedStatement implements PreparedStatementCreator {
+public class CapaPreparedStatement extends PreparedStatementBase implements PreparedStatementCreator {
 
-    protected final Logger logger = Logger.getLogger(getClass());
-
-    private static final int PARAMETRO_INICIAL = 1;
-    private CapaDTO capa;
+    private final CapaDTO capa;
 
     public CapaPreparedStatement(CapaDTO capa) {
         super();
@@ -37,7 +33,7 @@ public class CapaPreparedStatement implements PreparedStatementCreator {
         try {
             ps = connection.prepareStatement(CapaSQL.INSERT_CAPA, new String[]{CapaSQL.TABLE_CAPA});
             //Se asignan id's de la propuesta
-            ps.setObject(numParametro++,capa.getEmisora().getEmisora_id());        
+            ps.setObject(numParametro++, capa.getEmisora().getEmisora_id());
             fail = false;
         } catch (SQLException ex) {
             logger.error("No se pudo realizar la incercion:");
@@ -56,6 +52,10 @@ public class CapaPreparedStatement implements PreparedStatementCreator {
             }
         }
         return ps;
+    }
+
+    public CapaDTO getCapa() {
+        return capa;
     }
 
 }
