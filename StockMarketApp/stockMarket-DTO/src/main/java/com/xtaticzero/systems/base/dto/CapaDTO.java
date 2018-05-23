@@ -17,7 +17,6 @@ public class CapaDTO extends BaseModel {
     private static final long serialVersionUID = 4149393039959250570L;
 
     private BigInteger capa_id;
-    private AccionDTO accion;
     private EmisoraDTO emisora;
     private Boolean activo;
 
@@ -43,14 +42,6 @@ public class CapaDTO extends BaseModel {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
-    }
-
-    public AccionDTO getAccion() {
-        return accion;
-    }
-
-    public void setAccion(AccionDTO accion) {
-        this.accion = accion;
     }
 
 }

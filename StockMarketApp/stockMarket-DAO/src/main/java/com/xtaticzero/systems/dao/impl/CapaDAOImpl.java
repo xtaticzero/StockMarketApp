@@ -33,7 +33,7 @@ public class CapaDAOImpl extends BaseJDBCDao<CapaDTO> implements CapaDAO, CapaSQ
     @Override
     public CapaDTO insert(CapaDTO nuevaCapa) throws DAOException {
 
-        if (nuevaCapa != null && findCapa(nuevaCapa) !=null) {
+        if (nuevaCapa != null && findCapa(nuevaCapa) != null) {
             return findCapa(nuevaCapa);
         }
 
@@ -91,15 +91,16 @@ public class CapaDAOImpl extends BaseJDBCDao<CapaDTO> implements CapaDAO, CapaSQ
     @Override
     public CapaDTO findCapa(CapaDTO capa) throws DAOException {
         try {
-            if (capa != null && capa.getAccion() != null && capa.getEmisora() != null) {
-
+            if (capa != null && capa.getEmisora() != null) {
                 List<Object> params = new ArrayList<>();
-
-                params.add(capa.getAccion().getAccion_id() != null ? capa.getAccion().getAccion_id() : BigInteger.ZERO);
                 params.add(capa.getEmisora().getEmisora_id() != null ? capa.getEmisora().getEmisora_id() : BigInteger.ZERO);
 
-                return getJdbcTemplateBase().queryForObject(CapaSQL.HEDER_SELECT_CAPA.concat(AND).concat(CapaSQL.ACCION_BY_ID).concat(AND).concat(CapaSQL.EMISORA_BY_ID),
+                List<CapaDTO> lstResult = getJdbcTemplateBase().query(
+                        CapaSQL.HEDER_SELECT_CAPA.concat(AND).concat(CapaSQL.EMISORA_BY_ID),
                         params.toArray(), new CapaMapper());
+                if (lstResult != null && !lstResult.isEmpty()) {
+                    return lstResult.get(0);
+                }
             }
             return null;
         } catch (EmptyResultDataAccessException emty) {

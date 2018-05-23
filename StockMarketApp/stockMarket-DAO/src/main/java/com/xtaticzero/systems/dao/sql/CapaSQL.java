@@ -26,25 +26,25 @@ public interface CapaSQL extends BaseSQL {
             + "    on emi.emisora_id = capa.emisora_id\n"
             + "    and emi.emisora_id = ?";
 
-    String FIND_CAPA_BY_ID = "select capa_id,accion_id,emisora_id,activo from capa where capa_id=?";
+    String FIND_CAPA_BY_ID = "SELECT  CP.capa_id, CP.activo,\n"
+            + "EMI.emisora_id, EMI.nombre, EMI.fechaEntrada, EMI.fechaBaja\n"
+            + "from CAPA CP\n"
+            + "JOIN EMISORA EMI \n"
+            + "    ON CP.emisora_id = EMI.emisora_id\n"
+            + "where CP.capa_id=?";
 
     String ACCION_BY_ID = "AC.accion_id = ?";
-    
+
     String EMISORA_BY_ID = "EMI.emisora_id = ?";
 
     String HEDER_SELECT_CAPA = "SELECT \n"
             + "CP.capa_id,\n"
-            + "AC.accion_id,\n"
             + "EMI.emisora_id,\n"
             + "CP.activo,\n"
-            + "AC.fechaCompra,\n"
-            + "AC.fechaVenta,\n"
-            + "AC.costoUnitario,\n"
             + "EMI.nombre,\n"
             + "EMI.fechaEntrada,\n"
             + "EMI.fechaBaja\n"
             + "from CAPA CP\n"
-            + "INNER JOIN ACCION AC ON CP.accion_id = AC.accion_id\n"
             + "INNER JOIN EMISORA EMI ON CP.emisora_id = EMI.emisora_id\n"
             + "WHERE 1=1";
 }

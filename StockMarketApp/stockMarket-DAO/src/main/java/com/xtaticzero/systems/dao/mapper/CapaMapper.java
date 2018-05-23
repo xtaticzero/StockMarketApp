@@ -25,7 +25,6 @@ public class CapaMapper extends BaseAbstractMapper implements RowMapper<CapaDTO>
 
         capa.setCapa_id(new BigInteger(rs.getString(CAPA_ID)));
         capa.setActivo(rs.getBoolean(CAPA_ACTIVO));
-        capa.setAccion(new AccionMapper().mapRow(rs, i));
         capa.setEmisora(new EmisoraMapper().mapRow(rs, i));
 
         return capa;
