@@ -5,13 +5,13 @@
  */
 package mx.gob.sat.mat.tabacos.vista;
 
+import com.xtaticzero.systems.business.constants.FileExtensionEnum;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import mx.gob.sat.mat.tabacos.constants.enums.FileExtensionEnum;
 import org.apache.log4j.Logger;
 import stock.vista.vector.enums.MIMETypesEnum;
 import uk.co.jemos.podam.api.PodamFactory;

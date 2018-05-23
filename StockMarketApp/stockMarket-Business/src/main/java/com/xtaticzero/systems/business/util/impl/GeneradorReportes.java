@@ -6,10 +6,10 @@
 package com.xtaticzero.systems.business.util.impl;
 
 import com.xtaticzero.systems.business.exception.ReporterJasperException;
+import com.xtaticzero.systems.base.constants.Constantes;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
-import mx.gob.sat.mat.tabacos.constants.Constantes;
 
 /**
  *

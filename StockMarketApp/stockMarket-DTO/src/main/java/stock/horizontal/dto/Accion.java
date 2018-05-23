@@ -5,16 +5,16 @@
  */
 package stock.horizontal.dto;
 
+import com.xtaticzero.systems.base.util.FechaUtil;
 import java.io.Serializable;
 import java.util.Date;
-import mx.gob.sat.mat.tabacos.util.FechaUtil;
 
 /**
  *
  * @author Juan
  */
-public class Accion implements Serializable{
-    
+public class Accion implements Serializable {
+
     private static final long serialVersionUID = -4654717909755577329L;
 
     private String id;

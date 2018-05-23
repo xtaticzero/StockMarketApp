@@ -6,6 +6,7 @@
 package stock.vista.vector;
 
 import com.xtaticzero.systems.base.enums.ReportsEnum;
+import com.xtaticzero.systems.business.constants.FileExtensionEnum;
 import com.xtaticzero.systems.business.exception.ReporterJasperException;
 import com.xtaticzero.systems.business.util.ReporterService;
 import com.xtaticzero.systems.dao.PruebaDao;
@@ -13,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import mx.gob.sat.mat.tabacos.constants.enums.FileExtensionEnum;
 import mx.gob.sat.mat.tabacos.vista.VistaAbstractMB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -75,7 +75,6 @@ public class EstatusOrdenesMB extends VistaAbstractMB {
 //                break;
 //            }
 //        }
-
     }
 
     private void addDay(Calendar calendar, CotizacionDTO cotizacion) {

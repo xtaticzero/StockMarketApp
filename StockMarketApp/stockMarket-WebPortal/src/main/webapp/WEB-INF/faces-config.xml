@@ -9,6 +9,6 @@
     </application>
     <validator>
         <validator-id>emailValidator</validator-id>
-        <validator-class>mx.gob.sat.mat.tabacos.vista.validador.EmailValidator</validator-class>
+        <validator-class>stock.vista.util.EmailValidator</validator-class>
     </validator>
 </faces-config>

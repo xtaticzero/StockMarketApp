@@ -1,5 +1,7 @@
 package mx.gob.sat.mat.tabacos.vista;
 
+import com.xtaticzero.systems.base.constants.Constantes;
+import com.xtaticzero.systems.business.constants.FileExtensionEnum;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.MessageFormat;
@@ -14,12 +16,9 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import mx.gob.sat.mat.tabacos.constants.Constantes;
-import mx.gob.sat.mat.tabacos.constants.enums.FileExtensionEnum;
-import mx.gob.sat.mat.tabacos.constants.enums.MIMETypesEnum;
-import mx.gob.sat.mat.tabacos.modelo.dto.AccesoUsr;
 
 import org.apache.log4j.Logger;
+import stock.vista.vector.enums.MIMETypesEnum;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
@@ -56,10 +55,7 @@ public abstract class AbstractManagedBean implements Serializable {
     }
 
     public boolean isDevelop() {
-        ServletContext servletContext
-                = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-
-        return Boolean.parseBoolean(servletContext.getInitParameter(Constantes.SCOOP_DEV));
+        return false;
     }
 
     public void validaAccesoProceso(String identificadorProceso) {
@@ -93,12 +89,6 @@ public abstract class AbstractManagedBean implements Serializable {
         String rfc = "";
 
         return rfc;
-    }
-
-    public AccesoUsr getAccesoUsr() {
-        AccesoUsr accesoUsr;
-        accesoUsr = new AccesoUsr();
-        return accesoUsr;
     }
 
     public HttpSession getSession() {

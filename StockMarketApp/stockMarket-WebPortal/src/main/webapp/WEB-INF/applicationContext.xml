@@ -113,7 +113,7 @@
         <property name="scopes">
             <map>
                 <entry key="view">
-                    <bean class="mx.gob.sat.mat.tabacos.vista.util.ViewScope"/>
+                    <bean class="stock.vista.util.ViewScope"/>
                 </entry>
             </map>
         </property>

@@ -5,6 +5,7 @@
  */
 package com.xtaticzero.systems.business.util.impl;
 
+import com.xtaticzero.systems.business.constants.TipoReportesJasperEnum;
 import com.xtaticzero.systems.business.exception.ReporterJasperException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -16,7 +17,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import mx.gob.sat.mat.tabacos.constants.enums.TipoReportesJasperEnum;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -70,7 +70,7 @@ public class ReporteJasperUtil {
     private static final int CASE_TXT = 10;
     private static final int CASE_HTML = 11;
     private static final int CASE_XML = 12;
-    
+
     private static final String MSG_ERROR = "jasper.exception.general";
 
     private String reporteJasper;
@@ -225,7 +225,7 @@ public class ReporteJasperUtil {
         }
 
         TipoReportesJasperEnum tipoRep = obtenerTipoReporte(formatoReporte);
-        
+
         return evalualTipoReporte(tipoRep);
     }
 

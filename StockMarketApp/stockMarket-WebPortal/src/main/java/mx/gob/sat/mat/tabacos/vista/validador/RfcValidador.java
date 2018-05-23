@@ -9,7 +9,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-import mx.gob.sat.mat.tabacos.vista.util.Expresiones;
+import stock.vista.util.Expresiones;
+
 
 @FacesValidator("rfcValidator")
 public class RfcValidador implements Validator {
