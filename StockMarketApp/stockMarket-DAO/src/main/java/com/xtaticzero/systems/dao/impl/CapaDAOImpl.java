@@ -33,22 +33,24 @@ public class CapaDAOImpl extends BaseJDBCDao<CapaDTO> implements CapaDAO, CapaSQ
     @Override
     public CapaDTO insert(CapaDTO nuevaCapa) throws DAOException {
 
-        if (nuevaCapa != null && findCapa(nuevaCapa) != null) {
-            return findCapa(nuevaCapa);
-        }
+        if (nuevaCapa != null && findCapa(nuevaCapa) == null) {
 
-        KeyHolder keyHolder = new GeneratedKeyHolder();
+            KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        try {
-            PreparedStatementCreator statement
-                    = new CapaPreparedStatement(nuevaCapa);
-            getJdbcTemplateBase().update(statement, keyHolder);
-            nuevaCapa.setCapa_id(new BigInteger(String.valueOf(keyHolder.getKey().intValue())));
-            return nuevaCapa;
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-            throw new DAOException(ERR_GENERAL, ex.getMessage(), ex);
+            try {
+                PreparedStatementCreator statement
+                        = new CapaPreparedStatement(nuevaCapa);
+                getJdbcTemplateBase().update(statement, keyHolder);
+                nuevaCapa.setCapa_id(new BigInteger(String.valueOf(keyHolder.getKey().intValue())));
+                return nuevaCapa;
+            } catch (Exception ex) {
+                logger.error(ex.getMessage(), ex);
+                throw new DAOException(ERR_GENERAL, ex.getMessage(), ex);
+            }
+
         }
+        return findCapa(nuevaCapa);
+
     }
 
     @Override

@@ -8,6 +8,7 @@ package com.xtaticzero.systems.dao;
 import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
 import com.xtaticzero.systems.base.dto.EmisoraDTO;
+import java.util.List;
 
 /**
  *
@@ -17,11 +18,11 @@ public interface CotizacionDiariaDAO {
 
     CotizacionDiariaDTO insert(CotizacionDiariaDTO cotizacionDiaria) throws DAOException;
 
-    CotizacionDiariaDTO update(CotizacionDiariaDTO cotizacionDiaria) throws DAOException;
+    int update(CotizacionDiariaDTO cotizacionDiaria) throws DAOException;
 
-    CotizacionDiariaDTO delete(CotizacionDiariaDTO cotizacionDiaria) throws DAOException;
-    
+    int delete(CotizacionDiariaDTO cotizacionDiaria) throws DAOException;
+
     CotizacionDiariaDTO findCotizacionDiariaByEmisora(EmisoraDTO emisora) throws DAOException;
-    
-    CotizacionDiariaDTO findAllCotizacionDiaria() throws DAOException;
+
+    List<CotizacionDiariaDTO> findAllCotizacionDiaria() throws DAOException;
 }

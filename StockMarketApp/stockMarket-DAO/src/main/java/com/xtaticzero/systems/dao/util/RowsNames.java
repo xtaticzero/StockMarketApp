@@ -20,4 +20,8 @@ public interface RowsNames {
     String EMISORA_NOMBRE = "EMI.nombre";
     String EMISORA_FECHA_ENTRADA = "EMI.fechaEntrada";
     String EMISORA_FECHA_BAJA = "EMI.fechaBaja";
+    String COTIZACION_ID = "COT.cotizacion_id";
+    String COTIZACION_AL_DIA = "COT.costoAlDia";
+    String COTIZACION_FECHA_COTIZACION = "COT.diaCotizacion";
+    String COTIZACION_FECHA_BAJA = "COT.fechaTermino";
 }

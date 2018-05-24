@@ -11,4 +11,5 @@ package com.xtaticzero.systems.dao.sql;
  */
 public interface BaseSQL {
     String AND = " AND \n";
+    String WHERE = " WHERE \n";
 }
