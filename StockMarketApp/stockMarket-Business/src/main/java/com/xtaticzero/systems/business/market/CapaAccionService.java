@@ -7,6 +7,7 @@ package com.xtaticzero.systems.business.market;
 
 import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
 import com.xtaticzero.systems.base.dto.CapaAccionDTO;
+import java.util.List;
 
 /**
  *
@@ -15,4 +16,5 @@ import com.xtaticzero.systems.base.dto.CapaAccionDTO;
 public interface CapaAccionService {
 
     CapaAccionDTO guardarAccion(CapaAccionDTO nuevaAccion) throws BusinessException;
+    List<CapaAccionDTO> obtenerCapaAcciones() throws BusinessException;
 }

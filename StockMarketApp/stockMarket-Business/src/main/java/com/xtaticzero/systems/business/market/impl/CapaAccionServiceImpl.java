@@ -12,6 +12,7 @@ import com.xtaticzero.systems.base.dto.CapaAccionDTO;
 import com.xtaticzero.systems.business.BaseBusinessServices;
 import com.xtaticzero.systems.business.market.CapaAccionService;
 import com.xtaticzero.systems.dao.CapaAccionDAO;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,16 @@ public class CapaAccionServiceImpl extends BaseBusinessServices implements CapaA
         } catch (DAOException daoEx) {
             logger.error(daoEx.getMessage());
             throw new BusinessException(ERR_GENERAL_DESCRIPCION, daoEx, "No se pudo guardar la relacion capa-accion ");
+        }
+    }
+
+    @Override
+    public List<CapaAccionDTO> obtenerCapaAcciones() throws BusinessException {
+        try {
+            return capaAccionDAO.findAllCapaAccion();
+        } catch (DAOException daoEx) {
+            logger.error(daoEx.getMessage());
+            throw new BusinessException(ERR_GENERAL_DESCRIPCION, daoEx, "No se puede obtener lista acciones ");
         }
     }
 

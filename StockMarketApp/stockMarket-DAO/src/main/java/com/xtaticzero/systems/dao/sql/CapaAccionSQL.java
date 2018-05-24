@@ -16,20 +16,13 @@ public interface CapaAccionSQL {
             .concat("(accion_id,capa_id) ")
             .concat("VALUES(?,?)");
 
-    String SELECT_CAPA = "SELECT \n"
-            + "CP.capa_id,\n"
-            + "AC.accion_id,\n"
-            + "EMI.emisora_id,\n"
-            + "CP.activo,\n"
-            + "AC.fechaCompra,\n"
-            + "AC.fechaVenta,\n"
-            + "AC.costoUnitario,\n"
-            + "EMI.nombre,\n"
-            + "EMI.fechaEntrada,\n"
-            + "EMI.fechaBaja\n"
-            + "from CAPA CP\n"
-            + "INNER JOIN ACCION AC ON CP.accion_id = AC.accion_id\n"
-            + "INNER JOIN EMISORA EMI ON CP.emisora_id = EMI.emisora_id\n"
-            + "WHERE 1=1";
+    String SELECT_ALL_CAPA_ACCION = "SELECT CA.ca_id,\n"
+            + "CP.capa_id,CP.activo,\n"
+            + "AC.accion_id,AC.fechaCompra,AC.fechaVenta,AC.costoUnitario,AC.existencia,\n"
+            + "EMI.emisora_id,EMI.nombre,EMI.fechaEntrada,EMI.fechaBaja\n"
+            + "from CAPA_ACCION CA\n"
+            + "JOIN CAPA CP ON CP.capa_id = CA.capa_id\n"
+            + "JOIN ACCION AC ON AC.accion_id = CA.accion_id\n"
+            + "JOIN EMISORA EMI on EMI.emisora_id = CP.emisora_id";
 
 }

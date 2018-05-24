@@ -7,6 +7,7 @@ package com.xtaticzero.systems.dao;
 
 import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.CapaAccionDTO;
+import java.util.List;
 
 /**
  *
@@ -15,5 +16,6 @@ import com.xtaticzero.systems.base.dto.CapaAccionDTO;
 public interface CapaAccionDAO {
     
      CapaAccionDTO insert(CapaAccionDTO nuevaAccion) throws DAOException;
+     List<CapaAccionDTO> findAllCapaAccion() throws DAOException;
     
 }

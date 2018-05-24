@@ -6,7 +6,6 @@
 package com.xtaticzero.systems.dao.mapper;
 
 import com.xtaticzero.systems.base.dto.CapaDTO;
-import com.xtaticzero.systems.base.dto.EmisoraDTO;
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
