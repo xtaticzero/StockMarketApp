@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 @Service("userLogginService")
 public class UserLogginServiceImpl extends BaseBusinessServices implements UserLogginService {
 
+    private static final long serialVersionUID = 7831428175491115181L;
+
     @Autowired
     @Qualifier("userDao")
     private UserDao userDao;

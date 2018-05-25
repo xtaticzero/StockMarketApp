@@ -25,4 +25,6 @@ public interface CotizacionDiariaDAO {
     CotizacionDiariaDTO findCotizacionDiariaByEmisora(EmisoraDTO emisora) throws DAOException;
 
     List<CotizacionDiariaDTO> findAllCotizacionDiaria() throws DAOException;
+
+    int[] updateBatch(List<CotizacionDiariaDTO> lstCotizaciones) throws DAOException;
 }

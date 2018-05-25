@@ -14,16 +14,21 @@ import com.xtaticzero.systems.dao.mapper.CotizacionDiariaMapper;
 import com.xtaticzero.systems.dao.preparedstatement.CotizacionDiariaPreparedStatement;
 import com.xtaticzero.systems.dao.sql.CotizacionDiariaSQL;
 import java.math.BigInteger;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
+@Repository("cotizacionDiariaDAO")
 public class CotizacionDiariaDAOImpl extends BaseJDBCDao<CotizacionDiariaDTO> implements CotizacionDiariaDAO, CotizacionDiariaSQL {
 
     private static final long serialVersionUID = -7960526923843331731L;
@@ -135,6 +140,25 @@ public class CotizacionDiariaDAOImpl extends BaseJDBCDao<CotizacionDiariaDTO> im
             throw new DAOException(ERR_GENERAL, ex.getMessage(), ex);
         }
 
+    }
+
+    @Override
+    public int[] updateBatch(final List<CotizacionDiariaDTO> lstCotizaciones) throws DAOException {
+        
+        return getJdbcTemplateBase().batchUpdate(UPDATE_COTIZACION, new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                CotizacionDiariaDTO cotizacion = lstCotizaciones.get(i);
+                ps.setObject(1, cotizacion.getCostoAlDia());
+                ps.setObject(2, cotizacion.getEmisora().getEmisora_id());
+                ps.setObject(3, cotizacion.getCotizacionId());
+            }
+
+            @Override
+            public int getBatchSize() {
+                return lstCotizaciones.size();
+            }
+        });
     }
 
 }

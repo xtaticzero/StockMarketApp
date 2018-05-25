@@ -12,12 +12,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.ServletContext;
+import mx.gob.sat.mat.tabacos.vista.VistaAbstractMB;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import stock.vista.BaseAbstractMB;
 
 /**
  *
@@ -25,7 +25,7 @@ import stock.vista.BaseAbstractMB;
  */
 @Controller("userLoginView")
 @Scope(value = "view")
-public class UserLoginView extends BaseAbstractMB {
+public class UserLoginView extends VistaAbstractMB {
 
     private static final long serialVersionUID = 2316623966899405140L;
     @Autowired
@@ -51,7 +51,7 @@ public class UserLoginView extends BaseAbstractMB {
                 UsuarioDTO correctUser = logginService.logginUser(getUsuario());
                 if (correctUser != null) {
                     loggedIn = true;
-                    setUserProfile(getUsuario());
+                    setUserProfile(correctUser);
                     try {
                         FacesContext.getCurrentInstance().getExternalContext().redirect(
                                 ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getContextPath()
@@ -64,7 +64,7 @@ public class UserLoginView extends BaseAbstractMB {
                 }
             } catch (BusinessException ex) {
                 logger.error(ex.getMessage(), ex);
-                addErrorMessage("Usuario o Password incorrectos");
+                msgError("Usuario o Password incorrectos");
             }
 
         } else {

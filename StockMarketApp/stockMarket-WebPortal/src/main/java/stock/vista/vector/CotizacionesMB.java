@@ -5,14 +5,21 @@
  */
 package stock.vista.vector;
 
+import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
+import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
+import com.xtaticzero.systems.business.bo.impl.CotizacionVectorBO;
+import com.xtaticzero.systems.business.market.CotizacionDiariaService;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import mx.gob.sat.mat.tabacos.vista.VistaAbstractMB;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.RowEditEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import stock.horizontal.dto.CotizacionDTO;
@@ -34,51 +41,30 @@ public class CotizacionesMB extends VistaAbstractMB {
     private List<CotizacionDTO> lstCotizacionDTO;
     private List<CotizacionDTO> lstCotizacionAcciones;
 
+    private CotizacionVectorBO cotizacionBO;
+    private List<CotizacionDiariaDTO> filteredCotizaciones;
+
+    @Autowired
+    @Qualifier("cotizacionDiariaService")
+    private CotizacionDiariaService cotizacionService;
+
     @PostConstruct
     public void init() {
-        existencias = new ArrayList<>();
-        utilidades = new ArrayList<>();
-        lstCotizacionDTO = new ArrayList<>();
-        lstCotizacionAcciones = new ArrayList<>();
+        try {
+            validateUsuarioValido();
+            cotizacionBO = cotizacionService.getBOCotizacion(getUsuario());
+            cotizacionService.getLstCotizaciones(cotizacionBO);
 
-        for (int i = 1; i <= 50; i++) {
-            ExistenciaInicial existencia = getFactory().manufacturePojo(ExistenciaInicial.class);
-            existencia.setEmisora("Emisora " + i);
-            existencias.add(existencia);
-        }
+            existencias = new ArrayList<>();
+            utilidades = new ArrayList<>();
+            lstCotizacionDTO = new ArrayList<>();
+            lstCotizacionAcciones = new ArrayList<>();
+        } catch (IOException ex) {
+            logger.error(ex.getCause(), ex);
 
-        for (int i = 1; i <= 50; i++) {
-            Utilidad utilidad = getFactory().manufacturePojo(Utilidad.class);
-            utilidad.setEmisora("Unidad " + i);
-            utilidades.add(utilidad);
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2000, 12, 31, 0, 0);
-        int contador = 1;
-        while (true) {
-            CotizacionDTO cotizacion = getFactory().manufacturePojo(CotizacionDTO.class);
-            cotizacion.setId(contador);
-            cotizacion.setEmisora("Emisora " + ++contador);
-            addDay(calendar, cotizacion);
-            cotizacion.setFecha(calendar.getTime());
-            cotizacion.setCostoAdquisicion(Double.valueOf(cotizacion.getPorcentaje()) / 100);
-            cotizacion.setIsRed(cotizacion.getPorcentaje() <= 50);
-            lstCotizacionAcciones.add(cotizacion);
-            if (calendar.get(Calendar.YEAR) == 2018) {
-                break;
-            }
-        }
-        calendar.set(2000, 12, 31, 0, 0);
-        for (int i = 1; i <= 17; i++) {
-            CotizacionDTO cotizacion = getFactory().manufacturePojo(CotizacionDTO.class);
-            cotizacion.setEmisora("Emisora " + i);
-            calendar.add(Calendar.YEAR, 1);
-            cotizacion.setFecha(calendar.getTime());
-            cotizacion.setId(i);
-            cotizacion.setCostoAdquisicion(Double.valueOf(cotizacion.getPorcentaje()) / 100);
-            cotizacion.setIsRed(cotizacion.getPorcentaje() <= 50);
-            lstCotizacionDTO.add(cotizacion);
+        } catch (BusinessException ex) {
+            logger.error(ex.getCause(), ex);
+            msgError(ex.getMessage());
         }
     }
 
@@ -119,16 +105,46 @@ public class CotizacionesMB extends VistaAbstractMB {
         this.lstCotizacionAcciones = lstCotizacionAcciones;
     }
 
-    private void addDay(Calendar calendar, CotizacionDTO cotizacion) {
-        calendar.add(Calendar.DAY_OF_YEAR, 1);
-        while (true) {
-            if ((calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) || (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)) {
-                calendar.add(Calendar.DAY_OF_WEEK, 1);
-            } else {
-                break;
-            }
+    public void onRowEdit(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Cotizacion Editada", ((CotizacionDiariaDTO) event.getObject()).getEmisora().getNombre());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+        try {
+            cotizacionBO.setCotizacionSeleccionada(((CotizacionDiariaDTO) event.getObject()));
+            cotizacionService.actualizarCotizacion(cotizacionBO);
+        } catch (Exception e) {
+            logger.error(e);
+            msgError(e.getMessage());
         }
+    }
 
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Cotizacion Cacela Edicion", ((CotizacionDiariaDTO) event.getObject()).getEmisora().getNombre());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public CotizacionVectorBO getCotizacionBO() {
+        return cotizacionBO;
+    }
+
+    public void setCotizacionBO(CotizacionVectorBO cotizacionBO) {
+        this.cotizacionBO = cotizacionBO;
+    }
+
+    public CotizacionDiariaService getCotizacionService() {
+        return cotizacionService;
+    }
+
+    public void setCotizacionService(CotizacionDiariaService cotizacionService) {
+        this.cotizacionService = cotizacionService;
+    }
+
+    public List<CotizacionDiariaDTO> getFilteredCotizaciones() {
+        return filteredCotizaciones;
+    }
+
+    public void setFilteredCotizaciones(List<CotizacionDiariaDTO> filteredCotizaciones) {
+        this.filteredCotizaciones = filteredCotizaciones;
     }
 
 }

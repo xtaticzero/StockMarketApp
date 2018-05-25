@@ -95,6 +95,7 @@
     
     <import resource="classpath*:daos-context.xml"/>
     <import resource="classpath*:business-context.xml"/>
+    <import resource="/common/scheduled-context.xml" />
     
     <!--<tx:annotation-driven/>-->
     <!--Inyecta los servicios negocio-->

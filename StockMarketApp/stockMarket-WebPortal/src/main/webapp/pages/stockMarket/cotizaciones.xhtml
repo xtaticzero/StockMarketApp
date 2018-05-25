@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-        xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:pe="http://primefaces.org/ui/extensions">
+        xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" >
     <html>
         <h:head>
         </h:head>
@@ -19,22 +18,65 @@
                  margin-right:auto;">
 
                 <h:form>
-<!--                    <p:fileUpload fileUploadListener="{cotizacionesMB.handleFileUpload}" 
-                                  mode="advanced" 
-                                  dragDropSupport="true"
-                                  sizeLimit="100000" 
-                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                  accept=".csv, .xml, .tsv"
-                                  label="archivo"/>-->
-                    <p:fileUpload fileUploadListener="#{cotizacionesMB.handleFileUpload}" 
-                                  mode="advanced" 
-                                  dragDropSupport="true"
-                                  sizeLimit="100000" 
-                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                  
-                                  label="archivo"/>
+                    <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
+
+
+
                     <h:panelGrid columns="3">
                         <p:accordionPanel style="width: 1529.0px;">
+                            <p:tab title="VECTOR Cotizaciones">
+                                <div style="text-align: center;">
+                                    <p:dataTable id="cellEditingTable" var="cotizacion" value="#{cotizacionesMB.cotizacionBO.lstCotizacionesDiarias}"  
+                                                 filteredValue="#{cotizacionesMB.filteredCotizaciones}" 
+                                                 paginator="true" rows="11" paginatorPosition="bottom"  
+                                                 editable="true"
+                                                 style="width: 700px">  
+                                        <f:facet name="header">  
+                                            Vector - Casa de Bolsa 
+                                        </f:facet>
+
+                                        <p:ajax event="rowEdit" listener="#{cotizacionesMB.onRowEdit}" />
+                                        <p:ajax event="rowEditCancel" listener="#{cotizacionesMB.onRowCancel}" />
+
+                                        <p:column headerText="ID" style="width:32px">
+                                            <div style="text-align: right;">
+                                                <h:outputText value="#{cotizacion.cotizacionId}" />
+                                            </div>                                            
+                                        </p:column>
+
+                                        <p:column headerText="EMISORA" filterBy="#{cotizacion.emisora.nombre}">
+                                            <h:outputText value="#{cotizacion.emisora.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="COSTO UNITARIO" filterBy="#{cotizacion.costoAlDia}">
+                                            <p:cellEditor>
+                                                <f:facet name="output">
+                                                    <div style="text-align: right;">
+                                                        <h:outputText value="#{cotizacion.costoAlDia}">
+                                                            <f:convertNumber pattern="$ #,##0.00" />
+                                                        </h:outputText>
+                                                    </div>
+                                                </f:facet>
+                                                <f:facet name="input"><p:inputText id="modelInput" value="#{cotizacion.costoAlDia}" style="width:100%"/></f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+
+                                        <p:column headerText="FECHA" style="width:230px">
+                                            <div style="text-align: center;">
+                                                <h:outputText value="#{cotizacion.diaCotizacion}">
+                                                    <f:convertDateTime pattern="EEEE dd/MMMM/yyyy HH:mm:ss" type="date" timeZone="America/Mexico_City"/>
+                                                </h:outputText>
+                                            </div>
+                                        </p:column>
+
+                                        <p:column style="width:32px">
+                                            <p:rowEditor />
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </div>
+                            </p:tab>
+
                             <p:tab title="Tasa de Porcentaje Anual">
                                 <h:panelGrid columns="2" cellpadding="10">
                                     <p:dataTable var="car" value="#{cotizacionesMB.lstCotizacionDTO}" rows="10"
