@@ -5,17 +5,19 @@
  */
 package stock.vista.vector;
 
+import com.xtaticzero.systems.base.constants.excepcion.ExceptionConstant;
 import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.FrontException;
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
 import com.xtaticzero.systems.business.bo.impl.CotizacionVectorBO;
 import com.xtaticzero.systems.business.market.CotizacionDiariaService;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import mx.gob.sat.mat.tabacos.vista.VistaAbstractMB;
+import stock.vista.constans.CatalogoErroresEnum;
+import stock.vista.VistaAbstractMB;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Controller;
 import stock.horizontal.dto.CotizacionDTO;
 import stock.horizontal.dto.ExistenciaInicial;
 import stock.horizontal.dto.Utilidad;
+import stock.vista.ConstantesVista;
 
 /**
  *
@@ -49,23 +52,17 @@ public class CotizacionesMB extends VistaAbstractMB {
     private CotizacionDiariaService cotizacionService;
 
     @PostConstruct
-    public void init() {
-        try {
-            validateUsuarioValido();
-            cotizacionBO = cotizacionService.getBOCotizacion(getUsuario());
-            cotizacionService.getLstCotizaciones(cotizacionBO);
+    public void init() throws FrontException, BusinessException {
 
-            existencias = new ArrayList<>();
-            utilidades = new ArrayList<>();
-            lstCotizacionDTO = new ArrayList<>();
-            lstCotizacionAcciones = new ArrayList<>();
-        } catch (IOException ex) {
-            logger.error(ex.getCause(), ex);
+        validateUsuarioValido();
+        cotizacionBO = cotizacionService.getBOCotizacion(getUsuario());
+        cotizacionService.getLstCotizaciones(cotizacionBO);
 
-        } catch (BusinessException ex) {
-            logger.error(ex.getCause(), ex);
-            msgError(ex.getMessage());
-        }
+        existencias = new ArrayList<>();
+        utilidades = new ArrayList<>();
+        lstCotizacionDTO = new ArrayList<>();
+        lstCotizacionAcciones = new ArrayList<>();
+
     }
 
     public void handleFileUpload(FileUploadEvent event) {
@@ -108,7 +105,7 @@ public class CotizacionesMB extends VistaAbstractMB {
     public void onRowEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Cotizacion Editada", ((CotizacionDiariaDTO) event.getObject()).getEmisora().getNombre());
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        
+
         try {
             cotizacionBO.setCotizacionSeleccionada(((CotizacionDiariaDTO) event.getObject()));
             cotizacionService.actualizarCotizacion(cotizacionBO);

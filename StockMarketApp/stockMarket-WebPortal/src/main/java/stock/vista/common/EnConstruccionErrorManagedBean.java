@@ -5,6 +5,7 @@
  */
 package stock.vista.common;
 
+import com.xtaticzero.systems.base.constants.excepcion.impl.FrontException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -30,21 +31,36 @@ public class EnConstruccionErrorManagedBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        FacesContext faces = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) faces.getExternalContext().getSession(true);
-        if (session.getAttribute(ConstantesVista.MSG_ERROR_SESSION) != null) {
-            Object obj = session.getAttribute(ConstantesVista.MSG_ERROR_SESSION);
+        try {
+            FacesContext faces = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) faces.getExternalContext().getSession(false);
 
-            if (obj instanceof Exception) {
-                Exception e = (Exception) session.getAttribute(ConstantesVista.MSG_ERROR_SESSION);
-                setError(e.getMessage());
-            } else {
-                String e = (String) session.getAttribute(ConstantesVista.MSG_ERROR_SESSION);
-                setError(e);
+            if (session == null) {
+                session = (HttpSession) faces.getExternalContext().getSession(true);
             }
 
-            session.removeAttribute(ConstantesVista.MSG_ERROR_SESSION);
+            if (session.getAttribute(ConstantesVista.MSG_ERROR_SESSION) != null) {
+                Object obj = session.getAttribute(ConstantesVista.MSG_ERROR_SESSION);
+
+                if (obj instanceof FrontException) {
+                    FrontException e = (FrontException) session.getAttribute(ConstantesVista.MSG_ERROR_SESSION);
+                    setError(e.getMessage());
+                } else if (obj instanceof Exception) {
+                    FrontException e = (FrontException) session.getAttribute(ConstantesVista.MSG_ERROR_SESSION);
+                    setError(e.getMessage());
+                } else {
+                    String e = (String) session.getAttribute(ConstantesVista.MSG_ERROR_SESSION);
+                    setError(e);
+                }
+
+                session.removeAttribute(ConstantesVista.MSG_ERROR_SESSION);
+            } else {
+                error = "Error general";
+            }
+        } catch (Exception e) {
+            System.err.println("Error");
         }
+
     }
 
     /**

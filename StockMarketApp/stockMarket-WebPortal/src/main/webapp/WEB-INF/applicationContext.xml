@@ -105,10 +105,7 @@
     <!--Inyecta los managedbean-->
     <context:component-scan base-package="stock.vista.vector"/>
     <context:component-scan base-package="stock.vista.loggin"/>
-    
-    
-    
-    
+    <context:component-scan base-package="stock.vista.common"/>
     
     <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
         <property name="scopes">

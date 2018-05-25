@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mx.gob.sat.mat.tabacos.vista;
+package stock.vista;
 
+import com.xtaticzero.systems.base.constants.excepcion.ExceptionConstant;
+import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.FrontException;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.business.constants.FileExtensionEnum;
 import java.io.IOException;
@@ -14,12 +17,11 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
-import stock.vista.ConstantesVista;
+import stock.vista.constans.CatalogoErroresEnum;
 import stock.vista.vector.enums.MIMETypesEnum;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -39,20 +41,44 @@ public abstract class VistaAbstractMB implements Serializable {
      */
     private final PodamFactory factory = new PodamFactoryImpl();
 
-//    @Autowired
-//    @Qualifier("userLogginService")
-//    private BaseBusinessServices userLogginService;
     public VistaAbstractMB() {
         logger = Logger.getLogger(getClass());
     }
 
-    protected void validateUsuarioValido() throws IOException {
-        if (getUserProfile() != null) {
-            usuario = getUserProfile();
+    public void preRender() throws FrontException {
+        if (usuario.getRol_id() == null) {
+            BusinessException bEx = new BusinessException("usr.invalido", "usuario desconocido");
+            FrontException fEx = new FrontException(ExceptionConstant.ERR_GENERAL, bEx, CatalogoErroresEnum.ERROR_USUARIO_INVALIDO.getTipo(), CatalogoErroresEnum.ERROR_USUARIO_INVALIDO.getCodigo());
+            setAttributeSession(ConstantesVista.MSG_ERROR_SESSION, fEx);
+            throw fEx;
+        }
+    }
+
+    public FrontException errorEnVista(Exception frontException) throws BusinessException {
+        String msgErr;
+        if (frontException instanceof FrontException) {
+            msgErr = ((FrontException) frontException).getMessage();
+            setAttributeSession(ConstantesVista.MSG_ERROR_SESSION, msgErr);
+            return ((FrontException) frontException);
+        } else if (frontException instanceof BusinessException) {
+            msgErr = ((BusinessException) frontException).getMessage();
+            setAttributeSession(ConstantesVista.MSG_ERROR_SESSION, msgErr);
+            throw ((BusinessException) frontException);
+        }
+
+        throw new UnsupportedOperationException("Excepcion no soportada");
+    }
+
+    protected void validateUsuarioValido() throws FrontException {
+        usuario = getUserProfile();
+        if (usuario != null && usuario.getUser_id() != null) {
+            return;
         } else {
-            FacesContext.getCurrentInstance().getExternalContext().redirect(
-                    ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getContextPath()
-                    + "/error/indexError.jsf");
+            BusinessException bEx = new BusinessException("usr.invalido", "usuario desconocido");
+            FrontException fEx = new FrontException(ExceptionConstant.ERR_GENERAL, bEx, CatalogoErroresEnum.ERROR_USUARIO_INVALIDO.getTipo(), CatalogoErroresEnum.ERROR_USUARIO_INVALIDO.getCodigo());
+            setAttributeSession(ConstantesVista.MSG_ERROR_SESSION, fEx);
+            logger.error(fEx.getMessage(),fEx);
+            throw fEx;
         }
     }
 
@@ -90,6 +116,16 @@ public abstract class VistaAbstractMB implements Serializable {
     public void setUserProfile(UsuarioDTO userProfile) {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                 .put(ConstantesVista.USER_PROFILE, userProfile);
+    }
+
+    public void setAttributeSession(String nameAttrib, Object newAttrib) {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                .put(nameAttrib, newAttrib);
+    }
+
+    public void deletAttributeSession(String nameAttrib) {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                .remove(nameAttrib);
     }
 
     public void generaDocumento(byte[] arregloBytes, MIMETypesEnum mimeType, String nombre, FileExtensionEnum extencion) {

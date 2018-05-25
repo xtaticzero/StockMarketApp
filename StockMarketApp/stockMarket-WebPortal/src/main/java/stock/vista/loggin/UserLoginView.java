@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.ServletContext;
-import mx.gob.sat.mat.tabacos.vista.VistaAbstractMB;
+import stock.vista.VistaAbstractMB;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -56,6 +56,9 @@ public class UserLoginView extends VistaAbstractMB {
                         FacesContext.getCurrentInstance().getExternalContext().redirect(
                                 ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getContextPath()
                                 + "/pages/inicio.html");
+//                        FacesContext.getCurrentInstance().getExternalContext().redirect(
+//                                ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getContextPath()
+//                                + "/error/indexError.jsf");
                     } catch (Exception e) {
                         logger.error(getMessageResourceString("msj.loggin.err"));
                         logger.error(e.getMessage(), e);

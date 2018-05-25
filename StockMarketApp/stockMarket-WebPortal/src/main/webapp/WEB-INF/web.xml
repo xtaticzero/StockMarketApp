@@ -49,9 +49,13 @@
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
     <session-config>
-        <session-timeout>15</session-timeout>
+        <session-timeout>20</session-timeout>
     </session-config>    
     <welcome-file-list>
         <welcome-file>/pages/LoginForm.jsf</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/error/indexError.jsf</location>
+    </error-page>
 </web-app>

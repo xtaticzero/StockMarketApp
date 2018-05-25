@@ -6,7 +6,7 @@
         </h:head>
         <h:body>
             <ui:include src="../background.xhtml"/>
-            <ui:include src="menuHeder.xhtml"/>
+            <ui:include src="menuHeader.xhtml"/>
             <div id="panelCentral" 
                  style="position: absolute;
                  top: 75px;
@@ -16,12 +16,9 @@
                  width: 1533.0px;
                  margin-left:auto;
                  margin-right:auto;">
-
                 <h:form>
                     <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
-
-
-
+                    <f:event listener="#{cotizacionesMB.preRender}" type="preRenderView" />                    
                     <h:panelGrid columns="3">
                         <p:accordionPanel style="width: 1529.0px;">
                             <p:tab title="VECTOR Cotizaciones">
