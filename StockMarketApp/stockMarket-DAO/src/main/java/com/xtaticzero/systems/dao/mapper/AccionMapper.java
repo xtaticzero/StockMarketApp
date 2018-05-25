@@ -27,6 +27,7 @@ public class AccionMapper extends BaseAbstractMapper implements RowMapper<Accion
         accion.setCostoUnitario(new BigDecimal(rs.getString(ACCION_COSTO_UNITARIO)));
         accion.setFechaCompra((rs.getTimestamp(ACCION_FECHA_COMPRA)));
         accion.setFechaVenta((rs.getTimestamp(ACCION_FECHA_VENTA)));
+        accion.setExistencia(rs.getInt(ACCION_EXISTENCIA));
 
         return accion;
     }

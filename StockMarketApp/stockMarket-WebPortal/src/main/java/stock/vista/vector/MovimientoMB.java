@@ -47,12 +47,14 @@ public class MovimientoMB extends AbstractManagedBean {
     private List<EmisoraDTO> emisoras;
     private BigInteger selectEmisora;
     private AccionDTO accion;
+    private List<CapaAccionDTO> capaAcciones;
 
     @PostConstruct
     public void init() {
         try {
             emisoras = emisoraService.obtenerEmisoras();
             accion = new AccionDTO();
+            capaAcciones = capaAccionService.obtenerCapaAcciones();
         } catch (BusinessException ex) {
             getLogger().error(ex);
         }
@@ -69,16 +71,17 @@ public class MovimientoMB extends AbstractManagedBean {
             relacion.setCapa(capa);
 
             capaAccionService.guardarAccion(relacion);
-
+            capaAcciones = capaAccionService.obtenerCapaAcciones();
+            
+            addMessage("Exito!","");
+            
         } catch (BusinessException ex) {
             getLogger().error(ex);
         }
 
     }
 
-    /**
-     * getters and setters
-     */
+    /* getters and setters */
     public List<EmisoraDTO> getEmisoras() {
         return emisoras;
     }
@@ -97,6 +100,14 @@ public class MovimientoMB extends AbstractManagedBean {
 
     public void setAccion(AccionDTO accion) {
         this.accion = accion;
+    }
+
+    public List<CapaAccionDTO> getCapaAcciones() {
+        return capaAcciones;
+    }
+
+    public void setCapaAcciones(List<CapaAccionDTO> capaAcciones) {
+        this.capaAcciones = capaAcciones;
     }
 
 }
