@@ -112,6 +112,7 @@ public class CotizacionesMB extends VistaAbstractMB {
         try {
             cotizacionBO.setCotizacionSeleccionada(((CotizacionDiariaDTO) event.getObject()));
             cotizacionService.actualizarCotizacion(cotizacionBO);
+            cotizacionService.getLstCotizaciones(cotizacionBO);
         } catch (Exception e) {
             logger.error(e);
             msgError(e.getMessage());
