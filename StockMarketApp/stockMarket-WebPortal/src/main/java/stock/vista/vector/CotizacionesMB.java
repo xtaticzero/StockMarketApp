@@ -5,7 +5,6 @@
  */
 package stock.vista.vector;
 
-import com.xtaticzero.systems.base.constants.excepcion.ExceptionConstant;
 import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
 import com.xtaticzero.systems.base.constants.excepcion.impl.FrontException;
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
@@ -16,7 +15,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import stock.vista.constans.CatalogoErroresEnum;
 import stock.vista.VistaAbstractMB;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
@@ -27,7 +25,6 @@ import org.springframework.stereotype.Controller;
 import stock.horizontal.dto.CotizacionDTO;
 import stock.horizontal.dto.ExistenciaInicial;
 import stock.horizontal.dto.Utilidad;
-import stock.vista.ConstantesVista;
 
 /**
  *
