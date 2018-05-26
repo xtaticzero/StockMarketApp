@@ -7,11 +7,14 @@ package com.xtaticzero.systems.business.market.impl;
 
 import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
 import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
+import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
+import com.xtaticzero.systems.base.dto.EmisoraDTO;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.business.BaseBusinessServices;
 import com.xtaticzero.systems.business.bo.impl.CotizacionVectorBO;
 import com.xtaticzero.systems.business.market.CotizacionDiariaService;
 import com.xtaticzero.systems.dao.CotizacionDiariaDAO;
+import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -82,6 +85,16 @@ public class CotizacionDiariaServiceImpl extends BaseBusinessServices implements
         } catch (DAOException daoEx) {
             logger.error(daoEx.getCause(), daoEx);
             throw new BusinessException(ERR_GENERAL_DESCRIPCION, daoEx, DESC_ACTUALIZAR_INFO);
+        }
+    }
+
+    @Override
+    public CotizacionDiariaDTO findCotizacionDiariaByEmisora(BigInteger idEmisora) throws BusinessException {
+        try {
+            return cotizacionDAO.findCotizacionDiariaByEmisora(idEmisora);
+        } catch (DAOException daoEx) {
+            logger.error(daoEx.getMessage());
+            throw new BusinessException(ERR_GENERAL_DESCRIPCION, daoEx, "No se pudo obtener la cotizacion diaria ");
         }
     }
 

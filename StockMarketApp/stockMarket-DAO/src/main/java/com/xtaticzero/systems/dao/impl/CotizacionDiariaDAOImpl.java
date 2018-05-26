@@ -40,8 +40,8 @@ public class CotizacionDiariaDAOImpl extends BaseJDBCDao<CotizacionDiariaDTO> im
             throw new DAOException(ERR_GENERAL);
         }
 
-        if (findCotizacionDiariaByEmisora(cotizacionDiariaNew.getEmisora()) != null) {
-            cotizacionTmp = findCotizacionDiariaByEmisora(cotizacionDiariaNew.getEmisora());
+        if (findCotizacionDiariaByEmisora(cotizacionDiariaNew.getEmisora().getEmisora_id()) != null) {
+            cotizacionTmp = findCotizacionDiariaByEmisora(cotizacionDiariaNew.getEmisora().getEmisora_id());
             cotizacionTmp.setCostoAlDia(cotizacionDiariaNew.getCostoAlDia());
             if (update(cotizacionTmp) > 0) {
                 return cotizacionTmp;
@@ -105,18 +105,16 @@ public class CotizacionDiariaDAOImpl extends BaseJDBCDao<CotizacionDiariaDTO> im
     }
 
     @Override
-    public CotizacionDiariaDTO findCotizacionDiariaByEmisora(EmisoraDTO emisora) throws DAOException {
-        if (emisora == null || emisora.getEmisora_id() == null) {
+    public CotizacionDiariaDTO findCotizacionDiariaByEmisora(BigInteger idEmisora) throws DAOException {
+        if (idEmisora == null) {
             throw new DAOException(ERR_GENERAL);
         }
-
         try {
             List<Object> params = new ArrayList<>();
-
-            params.add(emisora.getEmisora_id());
-
-            List<CotizacionDiariaDTO> lstResult = getJdbcTemplateBase().query(FIND_COTIZACION_BY_EMISORA, params.toArray(), new CotizacionDiariaMapper());
-
+            params.add(idEmisora);
+            List<CotizacionDiariaDTO> lstResult = getJdbcTemplateBase()
+                    .query(FIND_COTIZACION_BY_EMISORA, params.toArray(),
+                             new CotizacionDiariaMapper());
             if (lstResult != null && !lstResult.isEmpty()) {
                 return lstResult.get(0);
             }
@@ -144,7 +142,7 @@ public class CotizacionDiariaDAOImpl extends BaseJDBCDao<CotizacionDiariaDTO> im
 
     @Override
     public int[] updateBatch(final List<CotizacionDiariaDTO> lstCotizaciones) throws DAOException {
-        
+
         return getJdbcTemplateBase().batchUpdate(UPDATE_COTIZACION, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {

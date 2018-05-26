@@ -19,13 +19,13 @@ public class TransaccionDTO extends BaseModel {
     private static final long serialVersionUID = 833068187881704761L;
 
     private BigInteger transaccion_id;
-    private CapaDTO capa;
+    private CapaAccionDTO capaAccion;
     private MovimientoDTO movimiento;
     private Date fechaTransaccion;
     private BigDecimal importe;
     private BigDecimal costo;
-    private BigDecimal unidad;
-    private BigDecimal costoMovimiento;
+    private BigDecimal utilidad;
+    private BigDecimal porcentajeVenta;
 
     public BigInteger getTransaccion_id() {
         return transaccion_id;
@@ -35,12 +35,12 @@ public class TransaccionDTO extends BaseModel {
         this.transaccion_id = transaccion_id;
     }
 
-    public CapaDTO getCapa() {
-        return capa;
+    public CapaAccionDTO getCapaAccion() {
+        return capaAccion;
     }
 
-    public void setCapa(CapaDTO capa) {
-        this.capa = capa;
+    public void setCapaAccion(CapaAccionDTO capaAccion) {
+        this.capaAccion = capaAccion;
     }
 
     public MovimientoDTO getMovimiento() {
@@ -52,11 +52,11 @@ public class TransaccionDTO extends BaseModel {
     }
 
     public Date getFechaTransaccion() {
-        return (fechaTransaccion!=null)?(Date)fechaTransaccion:null;
+        return (fechaTransaccion != null) ? (Date) fechaTransaccion : null;
     }
 
     public void setFechaTransaccion(Date fechaTransaccion) {
-        this.fechaTransaccion = (fechaTransaccion!=null)?(Date)fechaTransaccion:null;
+        this.fechaTransaccion = (fechaTransaccion != null) ? (Date) fechaTransaccion : null;
     }
 
     public BigDecimal getImporte() {
@@ -75,20 +75,20 @@ public class TransaccionDTO extends BaseModel {
         this.costo = costo;
     }
 
-    public BigDecimal getUnidad() {
-        return unidad;
+    public BigDecimal getUtilidad() {
+        return utilidad;
     }
 
-    public void setUnidad(BigDecimal unidad) {
-        this.unidad = unidad;
+    public void setUtilidad(BigDecimal utilidad) {
+        this.utilidad = utilidad;
     }
 
-    public BigDecimal getCostoMovimiento() {
-        return costoMovimiento;
+    public BigDecimal getPorcentajeVenta() {
+        return porcentajeVenta;
     }
 
-    public void setCostoMovimiento(BigDecimal costoMovimiento) {
-        this.costoMovimiento = costoMovimiento;
+    public void setPorcentajeVenta(BigDecimal porcentajeVenta) {
+        this.porcentajeVenta = porcentajeVenta;
     }
 
 }

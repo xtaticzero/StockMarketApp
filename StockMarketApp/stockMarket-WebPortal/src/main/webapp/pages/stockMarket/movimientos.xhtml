@@ -27,8 +27,9 @@
                     <p:row>
                         <p:column style="font-weight: bold;">Emisora:</p:column>
                         <p:column>
-                            <p:selectOneMenu id="emisoras" value="#{movimientoMB.selectEmisora}" 
-                                             style="width:125px">
+                            <p:selectOneMenu id="emisoras" value="#{movimientoMB.selectEmisora}"
+                                             style="width:125px" >
+                                <p:ajax listener="#{movimientoMB.changeEmisora}" update="iTCostUnit"/>
                                 <f:selectItems value="#{movimientoMB.emisoras}" var="emisora" 
                                                itemLabel="#{emisora.nombre}" itemValue="#{emisora.emisora_id}" />
                             </p:selectOneMenu>
@@ -37,32 +38,81 @@
                     <p:row>
                         <p:column style="font-weight: bold;">Costo Unitario:</p:column>
                         <p:column>
-                            <p:inputText value="#{movimientoMB.accion.costoUnitario}"/>
+                            <p:inputText id="iTCostUnit" value="#{movimientoMB.accion.costoUnitario}">
+                                <p:ajax update="oLTotal" listener="#{movimientoMB.calculaTotalCompra}" />
+                            </p:inputText>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column style="font-weight: bold;">Comisión:</p:column>
+                        <p:column>
+                            <p:outputLabel value="0.00174"/>
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column style="font-weight: bold;">Cantidad:</p:column>
                         <p:column>
-                            <p:inputText value="#{movimientoMB.accion.existencia}"/>
+                            <p:inputText value="#{movimientoMB.accion.existencia}">
+                                <p:ajax update="oLTotal" listener="#{movimientoMB.calculaTotalCompra}" />
+                            </p:inputText>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column style="font-weight: bold;">Total:</p:column>
+                        <p:column>
+                            <p:outputLabel id="oLTotal" value="#{movimientoMB.totalCompra}"/>
                         </p:column>
                     </p:row>
                 </p:panelGrid>
 
                 <p:spacer/>
-                <p:commandButton value="+" action="#{movimientoMB.agregaCompra}" update="growl,dtCapAcc"/>
+                <p:commandButton value="Comprar" action="#{movimientoMB.agregaCompra}" update="growl,dtCapAcc"/>
 
-                <p:dataTable id="dtCapAcc" value="#{movimientoMB.capaAcciones}" var="ca">
-                    <p:column headerText="Emisora">
-                        <h:outputText value="#{ca.capa.emisora.nombre}" />
-                    </p:column>
+                <p:dataTable id="dtCapAcc" value="#{movimientoMB.transacciones}" var="tran"
+                             editable="true"
+                             expandableRowGroups="true" sortBy="#{tran.capaAccion.capa.emisora.nombre}">
+                    <p:headerRow>
+                        <p:column colspan="11">
+                            <h:outputText value="#{tran.capaAccion.capa.emisora.nombre}" />
+                        </p:column>
+                    </p:headerRow>
                     <p:column headerText="Fecha Compra">
-                        <h:outputText value="#{ca.accion.fechaCompra}" />
+                        <h:outputText value="#{tran.capaAccion.accion.fechaCompra}" >
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Entradas">
+                        <h:outputText value="#{tran.capaAccion.accion.existencia}" />
+                    </p:column>
+                    <p:column headerText="Salidas">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="" /></f:facet>
+                            <f:facet name="input"><p:inputText value="" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Precio Venta">
+                        <h:outputText value="$#{tran.capaAccion.accion.costoUnitario}" />
+                    </p:column>
+                    <p:column headerText="Importe">
+                        <h:outputText value="#{tran.importe}" />
                     </p:column>
                     <p:column headerText="Costo Unitario">
-                        <h:outputText value="#{ca.accion.costoUnitario}" />
+                        <h:outputText value="#{tran.capaAccion.accion.costoUnitario}" />
                     </p:column>
-                    <p:column headerText="Existencia">
-                        <h:outputText value="#{ca.accion.existencia}" />
+                    <p:column headerText="Costo Total">
+                        <h:outputText value="#{tran.costo}" />
+                    </p:column>
+                    <p:column headerText="Utilidad">
+                        <h:outputText value="#{tran.utilidad}" />
+                    </p:column>
+                    <p:column headerText="% Sobre Venta">
+                        <h:outputText value="%#{tran.porcentajeVenta}" />
+                    </p:column>
+                    <p:column headerText="Costo Promedio">
+                        <h:outputText value="%" />
+                    </p:column>
+                    <p:column headerText="">
+                        <p:button value="Venta"/>
                     </p:column>
                 </p:dataTable>
 

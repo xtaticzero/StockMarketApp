@@ -27,8 +27,6 @@ public class CapaPreparedStatement extends PreparedStatementBase implements Prep
 
     @Override
     public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-        boolean fail = true;
-        PreparedStatement ps = null;
         int numParametro = PARAMETRO_INICIAL;
         try {
             ps = connection.prepareStatement(CapaSQL.INSERT_CAPA, new String[]{CapaSQL.TABLE_CAPA});
@@ -40,16 +38,7 @@ public class CapaPreparedStatement extends PreparedStatementBase implements Prep
             logger.error(ex);
             throw ex;
         } finally {
-            if (fail) {
-                try {
-                    if (ps != null) {
-                        ps.close();
-                    }
-                } catch (SQLException warn) {
-                    logger.error(warn);
-                    throw warn;
-                }
-            }
+            cerrarPS();
         }
         return ps;
     }

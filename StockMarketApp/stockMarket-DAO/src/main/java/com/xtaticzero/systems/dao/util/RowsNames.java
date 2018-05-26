@@ -27,6 +27,16 @@ public interface RowsNames {
 
     String CAPA_ACCION_ID = "CA.ca_id";
 
+    String MOVIMIENTO_ID = "MOV.movimiento_id";
+    String MOVIMIENTO_DESC = "MOV.descripcion";
+
+    String TRANSACCION_ID = "TRA.transaccion_id";
+    String TRANSACCION_FECHA = "TRA.fechaTransaccion";
+    String TRANSACCION_IMPORTE = "TRA.importe";
+    String TRANSACCION_COSTO = "TRA.costo";
+    String TRANSACCION_UTILIDAD = "TRA.utilidad";
+    String TRANSACCION_PORCENTAJE = "TRA.porcentaje_Movimiento";
+
     String COTIZACION_ID = "COT.cotizacion_id";
     String COTIZACION_AL_DIA = "COT.costo_al_dia";
     String COTIZACION_FECHA_COTIZACION = "COT.diaCotizacion";

@@ -27,8 +27,6 @@ public class CapaAccionPreparedStatement extends PreparedStatementBase implement
 
     @Override
     public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-        boolean fail = true;
-        PreparedStatement ps = null;
         int numParametro = PARAMETRO_INICIAL;
         try {
             ps = connection.prepareStatement(CapaAccionSQL.INSERT_ACCION, new String[]{CapaAccionSQL.TABLE_ACCION});
@@ -41,22 +39,9 @@ public class CapaAccionPreparedStatement extends PreparedStatementBase implement
             logger.error(ex);
             throw ex;
         } finally {
-            if (fail) {
-                try {
-                    if (ps != null) {
-                        ps.close();
-                    }
-                } catch (SQLException warn) {
-                    logger.error(warn);
-                    throw warn;
-                }
-            }
+            cerrarPS();
         }
         return ps;
-    }
-
-    public CapaAccionDTO getAccion() {
-        return accion;
     }
 
 }

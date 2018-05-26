@@ -9,7 +9,7 @@ package com.xtaticzero.systems.dao.sql;
  *
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
-public interface CotizacionDiariaSQL extends BaseSQL{
+public interface CotizacionDiariaSQL extends BaseSQL {
 
     String TABLE_COTIZACION_DIARIA = "COTIZACION_DIARIA";
 
@@ -21,7 +21,7 @@ public interface CotizacionDiariaSQL extends BaseSQL{
 
     String DELETE_COTIZACION = "UPDATE ".concat(TABLE_COTIZACION_DIARIA).concat(" SET fecha_termino = SYSDATE() "
             + "WHERE emisora_id = ? AND cotizacion_id = ?");
-    
+
     String PARAMETRO_EMISORA_ID = " EMI.emisora_id = ?";
     String ORDER_BY_EMISORA_ID = " ORDER by COT.cotizacion_id\n";
 
@@ -36,8 +36,8 @@ public interface CotizacionDiariaSQL extends BaseSQL{
             + "EMI.fechaBaja\n"
             + "FROM COTIZACION_DIARIA COT\n"
             + "INNER JOIN EMISORA EMI ON EMI.emisora_id = COT.emisora_id\n";
-    
-    String FIND_COTIZACION_BY_EMISORA = FIND_COTIZACION_ALL.concat(WHERE).concat(PARAMETRO_EMISORA_ID).concat(ORDER_BY_EMISORA_ID);
-            
+
+    String FIND_COTIZACION_BY_EMISORA = FIND_COTIZACION_ALL.concat(WHERE)
+            .concat(PARAMETRO_EMISORA_ID).concat(ORDER_BY_EMISORA_ID);
 
 }

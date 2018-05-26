@@ -27,8 +27,6 @@ public class AccionPreparedStatement extends PreparedStatementBase implements Pr
 
     @Override
     public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-        boolean fail = true;
-        PreparedStatement ps = null;
         int numParametro = PARAMETRO_INICIAL;
         try {
             ps = connection.prepareStatement(AccionSQL.INSERT_ACCION, new String[]{AccionSQL.TABLE_ACCION});
@@ -41,16 +39,7 @@ public class AccionPreparedStatement extends PreparedStatementBase implements Pr
             logger.error(ex);
             throw ex;
         } finally {
-            if (fail) {
-                try {
-                    if (ps != null) {
-                        ps.close();
-                    }
-                } catch (SQLException warn) {
-                    logger.error(warn);
-                    throw warn;
-                }
-            }
+            cerrarPS();
         }
         return ps;
     }

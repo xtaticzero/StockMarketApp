@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
  *
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
-public class CotizacionDiariaPreparedStatement extends PreparedStatementBase implements PreparedStatementCreator,CotizacionDiariaSQL {
+public class CotizacionDiariaPreparedStatement extends PreparedStatementBase implements PreparedStatementCreator, CotizacionDiariaSQL {
 
     private final CotizacionDiariaDTO cotizacionDiaria;
 
@@ -26,8 +26,6 @@ public class CotizacionDiariaPreparedStatement extends PreparedStatementBase imp
 
     @Override
     public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-        boolean fail = true;
-        PreparedStatement ps = null;
         int numParametro = PARAMETRO_INICIAL;
         try {
             ps = connection.prepareStatement(CotizacionDiariaSQL.INSERT_COTIZACION, new String[]{CotizacionDiariaSQL.TABLE_COTIZACION_DIARIA});
@@ -40,16 +38,7 @@ public class CotizacionDiariaPreparedStatement extends PreparedStatementBase imp
             logger.error(ex);
             throw ex;
         } finally {
-            if (fail) {
-                try {
-                    if (ps != null) {
-                        ps.close();
-                    }
-                } catch (SQLException warn) {
-                    logger.error(warn);
-                    throw warn;
-                }
-            }
+            cerrarPS();
         }
         return ps;
     }

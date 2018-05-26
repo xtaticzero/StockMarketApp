@@ -5,6 +5,8 @@
  */
 package com.xtaticzero.systems.dao.preparedstatement;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 /**
@@ -14,10 +16,25 @@ import org.apache.log4j.Logger;
 public abstract class PreparedStatementBase {
 
     protected static final int PARAMETRO_INICIAL = 1;
+    protected PreparedStatement ps = null;
+    protected boolean fail = true;
     protected final Logger logger;
 
     public PreparedStatementBase() {
         logger = Logger.getLogger(getClass());
+    }
+
+    public void cerrarPS() throws SQLException {
+        if (fail) {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException warn) {
+                logger.error(warn);
+                throw warn;
+            }
+        }
     }
 
 }
