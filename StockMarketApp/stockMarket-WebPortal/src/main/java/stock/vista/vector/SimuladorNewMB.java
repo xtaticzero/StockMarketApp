@@ -5,6 +5,9 @@
  */
 package stock.vista.vector;
 
+import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.FrontException;
+import javax.annotation.PostConstruct;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import stock.vista.VistaAbstractMB;
@@ -15,8 +18,13 @@ import stock.vista.VistaAbstractMB;
  */
 @Controller("simuladorNewMB")
 @Scope(value = "view")
-public class SimuladorNewMB extends VistaAbstractMB{
-    
+public class SimuladorNewMB extends VistaAbstractMB {
+
     private static final long serialVersionUID = -7154330566109088617L;
-    
+
+    @PostConstruct
+    public void init() throws FrontException, BusinessException {
+        validateUsuarioValido();
+    }
+
 }

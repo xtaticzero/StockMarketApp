@@ -50,25 +50,25 @@ public class UserDAOImpl extends BaseJDBCDao<UsuarioDTO> implements UserDao, Usu
 
     @Override
     public int update(UsuarioDTO usuario) throws DAOException {
-        if (usuario == null && usuario.getUser_id() != null) {
+        if (usuario != null && (usuario.getUser_id() == null || usuario.getEmail() == null)) {
             return 0;
+        } else {
+            try {
+                List<Object> params = new ArrayList<>();
+
+                params.add(usuario.getEmail());
+                params.add(usuario.getDisplay_name());
+                params.add(usuario.getPassword());
+                params.add(usuario.getUser_id());
+
+                return getJdbcTemplateBase().update(UsuarioSQL.SQL_UPDATE_USER, params.toArray());
+
+            } catch (Exception ex) {
+                logger.error(ex.getMessage(), ex);
+                throw new DAOException(ERR_GENERAL, ex.getMessage(), ex);
+            }
         }
 
-        try {
-
-            List<Object> params = new ArrayList<>();
-
-            params.add(usuario.getEmail());
-            params.add(usuario.getDisplay_name());
-            params.add(usuario.getPassword());
-            params.add(usuario.getUser_id());
-
-            return getJdbcTemplateBase().update(UsuarioSQL.SQL_UPDATE_USER, params.toArray());
-
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-            throw new DAOException(ERR_GENERAL, ex.getMessage(), ex);
-        }
     }
 
     @Override
