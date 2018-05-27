@@ -17,7 +17,7 @@ public interface CotizacionDiariaSQL extends BaseSQL {
             + "VALUES(?,SYSDATE(),?)");
 
     String UPDATE_COTIZACION = "UPDATE ".concat(TABLE_COTIZACION_DIARIA).concat(" SET costo_al_dia = ?, diaCotizacion = SYSDATE() \n"
-            + "WHERE emisora_id = ? AND cotizacion_id = ?");
+            + "WHERE emisora_id = ? AND fecha_termino is null");
 
     String DELETE_COTIZACION = "UPDATE ".concat(TABLE_COTIZACION_DIARIA).concat(" SET fecha_termino = SYSDATE() "
             + "WHERE emisora_id = ? AND cotizacion_id = ?");

@@ -13,6 +13,7 @@ import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
 import com.xtaticzero.systems.base.dto.EmisoraDTO;
 import com.xtaticzero.systems.base.dto.TransaccionDTO;
 import com.xtaticzero.systems.base.enums.MovimientosEnum;
+import com.xtaticzero.systems.business.bo.impl.CotizacionVectorBO;
 import com.xtaticzero.systems.business.market.AccionService;
 import com.xtaticzero.systems.business.market.CapaAccionService;
 import com.xtaticzero.systems.business.market.CapaService;
@@ -92,6 +93,15 @@ public class MovimientoMB extends AbstractManagedBean {
 
     public void agregaCompra() {
         try {
+            if (!cotizacion.getCostoAlDia().equals(accion.getCostoUnitario())) {
+                getLogger().info("### Cambio el costo al día " + accion.getCostoUnitario());
+                CotizacionVectorBO cotizacioBO = new CotizacionVectorBO();
+                cotizacion.setCostoAlDia(accion.getCostoUnitario());
+                cotizacioBO.setCotizacionSeleccionada(cotizacion);
+
+                cotizacionService.actualizarCotizacion(cotizacioBO);
+            }
+
             getLogger().info("### Asignar Capa " + selectEmisora);
             CapaDTO capa = capaService.asignaCapa(selectEmisora);
             accion = accionService.guardarAccion(accion);

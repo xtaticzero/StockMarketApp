@@ -7,7 +7,6 @@ package com.xtaticzero.systems.dao.impl;
 
 import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
-import com.xtaticzero.systems.base.dto.EmisoraDTO;
 import com.xtaticzero.systems.dao.BaseJDBCDao;
 import com.xtaticzero.systems.dao.CotizacionDiariaDAO;
 import com.xtaticzero.systems.dao.mapper.CotizacionDiariaMapper;
@@ -74,7 +73,6 @@ public class CotizacionDiariaDAOImpl extends BaseJDBCDao<CotizacionDiariaDTO> im
 
             params.add(cotizacionDiaria.getCostoAlDia());
             params.add(cotizacionDiaria.getEmisora().getEmisora_id());
-            params.add(cotizacionDiaria.getCotizacionId());
 
             return getJdbcTemplateBase().update(UPDATE_COTIZACION, params.toArray());
 
@@ -114,7 +112,7 @@ public class CotizacionDiariaDAOImpl extends BaseJDBCDao<CotizacionDiariaDTO> im
             params.add(idEmisora);
             List<CotizacionDiariaDTO> lstResult = getJdbcTemplateBase()
                     .query(FIND_COTIZACION_BY_EMISORA, params.toArray(),
-                             new CotizacionDiariaMapper());
+                            new CotizacionDiariaMapper());
             if (lstResult != null && !lstResult.isEmpty()) {
                 return lstResult.get(0);
             }
