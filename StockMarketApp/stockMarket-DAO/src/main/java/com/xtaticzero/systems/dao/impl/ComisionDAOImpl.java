@@ -45,7 +45,7 @@ public class ComisionDAOImpl extends BaseJDBCDao<ComisionDTO> implements Comisio
 
     @Override
     public int updateComision(ComisionDTO comision) throws DAOException {
-        if (comision != null && (comision.getComision_id() == null)) {
+        if (comision == null || (comision.getComision_id() == null)) {
             return 0;
         } else {
             try {
