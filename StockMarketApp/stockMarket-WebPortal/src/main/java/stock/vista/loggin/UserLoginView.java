@@ -55,10 +55,7 @@ public class UserLoginView extends VistaAbstractMB {
                     try {
                         FacesContext.getCurrentInstance().getExternalContext().redirect(
                                 ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getContextPath()
-                                + "/pages/inicio.html");
-//                        FacesContext.getCurrentInstance().getExternalContext().redirect(
-//                                ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getContextPath()
-//                                + "/error/indexError.jsf");
+                                + "/pages/stockMarket/paginaInicio.jsf");
                     } catch (Exception e) {
                         logger.error(getMessageResourceString("msj.loggin.err"));
                         logger.error(e.getMessage(), e);
