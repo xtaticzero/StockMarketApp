@@ -26,7 +26,7 @@ public class CotizacionHistoryMapper extends BaseAbstractMapper implements RowMa
         cotizacionHistorico.setCotizacionHistoryId(new BigInteger(rs.getString(COTIZACION_HISTORY_ID)));
         cotizacionHistorico.setCotizacionDiariaDTO(new CotizacionDiariaMapper().mapRow(rs, i));
         cotizacionHistorico.getCotizacionDiariaDTO().setCostoAlDia(new BigDecimal(rs.getString(COTIZACION_HISTORY_COSTO)));
-        cotizacionHistorico.getCotizacionDiariaDTO().setDiaCotizacion(rs.getDate(COTIZACION_HISTORY_FECHA));
+        cotizacionHistorico.getCotizacionDiariaDTO().setDiaCotizacion(rs.getTimestamp(COTIZACION_HISTORY_FECHA));
         
         return cotizacionHistorico;
     }

@@ -36,11 +36,11 @@
                                              style="width: 900px">
 
 
-                                    <p:column headerText="EMISORA">
+                                    <p:column headerText="EMISORA" style="width: 75px;">
                                         <h:outputText value="#{cotizacionH.cotizacionDiariaDTO.emisora.nombre}" />
                                     </p:column>
 
-                                    <p:column headerText="COSTO UNITARIO" filterBy="#{cotizacionH.cotizacionDiariaDTO.costoAlDia}">
+                                    <p:column headerText="COTIZACIÓN" filterBy="#{cotizacionH.cotizacionDiariaDTO.costoAlDia}">
                                         <div style="text-align: right;">
                                             <h:outputText value="#{cotizacionH.cotizacionDiariaDTO.costoAlDia}">
                                                 <f:convertNumber pattern="$ #,##0.00" />

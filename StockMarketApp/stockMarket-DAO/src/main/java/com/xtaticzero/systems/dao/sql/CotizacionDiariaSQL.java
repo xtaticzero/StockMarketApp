@@ -55,6 +55,11 @@ public interface CotizacionDiariaSQL extends BaseSQL {
             + "FROM COTIZACION_DIARIA_HISTORY COT_H\n"
             + "INNER JOIN COTIZACION_DIARIA COT ON COT.cotizacion_id = COT_H.cotizacion_id\n"
             + "INNER JOIN EMISORA EMI ON COT_H.emisora_id = EMI.emisora_id\n"
-            + "WHERE EMI.emisora_id = ?";
+            + "WHERE 1=1\n"
+            + "AND \n"
+            + "EMI.emisora_id = ?\n"
+            + "AND\n"
+            + "(COT_H.diaCotizacion between  DATE_FORMAT(NOW() ,'%Y-%m-01') AND SYSDATE() )\n"
+            + "ORDER BY COT_H.diaCotizacion DESC";
 
 }
