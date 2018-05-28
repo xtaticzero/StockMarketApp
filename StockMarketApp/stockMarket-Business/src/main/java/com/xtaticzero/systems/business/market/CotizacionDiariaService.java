@@ -7,9 +7,11 @@ package com.xtaticzero.systems.business.market;
 
 import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
+import com.xtaticzero.systems.base.dto.CotizacionHistoricoDTO;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.business.bo.impl.CotizacionVectorBO;
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  *
@@ -27,6 +29,6 @@ public interface CotizacionDiariaService {
     
     CotizacionDiariaDTO findCotizacionDiariaByEmisora(BigInteger idEmisora) throws BusinessException;
     
-    CotizacionDiariaDTO findCotizacionDiariaHistoricoByEmisora(BigInteger idEmisora) throws BusinessException;
+    CotizacionVectorBO findCotizacionDiariaHistoricoByEmisora(CotizacionVectorBO cotizacionDiariaBO) throws BusinessException;
 
 }

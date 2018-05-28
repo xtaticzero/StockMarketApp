@@ -6,6 +6,7 @@
 package com.xtaticzero.systems.business.bo.impl;
 
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
+import com.xtaticzero.systems.base.dto.CotizacionHistoricoDTO;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.business.bo.BO;
 import java.util.List;
@@ -19,6 +20,7 @@ public class CotizacionVectorBO extends BO<CotizacionVectorBO> {
     private static final long serialVersionUID = -7941723588237593411L;
 
     private List<CotizacionDiariaDTO> lstCotizacionesDiarias;
+    private List<CotizacionHistoricoDTO> lstHistoricoCotizacion;
     private CotizacionDiariaDTO cotizacionSeleccionada;
 
     private CotizacionVectorBO(UsuarioDTO usuario) {
@@ -46,6 +48,14 @@ public class CotizacionVectorBO extends BO<CotizacionVectorBO> {
 
     public void setCotizacionSeleccionada(CotizacionDiariaDTO cotizacionSeleccionada) {
         this.cotizacionSeleccionada = cotizacionSeleccionada;
+    }
+
+    public List<CotizacionHistoricoDTO> getLstHistoricoCotizacion() {
+        return lstHistoricoCotizacion;
+    }
+
+    public void setLstHistoricoCotizacion(List<CotizacionHistoricoDTO> lstHistoricoCotizacion) {
+        this.lstHistoricoCotizacion = lstHistoricoCotizacion;
     }
 
 }

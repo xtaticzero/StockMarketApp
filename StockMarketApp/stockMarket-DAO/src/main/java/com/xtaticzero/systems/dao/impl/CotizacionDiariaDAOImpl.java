@@ -7,9 +7,11 @@ package com.xtaticzero.systems.dao.impl;
 
 import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
+import com.xtaticzero.systems.base.dto.CotizacionHistoricoDTO;
 import com.xtaticzero.systems.dao.BaseJDBCDao;
 import com.xtaticzero.systems.dao.CotizacionDiariaDAO;
 import com.xtaticzero.systems.dao.mapper.CotizacionDiariaMapper;
+import com.xtaticzero.systems.dao.mapper.CotizacionHistoryMapper;
 import com.xtaticzero.systems.dao.preparedstatement.CotizacionDiariaPreparedStatement;
 import com.xtaticzero.systems.dao.sql.CotizacionDiariaSQL;
 import java.math.BigInteger;
@@ -123,6 +125,20 @@ public class CotizacionDiariaDAOImpl extends BaseJDBCDao<CotizacionDiariaDTO> im
         }
 
         return null;
+    }
+
+    @Override
+    public List<CotizacionHistoricoDTO> findCotizacionHistoryByEmisora(BigInteger idEmisora) throws DAOException {
+        try {
+            List<Object> params = new ArrayList<>();
+            params.add(idEmisora);
+
+            return getJdbcTemplateBase().query(FIND_COTIZACION_HISTORY_BY_EMISORA, params.toArray(),new CotizacionHistoryMapper());
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            throw new DAOException(ERR_GENERAL, ex.getMessage(), ex);
+        }
     }
 
     @Override

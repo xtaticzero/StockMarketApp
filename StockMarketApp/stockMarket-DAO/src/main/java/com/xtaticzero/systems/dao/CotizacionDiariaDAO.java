@@ -7,6 +7,7 @@ package com.xtaticzero.systems.dao;
 
 import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
+import com.xtaticzero.systems.base.dto.CotizacionHistoricoDTO;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public interface CotizacionDiariaDAO {
     int delete(CotizacionDiariaDTO cotizacionDiaria) throws DAOException;
 
     CotizacionDiariaDTO findCotizacionDiariaByEmisora(BigInteger idEmisora) throws DAOException;
+
+    List<CotizacionHistoricoDTO> findCotizacionHistoryByEmisora(BigInteger idEmisora) throws DAOException;
 
     List<CotizacionDiariaDTO> findAllCotizacionDiaria() throws DAOException;
 

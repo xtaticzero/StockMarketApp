@@ -16,10 +16,48 @@
                  width: 1533.0px;
                  margin-left:auto;
                  margin-right:auto;">
-                <h:form>
+                <h:form id="cotizacionDiaria">
                     <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
                     <f:event listener="#{cotizacionesMB.preRender}" type="preRenderView" />                    
                     <h:panelGrid columns="3">
+                        <p:dialog header="Cotización Historico" 
+                                  widgetVar="cotizacionDialog" 
+                                  modal="true" 
+                                  showEffect="fade" 
+                                  hideEffect="fade" 
+                                  resizable="false" 
+                                  draggable="false">
+                            <p:outputPanel id="cotizacionDetail" style="text-align:center;">
+                                <p:dataTable var="cotizacionH" value="#{cotizacionesMB.cotizacionBO.lstHistoricoCotizacion}" rows="10"
+                                             paginator="true"
+                                             emptyMessage="#{msj['label.lista.vacia']}"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15"
+                                             style="width: 900px">
+
+
+                                    <p:column headerText="EMISORA">
+                                        <h:outputText value="#{cotizacionH.cotizacionDiariaDTO.emisora.nombre}" />
+                                    </p:column>
+
+                                    <p:column headerText="COSTO UNITARIO" filterBy="#{cotizacionH.cotizacionDiariaDTO.costoAlDia}">
+                                        <div style="text-align: right;">
+                                            <h:outputText value="#{cotizacionH.cotizacionDiariaDTO.costoAlDia}">
+                                                <f:convertNumber pattern="$ #,##0.00" />
+                                            </h:outputText>
+                                        </div>
+                                    </p:column>
+
+                                    <p:column headerText="FECHA">
+                                        <h:outputText value="#{cotizacionH.cotizacionDiariaDTO.diaCotizacion}">
+                                            <f:convertDateTime pattern="EEEE dd/MMMM/yyyy hh:mm a" type="date" timeZone="America/Mexico_City"/>
+                                        </h:outputText>
+                                    </p:column>
+
+
+                                </p:dataTable>
+                            </p:outputPanel>
+                        </p:dialog>
                         <p:accordionPanel style="width: 1529.0px;">
                             <p:tab title="VECTOR Cotizaciones">
                                 <div style="text-align: center;">
@@ -35,10 +73,16 @@
                                         <p:ajax event="rowEdit" listener="#{cotizacionesMB.onRowEdit}" />
                                         <p:ajax event="rowEditCancel" listener="#{cotizacionesMB.onRowCancel}" />
 
-                                        <p:column headerText="ID" style="width:32px">
-                                            <div style="text-align: right;">
-                                                <h:outputText value="#{cotizacion.cotizacionId}" />
-                                            </div>                                            
+                                        <!--                                        <p:column headerText="ID" style="width:32px">
+                                                                                    <div style="text-align: right;">
+                                                                                        <h:outputText value="{cotizacion.cotizacionId}" />
+                                                                                    </div>                                            
+                                                                                </p:column>-->
+
+                                        <p:column headerText="HISTORICO" style="width:70px;text-align: center">
+                                            <p:commandButton update=":cotizacionDiaria:cotizacionDetail" action="#{cotizacionesMB.buscarHistorialCotizacion}" onsuccess="PF('cotizacionDialog').show()" icon="ui-icon-search" title="View">
+                                                <f:setPropertyActionListener value="#{cotizacion}" target="#{cotizacionesMB.cotizacionBO.cotizacionSeleccionada}" />
+                                            </p:commandButton>
                                         </p:column>
 
                                         <p:column headerText="EMISORA" filterBy="#{cotizacion.emisora.nombre}" style="width:150px">
@@ -55,7 +99,7 @@
                                                     </div>
                                                 </f:facet>
                                                 <f:facet name="input">
-                                                    <p:inputNumber id="modelInput" value="#{cotizacion.costoAlDia}" style="width:100%">  
+                                                    <p:inputNumber id="modelInput" value="#{cotizacion.costoAlDia}">  
                                                         <p:ajax update="modelInput" />  
                                                     </p:inputNumber>
                                                 </f:facet>
@@ -70,7 +114,7 @@
                                             </div>
                                         </p:column>
 
-                                        <p:column style="width:32px">
+                                        <p:column headerText="EDICIÓN" style="width:50px">
                                             <p:rowEditor />
                                         </p:column>
 
