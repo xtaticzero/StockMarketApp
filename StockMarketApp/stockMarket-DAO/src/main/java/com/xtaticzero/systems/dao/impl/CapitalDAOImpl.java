@@ -16,11 +16,13 @@ import java.util.List;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
+@Repository("capitalDAO")
 public class CapitalDAOImpl extends BaseJDBCDao<CapitalDTO> implements CapitalDAO {
 
     private static final long serialVersionUID = -2124018714836352194L;
