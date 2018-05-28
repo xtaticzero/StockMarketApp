@@ -9,13 +9,16 @@ import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.CapitalDTO;
 import com.xtaticzero.systems.dao.BaseJDBCDao;
 import com.xtaticzero.systems.dao.CapitalDAO;
+import com.xtaticzero.systems.dao.mapper.CapitalMapper;
 import com.xtaticzero.systems.dao.preparedstatement.CapitalPrepareStatement;
+import com.xtaticzero.systems.dao.util.RowsNames;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -70,17 +73,47 @@ public class CapitalDAOImpl extends BaseJDBCDao<CapitalDTO> implements CapitalDA
 
     @Override
     public BigDecimal totalEntradas() throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            BigDecimal totalEntradas = BigDecimal.ZERO;
+            SqlRowSet srs = getJdbcTemplateBase().queryForRowSet(TOTAL_ENTRADAS);
+
+            while (srs.next()) {
+                totalEntradas = new BigDecimal(srs.getString(RowsNames.TOTAL));
+            }
+
+            return totalEntradas;
+        } catch (Exception e) {
+            logger.error(e);
+            throw new DAOException(ERR_GENERAL, e);
+        }
+
     }
 
     @Override
     public BigDecimal totalSalidas() throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            BigDecimal totalSalidas = BigDecimal.ZERO;
+            SqlRowSet srs = getJdbcTemplateBase().queryForRowSet(TOTAL_SALIDAS);
+
+            while (srs.next()) {
+                totalSalidas = new BigDecimal(srs.getString(RowsNames.TOTAL));
+            }
+
+            return totalSalidas;
+        } catch (Exception e) {
+            logger.error(e);
+            throw new DAOException(ERR_GENERAL, e);
+        }
     }
 
     @Override
     public List<CapitalDTO> getValanceMovimientos() throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return getJdbcTemplateBase().query(REPORTE_MOVIMIENTOS, new CapitalMapper());
+        } catch (Exception e) {
+            logger.error(e);
+            throw new DAOException(ERR_GENERAL, e);
+        }
     }
 
 }

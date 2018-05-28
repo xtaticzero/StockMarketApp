@@ -48,12 +48,11 @@ public class CapitalDTO extends BaseModel {
     }
 
     public Date getDiaMovimiento() {
-        return diaMovimiento;
+        return (diaMovimiento != null ? (Date) diaMovimiento.clone() : null);
     }
 
     public void setDiaMovimiento(Date diaMovimiento) {
-        this.diaMovimiento = diaMovimiento;
+        this.diaMovimiento = (diaMovimiento != null ? (Date) diaMovimiento.clone() : null);
     }
 
-    
 }
