@@ -41,8 +41,15 @@ public interface RowsNames {
     String COTIZACION_AL_DIA = "COT.costo_al_dia";
     String COTIZACION_FECHA_COTIZACION = "COT.diaCotizacion";
     String COTIZACION_FECHA_BAJA = "COT.fecha_termino";
-    
+
     String COMISION_ID = "COM.comision_id";
     String COMISION_PORCENTAJE = "COM.porcentaje";
     String COMISION_DESCRIPCION = "COM.descripcion";
+
+    String CAPITAL_ID = "CAP.capital_id";
+    String CAPITAL_MONTO_ENTRADA = "CAP.montoEntrada";
+    String CAPITAL_MONTO_SALIDA = "CAP.montoSalida";
+    String CAPITAL_DIA_MOVIMIENTO = "CAP.diaMovimiento";
+
+    String TOTAL = "total";
 }
