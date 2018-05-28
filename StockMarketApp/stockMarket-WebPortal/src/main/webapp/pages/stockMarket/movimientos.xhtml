@@ -14,67 +14,89 @@
         <h:body>
             <ui:include src="../background.xhtml"/>
             <ui:include src="menuHeader.xhtml"/>
-            <div id="panelCentral" 
+            <div id="panelCentral ui-g" 
                  style="position: absolute;
                  top: 75px;
                  height: 200px;
                  /*                 border: 3px solid #73AD21;*/
                  align-content: center;
-                 width: 1533.0px;
+                 width: 100%;
                  margin-left:auto;
                  margin-right:auto;">
                 <f:event listener="#{cotizacionesMB.preRender}" type="preRenderView" />
                 <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
                 <h:form prependId="false">
-                    <p:panelGrid style="margin-top:20px">
-                        <f:facet name="header">
-                            <p:row>
-                                <p:column colspan="7">Compra</p:column>
-                            </p:row>
-                        </f:facet>
-                        <p:row>
-                            <p:column style="font-weight: bold;">Emisora:</p:column>
-                            <p:column>
-                                <p:selectOneMenu id="emisoras" value="#{movimientoMB.selectEmisora}"
-                                                 style="width:125px" >
-                                    <p:ajax listener="#{movimientoMB.changeEmisora}" update="iTCostUnit"/>
-                                    <f:selectItems value="#{movimientoMB.emisoras}" var="emisora" 
-                                                   itemLabel="#{emisora.nombre}" itemValue="#{emisora.emisora_id}" />
-                                </p:selectOneMenu>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column style="font-weight: bold;">Costo Unitario:</p:column>
-                            <p:column>
-                                <p:inputText id="iTCostUnit" value="#{movimientoMB.accion.costoUnitario}">
-                                    <p:ajax update="oLTotal" listener="#{movimientoMB.calculaTotalCompra}" />
-                                </p:inputText>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column style="font-weight: bold;">Comisión:</p:column>
-                            <p:column>
-                                <p:outputLabel value="0.00174"/>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column style="font-weight: bold;">Cantidad:</p:column>
-                            <p:column>
-                                <p:inputText value="#{movimientoMB.accion.existencia}">
-                                    <p:ajax update="oLTotal" listener="#{movimientoMB.calculaTotalCompra}" />
-                                </p:inputText>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column style="font-weight: bold;">Total:</p:column>
-                            <p:column>
-                                <p:outputLabel id="oLTotal" value="#{movimientoMB.totalCompra}"/>
-                            </p:column>
-                        </p:row>
-                    </p:panelGrid>
 
-                    <p:spacer/>
-                    <p:commandButton value="Comprar" action="#{movimientoMB.agregaCompra}" update="growl,dtCapAcc"/>
+                    <div class="ui-g" style="display: flex; justify-content: center;">
+                        <div class="ui-g-12 ui-md-5">
+                            <p:panelGrid style="margin-top:20px">
+                                <f:facet name="header">
+                                    <p:row>
+                                        <p:column colspan="2">Compra</p:column>
+                                    </p:row>
+                                </f:facet>
+                                <p:row>
+                                    <p:column style="font-weight: bold;">Emisora:</p:column>
+                                    <p:column>
+                                        <p:selectOneMenu id="emisoras" value="#{movimientoMB.selectEmisora}"
+                                                         style="width:125px" >
+                                            <p:ajax listener="#{movimientoMB.changeEmisora}" update="iTCostUnit"/>
+                                            <f:selectItems value="#{movimientoMB.emisoras}" var="emisora" 
+                                                           itemLabel="#{emisora.nombre}" itemValue="#{emisora.emisora_id}" />
+                                        </p:selectOneMenu>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="font-weight: bold;">Costo Unitario:</p:column>
+                                    <p:column>
+                                        <p:inputText id="iTCostUnit" value="#{movimientoMB.accion.costoUnitario}" style="width:165px">
+                                            <p:ajax update="oLTotal" listener="#{movimientoMB.calculaTotalCompra}" />
+                                        </p:inputText>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="font-weight: bold;">Comisión:</p:column>
+                                    <p:column>
+                                        <p:outputLabel value="0.00174"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="font-weight: bold;">Cantidad:</p:column>
+                                    <p:column>
+                                        <p:inputText value="#{movimientoMB.accion.existencia}" style="width:165px">
+                                            <p:ajax update="oLTotal" listener="#{movimientoMB.calculaTotalCompra}" />
+                                        </p:inputText>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="font-weight: bold;">Total:</p:column>
+                                    <p:column>
+                                        <p:outputLabel id="oLTotal" value="#{movimientoMB.totalCompra}"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="2">
+                                        <p:commandButton value="Comprar" action="#{movimientoMB.agregaCompra}" update="growl,dtCapAcc,iTCapInit"/>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+
+                        </div>
+                        <div class="ui-g-12 ui-md-2">
+                            <p:panelGrid style="margin-top:20px">
+                                <f:facet name="header">
+                                    <p:row>
+                                        <p:column>Capital Inicial</p:column>
+                                    </p:row>
+                                </f:facet>
+                                <p:row>
+                                    <p:column>
+                                        <p:inputText id="iTCapInit" value="#{movimientoMB.capitalInit}" style="width:165px"/>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </div>
+                    </div>
 
                     <p:dataTable id="dtCapAcc" value="#{movimientoMB.transacciones}" var="tran"
                                  editable="true"

@@ -45,4 +45,10 @@ public interface RowsNames {
     String COMISION_ID = "COM.comision_id";
     String COMISION_PORCENTAJE = "COM.porcentaje";
     String COMISION_DESCRIPCION = "COM.descripcion";
+    
+    String CAPITAL_ID = "CAP.capital_id";
+    String CAPITAL_ENTRADA = "CAP.montoEntrada";
+    String CAPITAL_SALIDA = "CAP.montoSalida";
+    String CAPITAL_FECHA = "CAP.diaMovimiento";
+    
 }
