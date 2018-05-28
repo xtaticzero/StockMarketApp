@@ -23,8 +23,7 @@ public class CompraVentaBO extends BO<CompraVentaBO> {
     private CapaDTO capa;
 
     private CompraVentaBO(UsuarioDTO usuario) {
-        super();
-        setUsuario(usuario);
+        super(usuario);
     }
 
     public static CompraVentaBO getBOValido(UsuarioDTO usuario) {
@@ -47,7 +46,7 @@ public class CompraVentaBO extends BO<CompraVentaBO> {
     }
 
     public void setLstCapas(CapaDTO capas) {
-        this.capa = capa;
+        this.capa = capas;
     }
 
 }

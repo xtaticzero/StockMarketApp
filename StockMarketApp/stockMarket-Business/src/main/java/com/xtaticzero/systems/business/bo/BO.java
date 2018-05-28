@@ -21,8 +21,8 @@ public abstract class BO<T> implements Serializable {
     private Rule<T> rule;
     private UsuarioDTO usuario;
 
-    protected BO() {
-
+    protected BO(UsuarioDTO usuario) {
+        this.usuario = usuario;
     }
 
     public Rule<T> getRule() {

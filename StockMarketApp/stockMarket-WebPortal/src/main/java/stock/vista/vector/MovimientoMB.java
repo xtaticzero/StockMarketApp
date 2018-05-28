@@ -6,6 +6,7 @@
 package stock.vista.vector;
 
 import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
+import com.xtaticzero.systems.base.constants.excepcion.impl.FrontException;
 import com.xtaticzero.systems.base.dto.AccionDTO;
 import com.xtaticzero.systems.base.dto.CapaAccionDTO;
 import com.xtaticzero.systems.base.dto.CapaDTO;
@@ -24,12 +25,11 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.faces.event.ValueChangeEvent;
-import mx.gob.sat.mat.tabacos.vista.AbstractManagedBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import stock.vista.VistaAbstractMB;
 
 /**
  *
@@ -37,7 +37,7 @@ import org.springframework.stereotype.Controller;
  */
 @Controller("movimientoMB")
 @Scope(value = "view")
-public class MovimientoMB extends AbstractManagedBean {
+public class MovimientoMB extends VistaAbstractMB {
 
     @Autowired
     @Qualifier("emisoraService")
@@ -66,13 +66,14 @@ public class MovimientoMB extends AbstractManagedBean {
     private BigDecimal totalCompra = BigDecimal.ZERO;
 
     @PostConstruct
-    public void init() {
+    public void init() throws FrontException {
         try {
+            validateUsuarioValido();
             emisoras = emisoraService.obtenerEmisoras();
             accion = new AccionDTO();
             transacciones = transaccionService.obtenerTransacciones();
         } catch (BusinessException ex) {
-            getLogger().error(ex);
+            logger.error(ex);
         }
     }
 
@@ -81,7 +82,7 @@ public class MovimientoMB extends AbstractManagedBean {
             cotizacion = cotizacionService.findCotizacionDiariaByEmisora(selectEmisora);
             accion.setCostoUnitario(cotizacion.getCostoAlDia());
         } catch (BusinessException ex) {
-            getLogger().error(ex);
+            logger.error(ex);
         }
     }
 
@@ -94,15 +95,15 @@ public class MovimientoMB extends AbstractManagedBean {
     public void agregaCompra() {
         try {
             if (!cotizacion.getCostoAlDia().equals(accion.getCostoUnitario())) {
-                getLogger().info("### Cambio el costo al día " + accion.getCostoUnitario());
-                CotizacionVectorBO cotizacioBO = new CotizacionVectorBO();
+                logger.info("### Cambio el costo al día " + accion.getCostoUnitario());
+                CotizacionVectorBO cotizacioBO = CotizacionVectorBO.getBOValido(getUsuario());
                 cotizacion.setCostoAlDia(accion.getCostoUnitario());
                 cotizacioBO.setCotizacionSeleccionada(cotizacion);
 
                 cotizacionService.actualizarCotizacion(cotizacioBO);
             }
 
-            getLogger().info("### Asignar Capa " + selectEmisora);
+            logger.info("### Asignar Capa " + selectEmisora);
             CapaDTO capa = capaService.asignaCapa(selectEmisora);
             accion = accionService.guardarAccion(accion);
 
@@ -125,10 +126,10 @@ public class MovimientoMB extends AbstractManagedBean {
             transaccionService.guardarTransaccion(transaccion);
 
             transacciones = transaccionService.obtenerTransacciones();
-            addMessage("Exito!", "");
+            msgInfo("Exito!");
 
         } catch (BusinessException ex) {
-            getLogger().error(ex);
+            logger.error(ex);
         }
     }
 

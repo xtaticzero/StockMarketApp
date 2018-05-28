@@ -21,11 +21,8 @@ public class CotizacionVectorBO extends BO<CotizacionVectorBO> {
     private List<CotizacionDiariaDTO> lstCotizacionesDiarias;
     private CotizacionDiariaDTO cotizacionSeleccionada;
 
-    public CotizacionVectorBO(){}
-    
     private CotizacionVectorBO(UsuarioDTO usuario) {
-        super();
-        setUsuario(usuario);
+        super(usuario);
     }
 
     public static CotizacionVectorBO getBOValido(UsuarioDTO usuario) {
