@@ -10,7 +10,6 @@ import com.xtaticzero.systems.base.constants.excepcion.impl.FrontException;
 import com.xtaticzero.systems.base.dto.AccionDTO;
 import com.xtaticzero.systems.base.dto.CapaAccionDTO;
 import com.xtaticzero.systems.base.dto.CapaDTO;
-import com.xtaticzero.systems.base.dto.CapitalDTO;
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
 import com.xtaticzero.systems.base.dto.EmisoraDTO;
 import com.xtaticzero.systems.base.dto.TransaccionDTO;
@@ -19,7 +18,6 @@ import com.xtaticzero.systems.business.bo.impl.CotizacionVectorBO;
 import com.xtaticzero.systems.business.market.AccionService;
 import com.xtaticzero.systems.business.market.CapaAccionService;
 import com.xtaticzero.systems.business.market.CapaService;
-import com.xtaticzero.systems.business.market.CapitalService;
 import com.xtaticzero.systems.business.market.CotizacionDiariaService;
 import com.xtaticzero.systems.business.market.EmisoraService;
 import com.xtaticzero.systems.business.market.TransaccionService;
@@ -59,9 +57,6 @@ public class MovimientoMB extends VistaAbstractMB {
     @Autowired
     @Qualifier("cotizacionDiariaService")
     private CotizacionDiariaService cotizacionService;
-    @Autowired
-    @Qualifier("capitalService")
-    private CapitalService capitalService;
 
     private List<EmisoraDTO> emisoras;
     private BigInteger selectEmisora;
@@ -69,8 +64,6 @@ public class MovimientoMB extends VistaAbstractMB {
     private CotizacionDiariaDTO cotizacion;
     private List<TransaccionDTO> transacciones;
     private BigDecimal totalCompra = BigDecimal.ZERO;
-    private CapitalDTO capital;
-    private BigDecimal capitalInit = BigDecimal.ZERO;
 
     @PostConstruct
     public void init() throws FrontException {
@@ -79,8 +72,6 @@ public class MovimientoMB extends VistaAbstractMB {
             emisoras = emisoraService.obtenerEmisoras();
             accion = new AccionDTO();
             transacciones = transaccionService.obtenerTransacciones();
-            capital = capitalService.getCapital();
-            capitalInit = capital.getMontoEntrada();
         } catch (BusinessException ex) {
             logger.error(ex);
         }
@@ -103,63 +94,39 @@ public class MovimientoMB extends VistaAbstractMB {
 
     public void agregaCompra() {
         try {
-            if (!capital.equals(BigDecimal.ZERO)) {
+            if (!cotizacion.getCostoAlDia().equals(accion.getCostoUnitario())) {
+                logger.info("### Cambio el costo al día " + accion.getCostoUnitario());
+                CotizacionVectorBO cotizacioBO = CotizacionVectorBO.getBOValido(getUsuario());
+                cotizacion.setCostoAlDia(accion.getCostoUnitario());
+                cotizacioBO.setCotizacionSeleccionada(cotizacion);
 
-                if (!capital.getMontoEntrada().equals(capitalInit)) {
-                    logger.info("### Cambio el capital " + capitalInit);
-                    capital.setMontoEntrada(capitalInit);
-                    capital = capitalService.agregarEntrada(capital);
-                    capitalInit = capital.getMontoEntrada();
-                }
-
-                if (totalCompra.compareTo(capital.getMontoEntrada()) == 1) {
-                    msgWarn("La compra supera tu capital");
-                } else {
-                    if (!cotizacion.getCostoAlDia().equals(accion.getCostoUnitario())) {
-                        logger.info("### Cambio el costo al día " + accion.getCostoUnitario());
-                        CotizacionVectorBO cotizacioBO = CotizacionVectorBO.getBOValido(getUsuario());
-                        cotizacion.setCostoAlDia(accion.getCostoUnitario());
-                        cotizacioBO.setCotizacionSeleccionada(cotizacion);
-
-                        cotizacionService.actualizarCotizacion(cotizacioBO);
-                    }
-
-                    logger.info("### Asignar Capa " + selectEmisora);
-                    CapaDTO capa = capaService.asignaCapa(selectEmisora);
-                    accion = accionService.guardarAccion(accion);
-
-                    CapaAccionDTO relacion = new CapaAccionDTO();
-                    relacion.setAccion(accion);
-                    relacion.setCapa(capa);
-
-                    CapaAccionDTO capaAccion = capaAccionService.guardarAccion(relacion);
-                    cotizacion = cotizacionService.findCotizacionDiariaByEmisora(selectEmisora);
-
-                    TransaccionDTO transaccion = new TransaccionDTO();
-
-                    transaccion.setCapaAccion(capaAccion);
-                    transaccion.setMovimiento(MovimientosEnum.getMovimiento(MovimientosEnum.COMPRA));
-                    transaccion.setImporte(cotizacion.getCostoAlDia().multiply(new BigDecimal(accion.getExistencia())));
-                    transaccion.setCosto(accion.getCostoUnitario().multiply(new BigDecimal(accion.getExistencia())));
-                    transaccion.setUtilidad(transaccion.getImporte().subtract(transaccion.getCosto()));
-                    transaccion.setPorcentajeVenta((transaccion.getUtilidad().divide(transaccion.getImporte())).multiply(new BigDecimal(100)));
-
-                    transaccionService.guardarTransaccion(transaccion);
-
-                    transacciones = transaccionService.obtenerTransacciones();
-                    
-                    
-                    capital.setMontoSalida(transaccion.getCosto());
-                    capitalService.agregarSalida(capital);
-                    capital.setMontoEntrada(capitalInit.subtract(transaccion.getCosto()));
-                    capital = capitalService.agregarEntrada(capital);
-                    capitalInit = capital.getMontoEntrada();
-                    
-                    msgInfo("Exito!");
-                }
-            } else {
-                msgWarn("Te has quedado sin capital, favor de validar el dato!");
+                cotizacionService.actualizarCotizacion(cotizacioBO);
             }
+
+            logger.info("### Asignar Capa " + selectEmisora);
+            CapaDTO capa = capaService.asignaCapa(selectEmisora);
+            accion = accionService.guardarAccion(accion);
+
+            CapaAccionDTO relacion = new CapaAccionDTO();
+            relacion.setAccion(accion);
+            relacion.setCapa(capa);
+
+            CapaAccionDTO capaAccion = capaAccionService.guardarAccion(relacion);
+            cotizacion = cotizacionService.findCotizacionDiariaByEmisora(selectEmisora);
+
+            TransaccionDTO transaccion = new TransaccionDTO();
+
+            transaccion.setCapaAccion(capaAccion);
+            transaccion.setMovimiento(MovimientosEnum.getMovimiento(MovimientosEnum.COMPRA));
+            transaccion.setImporte(cotizacion.getCostoAlDia().multiply(new BigDecimal(accion.getExistencia())));
+            transaccion.setCosto(accion.getCostoUnitario().multiply(new BigDecimal(accion.getExistencia())));
+            transaccion.setUtilidad(transaccion.getImporte().subtract(transaccion.getCosto()));
+            transaccion.setPorcentajeVenta((transaccion.getUtilidad().divide(transaccion.getImporte())).multiply(new BigDecimal(100)));
+
+            transaccionService.guardarTransaccion(transaccion);
+
+            transacciones = transaccionService.obtenerTransacciones();
+            msgInfo("Exito!");
 
         } catch (BusinessException ex) {
             logger.error(ex);
@@ -201,22 +168,6 @@ public class MovimientoMB extends VistaAbstractMB {
 
     public void setTotalCompra(BigDecimal totalCompra) {
         this.totalCompra = totalCompra;
-    }
-
-    public CapitalDTO getCapital() {
-        return capital;
-    }
-
-    public void setCapital(CapitalDTO capital) {
-        this.capital = capital;
-    }
-
-    public BigDecimal getCapitalInit() {
-        return capitalInit;
-    }
-
-    public void setCapitalInit(BigDecimal capitalInit) {
-        this.capitalInit = capitalInit;
     }
 
 }

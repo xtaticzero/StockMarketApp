@@ -17,8 +17,6 @@ import java.util.List;
  */
 public interface CapitalDAO extends CapitalSQL {
 
-    CapitalDTO getCapital() throws DAOException;
-    
     CapitalDTO agregarEntrada(CapitalDTO entradaCapital) throws DAOException;
 
     CapitalDTO agregarSalida(CapitalDTO salidaCapital) throws DAOException;

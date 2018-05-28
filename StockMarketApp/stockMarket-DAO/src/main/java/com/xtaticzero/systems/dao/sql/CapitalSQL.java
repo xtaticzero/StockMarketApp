@@ -29,6 +29,6 @@ public interface CapitalSQL {
             + "CAP.montoSalida,\n"
             + "CAP.diaMovimiento\n"
             + "FROM CAPITAL CAP \n"
-            + "ORDER BY CAP.diaMovimiento DESC";
+            + "ORDER BY CAP.diaMovimiento";
 
 }
