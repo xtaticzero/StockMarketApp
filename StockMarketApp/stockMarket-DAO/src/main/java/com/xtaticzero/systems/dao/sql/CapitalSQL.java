@@ -13,9 +13,9 @@ public interface CapitalSQL {
 
     String TABLE_CAPITAL = "CAPITAL";
 
-    String INSERT_ENTRADA_CAPITAL = "INSERT INTO CAPITAL(montoEntrada,diaMovimiento) VALUES(?,SYSDATE())";
+    String INSERT_ENTRADA_CAPITAL = "INSERT INTO CAPITAL(montoSalida,montoEntrada,diaMovimiento) VALUES(0,?,SYSDATE())";
 
-    String INSERT_SALIDA_CAPITAL = "INSERT INTO CAPITAL(montoSalida,diaMovimiento) VALUES(?,SYSDATE())";
+    String INSERT_SALIDA_CAPITAL = "INSERT INTO CAPITAL(montoSalida,montoEntrada,diaMovimiento) VALUES(?,0,SYSDATE())";
 
     String TOTAL_ENTRADAS = "SELECT SUM(CAPITAL.montoEntrada) total\n"
             + "   FROM CAPITAL;";
