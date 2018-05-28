@@ -18,11 +18,13 @@ import java.util.List;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
+@Repository("comisionDAO")
 public class ComisionDAOImpl extends BaseJDBCDao<ComisionDTO> implements ComisionDAO, ComisionSQL {
 
     private static final long serialVersionUID = 8822898927628723785L;
@@ -73,7 +75,7 @@ public class ComisionDAOImpl extends BaseJDBCDao<ComisionDTO> implements Comisio
     public List<ComisionDTO> findComision() throws DAOException {
         try {
 
-            return getJdbcTemplateBase().query(UPDATE_COMISION, new ComisionMapper());
+            return getJdbcTemplateBase().query(FIND_COMISION, new ComisionMapper());
 
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.xtaticzero.systems.business.market.impl;
 
 import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
@@ -23,14 +22,16 @@ import org.springframework.stereotype.Service;
  */
 @Service("capaAccionService")
 public class CapaAccionServiceImpl extends BaseBusinessServices implements CapaAccionService {
-    
+
+    private static final long serialVersionUID = -6632021297762457642L;
+
     @Autowired
     @Qualifier("capaAccionDAO")
     private CapaAccionDAO capaAccionDAO;
 
     @Override
     public CapaAccionDTO guardarAccion(CapaAccionDTO nuevaAccion) throws BusinessException {
-         try {
+        try {
             return capaAccionDAO.insert(nuevaAccion);
         } catch (DAOException daoEx) {
             logger.error(daoEx.getMessage());

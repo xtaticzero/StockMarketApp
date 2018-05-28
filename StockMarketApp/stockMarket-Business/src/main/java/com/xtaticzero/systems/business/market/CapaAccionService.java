@@ -16,5 +16,6 @@ import java.util.List;
 public interface CapaAccionService {
 
     CapaAccionDTO guardarAccion(CapaAccionDTO nuevaAccion) throws BusinessException;
+
     List<CapaAccionDTO> obtenerCapaAcciones() throws BusinessException;
 }

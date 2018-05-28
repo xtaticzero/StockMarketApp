@@ -40,4 +40,19 @@ public interface CotizacionDiariaSQL extends BaseSQL {
     String FIND_COTIZACION_BY_EMISORA = FIND_COTIZACION_ALL.concat(WHERE)
             .concat(PARAMETRO_EMISORA_ID).concat(ORDER_BY_EMISORA_ID);
 
+    String FIND_COTIZACION_HISTORY_BY_EMISORA = "SELECT \n"
+            + "COT_H.cotizacion_history_id,\n"
+            + "COT.cotizacion_id,\n"
+            + "COT.costo_al_dia,\n"
+            + "COT.diaCotizacion,\n"
+            + "COT.fecha_termino,\n"
+            + "EMI.emisora_id,\n"
+            + "EMI.nombre,\n"
+            + "EMI.fechaEntrada,\n"
+            + "EMI.fechaBaja\n"
+            + "FROM COTIZACION_DIARIA_HISTORY COT_H\n"
+            + "INNER JOIN COTIZACION_DIARIA COT ON COT.cotizacion_id = COT_H.cotizacion_id\n"
+            + "INNER JOIN EMISORA EMI ON COT_H.emisora_id = EMI.emisora_id\n"
+            + "WHERE EMI.emisora_id = ?";
+
 }

@@ -26,5 +26,7 @@ public interface CotizacionDiariaService {
     CotizacionVectorBO actualizarCotizaciones(CotizacionVectorBO cotizacionDiariaBO) throws BusinessException;
     
     CotizacionDiariaDTO findCotizacionDiariaByEmisora(BigInteger idEmisora) throws BusinessException;
+    
+    CotizacionDiariaDTO findCotizacionDiariaHistoricoByEmisora(BigInteger idEmisora) throws BusinessException;
 
 }

@@ -5,8 +5,10 @@
  */
 package com.xtaticzero.systems.business.bo.impl;
 
+import com.xtaticzero.systems.base.dto.CapaAccionDTO;
 import com.xtaticzero.systems.base.dto.CapaDTO;
 import com.xtaticzero.systems.base.dto.ComisionDTO;
+import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.business.bo.BO;
 import java.util.List;
@@ -24,11 +26,12 @@ public class SimuladorBO extends BO<SimuladorBO> {
     }
 
     private ComisionDTO comision;
+    private CotizacionVectorBO cotizacionDiariaBo;
 
-    private List<CapaDTO> lstCapas;
-    private List<CapaDTO> lstCapasSeleccionadas;
+    private List<CapaAccionDTO> lstCapaAccion;
+    private List<CapaAccionDTO> lstCapaAccionSeleccionadas;
 
-    public SimuladorBO getBOValido(UsuarioDTO usuario) {
+    public static SimuladorBO getBOValido(UsuarioDTO usuario) {
         if (usuario != null && usuario.getRol_id() != null && usuario.getDisplay_name() != null) {
             return new SimuladorBO(usuario);
         }
@@ -43,21 +46,28 @@ public class SimuladorBO extends BO<SimuladorBO> {
         this.comision = comision;
     }
 
-    public List<CapaDTO> getLstCapas() {
-        return lstCapas;
+    public List<CapaAccionDTO> getLstCapaAccion() {
+        return lstCapaAccion;
     }
 
-    public void setLstCapas(List<CapaDTO> lstCapas) {
-        this.lstCapas = lstCapas;
+    public void setLstCapaAccion(List<CapaAccionDTO> lstCapaAccion) {
+        this.lstCapaAccion = lstCapaAccion;
     }
 
-    public List<CapaDTO> getLstCapasSeleccionadas() {
-        return lstCapasSeleccionadas;
+    public List<CapaAccionDTO> getLstCapaAccionSeleccionadas() {
+        return lstCapaAccionSeleccionadas;
     }
 
-    public void setLstCapasSeleccionadas(List<CapaDTO> lstCapasSeleccionadas) {
-        this.lstCapasSeleccionadas = lstCapasSeleccionadas;
+    public void setLstCapaAccionSeleccionadas(List<CapaAccionDTO> lstCapaAccionSeleccionadas) {
+        this.lstCapaAccionSeleccionadas = lstCapaAccionSeleccionadas;
     }
-    
-    
+
+    public CotizacionVectorBO getCotizacionDiariaBo() {
+        return cotizacionDiariaBo;
+    }
+
+    public void setCotizacionDiariaBo(CotizacionVectorBO cotizacionDiariaBo) {
+        this.cotizacionDiariaBo = cotizacionDiariaBo;
+    }
+
 }

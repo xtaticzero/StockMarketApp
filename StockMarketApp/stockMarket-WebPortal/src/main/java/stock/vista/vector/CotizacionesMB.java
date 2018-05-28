@@ -114,8 +114,12 @@ public class CotizacionesMB extends VistaAbstractMB {
     }
 
     public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Cotizacion Cacela Edicion", ((CotizacionDiariaDTO) event.getObject()).getEmisora().getNombre());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        try {
+            cotizacionService.getLstCotizaciones(cotizacionBO);
+        } catch (Exception e) {
+            logger.error(e);
+            msgError(e.getMessage());
+        }
     }
 
     public CotizacionVectorBO getCotizacionBO() {

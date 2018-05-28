@@ -97,4 +97,9 @@ public class CotizacionDiariaServiceImpl extends BaseBusinessServices implements
         }
     }
 
+    @Override
+    public CotizacionDiariaDTO findCotizacionDiariaHistoricoByEmisora(BigInteger idEmisora) throws BusinessException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

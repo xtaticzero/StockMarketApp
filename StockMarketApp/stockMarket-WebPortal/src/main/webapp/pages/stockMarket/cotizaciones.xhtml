@@ -27,7 +27,7 @@
                                                  filteredValue="#{cotizacionesMB.filteredCotizaciones}" 
                                                  paginator="true" rows="11" paginatorPosition="bottom"  
                                                  editable="true"
-                                                 style="width: 700px">  
+                                                 style="width: 900px">  
                                         <f:facet name="header">  
                                             Vector - Casa de Bolsa 
                                         </f:facet>
@@ -41,11 +41,11 @@
                                             </div>                                            
                                         </p:column>
 
-                                        <p:column headerText="EMISORA" filterBy="#{cotizacion.emisora.nombre}">
+                                        <p:column headerText="EMISORA" filterBy="#{cotizacion.emisora.nombre}" style="width:150px">
                                             <h:outputText value="#{cotizacion.emisora.nombre}" />
                                         </p:column>
 
-                                        <p:column headerText="COSTO UNITARIO" filterBy="#{cotizacion.costoAlDia}">
+                                        <p:column headerText="COSTO UNITARIO" filterBy="#{cotizacion.costoAlDia}" style="width:110px">
                                             <p:cellEditor>
                                                 <f:facet name="output">
                                                     <div style="text-align: right;">
@@ -54,14 +54,18 @@
                                                         </h:outputText>
                                                     </div>
                                                 </f:facet>
-                                                <f:facet name="input"><p:inputText id="modelInput" value="#{cotizacion.costoAlDia}" style="width:100%"/></f:facet>
+                                                <f:facet name="input">
+                                                    <p:inputNumber id="modelInput" value="#{cotizacion.costoAlDia}" style="width:100%">  
+                                                        <p:ajax update="modelInput" />  
+                                                    </p:inputNumber>
+                                                </f:facet>
                                             </p:cellEditor>
                                         </p:column>
 
-                                        <p:column headerText="FECHA" style="width:230px">
+                                        <p:column headerText="FECHA" style="width:240px">
                                             <div style="text-align: center;">
                                                 <h:outputText value="#{cotizacion.diaCotizacion}">
-                                                    <f:convertDateTime pattern="EEEE dd/MMMM/yyyy HH:mm:ss" type="date" timeZone="America/Mexico_City"/>
+                                                    <f:convertDateTime pattern="EEEE dd/MMMM/yyyy hh:mm a" type="date" timeZone="America/Mexico_City"/>
                                                 </h:outputText>
                                             </div>
                                         </p:column>
