@@ -31,6 +31,21 @@ public class CapitalDAOImpl extends BaseJDBCDao<CapitalDTO> implements CapitalDA
     private static final long serialVersionUID = -2124018714836352194L;
 
     @Override
+    public CapitalDTO getCapital() throws DAOException {
+        try {
+            List<CapitalDTO> lstResult = getJdbcTemplateBase().query(REPORTE_MOVIMIENTOS,
+                    new CapitalMapper());
+            if (lstResult != null && !lstResult.isEmpty()) {
+                return lstResult.get(0);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new DAOException(ERR_GENERAL, e.getMessage(), e);
+        }
+        return null;
+    }
+
+    @Override
     public CapitalDTO agregarEntrada(CapitalDTO entradaCapital) throws DAOException {
         if (entradaCapital == null || entradaCapital.getMontoEntrada() == null) {
             return null;

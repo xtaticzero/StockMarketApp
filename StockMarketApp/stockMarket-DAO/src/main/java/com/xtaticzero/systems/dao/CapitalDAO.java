@@ -16,6 +16,8 @@ import java.util.List;
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
 public interface CapitalDAO extends CapitalSQL {
+    
+    CapitalDTO getCapital() throws DAOException;
 
     CapitalDTO agregarEntrada(CapitalDTO entradaCapital) throws DAOException;
 
