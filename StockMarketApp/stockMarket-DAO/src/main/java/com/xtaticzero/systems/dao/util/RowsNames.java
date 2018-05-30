@@ -32,10 +32,11 @@ public interface RowsNames {
 
     String TRANSACCION_ID = "TRA.transaccion_id";
     String TRANSACCION_FECHA = "TRA.fechaTransaccion";
-    String TRANSACCION_IMPORTE = "TRA.importe";
-    String TRANSACCION_COSTO = "TRA.costo";
+    String TRANSACCION_CANTIDAD = "TRA.cantidad";
+    String TRANSACCION_COSTO = "TRA.costoUnitario";
+    String TRANSACCION_TOTAL = "TRA.total";
     String TRANSACCION_UTILIDAD = "TRA.utilidad";
-    String TRANSACCION_PORCENTAJE = "TRA.porcentaje_Movimiento";
+    String TRANSACCION_PORCENTAJE = "TRA.porcentajeMovimiento";
 
     String COTIZACION_ID = "COT.cotizacion_id";
     String COTIZACION_AL_DIA = "COT.costo_al_dia";

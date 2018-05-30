@@ -71,7 +71,9 @@
                                 <p:row>
                                     <p:column style="font-weight: bold;">Total:</p:column>
                                     <p:column>
-                                        <p:outputLabel id="oLTotal" value="#{movimientoMB.totalCompra}"/>
+                                        <p:outputLabel id="oLTotal" value="#{movimientoMB.totalCompra}">
+                                            <f:convertNumber maxFractionDigits="4" />
+                                        </p:outputLabel>
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -91,7 +93,9 @@
                                 </f:facet>
                                 <p:row>
                                     <p:column>
-                                        <p:inputText id="iTCapInit" value="#{movimientoMB.capitalInit}" style="width:165px"/>
+                                        <p:inputText id="iTCapInit" value="#{movimientoMB.capitalInit}" style="width:165px">
+                                            <f:convertNumber maxFractionDigits="4" locale="es_MX"/>
+                                        </p:inputText>
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -102,48 +106,89 @@
                                  editable="true"
                                  expandableRowGroups="true" sortBy="#{tran.capaAccion.capa.emisora.nombre}">
                         <p:headerRow>
-                            <p:column colspan="11">
+                            <p:column colspan="9">
                                 <h:outputText value="#{tran.capaAccion.capa.emisora.nombre}" />
                             </p:column>
                         </p:headerRow>
-                        <p:column headerText="Fecha Compra">
-                            <h:outputText value="#{tran.capaAccion.accion.fechaCompra}" >
+                        <p:column headerText="Fecha">
+                            <h:outputText value="#{tran.fechaTransaccion}" >
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Entradas">
-                            <h:outputText value="#{tran.capaAccion.accion.existencia}" />
+                        <p:column headerText="Entrada">
+                            <h:outputText value="#{tran.cantidad}" />
                         </p:column>
-                        <p:column headerText="Salidas">
+                        <p:column headerText="Salida">
                             <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="" /></f:facet>
+                                <f:facet name="output"><h:outputText value="0" /></f:facet>
                                 <f:facet name="input"><p:inputText value="" style="width:100%"/></f:facet>
                             </p:cellEditor>
                         </p:column>
+                        <p:column headerText="Precio Compra">
+                            <h:outputText value="$#{tran.costoUnitario}" />
+                        </p:column>
                         <p:column headerText="Precio Venta">
-                            <h:outputText value="$#{tran.capaAccion.accion.costoUnitario}" />
+                            <h:outputText value="" />
                         </p:column>
-                        <p:column headerText="Importe">
-                            <h:outputText value="#{tran.importe}" />
-                        </p:column>
-                        <p:column headerText="Costo Unitario">
-                            <h:outputText value="#{tran.capaAccion.accion.costoUnitario}" />
-                        </p:column>
-                        <p:column headerText="Costo Total">
-                            <h:outputText value="#{tran.costo}" />
+                        <p:column headerText="Total">
+                            <h:outputText value="#{tran.total}" >
+                                <f:convertNumber maxFractionDigits="4" locale="es_MX"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Utilidad">
-                            <h:outputText value="#{tran.utilidad}" />
+                            <h:outputText value="#{tran.utilidad}" >
+                                <f:convertNumber maxFractionDigits="4" locale="es_MX"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="% Sobre Venta">
-                            <h:outputText value="%#{tran.porcentajeVenta}" />
-                        </p:column>
-                        <p:column headerText="Costo Promedio">
-                            <h:outputText value="%" />
+                            <h:outputText value="#{tran.porcentajeMovimiento}" >
+                                <f:convertNumber maxFractionDigits="4" type="percent" locale="es_MX"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="">
                             <p:button value="Venta"/>
                         </p:column>
+                        <p:summaryRow>
+                            <p:column style="text-align:right">
+                                <h:outputText value="Total:" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{movimientoMB.totalEntradas(tran.capaAccion.capa.emisora)}">
+                                    <f:convertNumber maxFractionDigits="4" locale="es_MX"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{movimientoMB.totalSalidas(tran.capaAccion.capa.emisora)}">
+                                    <f:convertNumber maxFractionDigits="4" locale="es_MX"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="$#{movimientoMB.totalPrecioCompras(tran.capaAccion.capa.emisora)}">
+                                    <f:convertNumber maxFractionDigits="4" locale="es_MX"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="$#{movimientoMB.totalPrecioVentas(tran.capaAccion.capa.emisora)}">
+                                    <f:convertNumber maxFractionDigits="4" locale="es_MX"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="$#{movimientoMB.totalTotales(tran.capaAccion.capa.emisora)}">
+                                    <f:convertNumber maxFractionDigits="4" locale="es_MX"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="$#{movimientoMB.totalUtilidades(tran.capaAccion.capa.emisora)}">
+                                    <f:convertNumber maxFractionDigits="4" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{movimientoMB.porcentajeTotales(tran.capaAccion.capa.emisora)}">
+                                    <f:convertNumber maxFractionDigits="4" type="percent" locale="es_MX"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column/>
+                        </p:summaryRow>
                     </p:dataTable>
 
                 </h:form>

@@ -22,10 +22,11 @@ public class TransaccionDTO extends BaseModel {
     private CapaAccionDTO capaAccion;
     private MovimientoDTO movimiento;
     private Date fechaTransaccion;
-    private BigDecimal importe;
-    private BigDecimal costo;
+    private Integer cantidad;
+    private BigDecimal costoUnitario;
+    private BigDecimal total;    
     private BigDecimal utilidad;
-    private BigDecimal porcentajeVenta;
+    private BigDecimal porcentajeMovimiento;
 
     public BigInteger getTransaccion_id() {
         return transaccion_id;
@@ -59,22 +60,6 @@ public class TransaccionDTO extends BaseModel {
         this.fechaTransaccion = (fechaTransaccion != null) ? (Date) fechaTransaccion : null;
     }
 
-    public BigDecimal getImporte() {
-        return importe;
-    }
-
-    public void setImporte(BigDecimal importe) {
-        this.importe = importe;
-    }
-
-    public BigDecimal getCosto() {
-        return costo;
-    }
-
-    public void setCosto(BigDecimal costo) {
-        this.costo = costo;
-    }
-
     public BigDecimal getUtilidad() {
         return utilidad;
     }
@@ -83,12 +68,35 @@ public class TransaccionDTO extends BaseModel {
         this.utilidad = utilidad;
     }
 
-    public BigDecimal getPorcentajeVenta() {
-        return porcentajeVenta;
+    public Integer getCantidad() {
+        return cantidad;
     }
 
-    public void setPorcentajeVenta(BigDecimal porcentajeVenta) {
-        this.porcentajeVenta = porcentajeVenta;
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
+    public BigDecimal getCostoUnitario() {
+        return costoUnitario;
+    }
+
+    public void setCostoUnitario(BigDecimal costoUnitario) {
+        this.costoUnitario = costoUnitario;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public BigDecimal getPorcentajeMovimiento() {
+        return porcentajeMovimiento;
+    }
+
+    public void setPorcentajeMovimiento(BigDecimal porcentajeMovimiento) {
+        this.porcentajeMovimiento = porcentajeMovimiento;
+    }
 }

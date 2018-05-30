@@ -25,6 +25,7 @@ import com.xtaticzero.systems.business.market.EmisoraService;
 import com.xtaticzero.systems.business.market.TransaccionService;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +99,7 @@ public class MovimientoMB extends VistaAbstractMB {
     public void calculaTotalCompra() {
         System.out.println("### Cost Unit: " + accion.getCostoUnitario());
         System.out.println("### Existencia: " + accion.getExistencia());
-        totalCompra = accion.getCostoUnitario().multiply(new BigDecimal(accion.getExistencia()));
+        totalCompra = accion.getCostoUnitario().multiply(new BigDecimal(accion.getExistencia() * 1.00174));
     }
 
     public void agregaCompra() {
@@ -139,18 +140,19 @@ public class MovimientoMB extends VistaAbstractMB {
 
                     transaccion.setCapaAccion(capaAccion);
                     transaccion.setMovimiento(MovimientosEnum.getMovimiento(MovimientosEnum.COMPRA));
-                    transaccion.setImporte(cotizacion.getCostoAlDia().multiply(new BigDecimal(accion.getExistencia())));
-                    transaccion.setCosto(accion.getCostoUnitario().multiply(new BigDecimal(accion.getExistencia())));
-                    transaccion.setUtilidad(transaccion.getImporte().subtract(transaccion.getCosto()));
-                    transaccion.setPorcentajeVenta((transaccion.getUtilidad().divide(transaccion.getImporte())).multiply(new BigDecimal(100)));
+                    transaccion.setCantidad(accion.getExistencia());
+                    transaccion.setCostoUnitario(accion.getCostoUnitario());
+                    transaccion.setTotal(accion.getCostoUnitario().multiply(new BigDecimal(accion.getExistencia() * 1.00174)));
+                    transaccion.setUtilidad(BigDecimal.ZERO);
+                    transaccion.setPorcentajeMovimiento(BigDecimal.ZERO);
 
                     transaccionService.guardarTransaccion(transaccion);
 
                     transacciones = transaccionService.obtenerTransacciones();
 
-                    capital.setMontoSalida(transaccion.getCosto());
+                    capital.setMontoSalida(transaccion.getTotal());
                     capitalService.agregarSalida(capital);
-                    capital.setMontoEntrada(capitalInit.subtract(transaccion.getCosto()));
+                    capital.setMontoEntrada(capitalInit.subtract(transaccion.getTotal()));
                     capital = capitalService.agregarEntrada(capital);
                     capitalInit = capital.getMontoEntrada();
 
@@ -163,6 +165,76 @@ public class MovimientoMB extends VistaAbstractMB {
         } catch (BusinessException ex) {
             logger.error(ex);
         }
+    }
+
+    private int calculaCantidadTotal(EmisoraDTO emisora, MovimientosEnum mov) {
+        int sum = 0;
+        for (TransaccionDTO tran : transacciones) {
+            if (emisora.getEmisora_id().equals(tran.getCapaAccion().getCapa().getEmisora().getEmisora_id())) {
+                if (tran.getMovimiento().getMovimiento_id().equals(mov.getId())) {
+                    sum += tran.getCantidad();
+                }
+            }
+        }
+        return sum;
+    }
+
+    private BigDecimal calculaCostoUnitarioTotal(EmisoraDTO emisora, MovimientosEnum mov) {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (TransaccionDTO tran : transacciones) {
+            if (emisora.getEmisora_id().equals(tran.getCapaAccion().getCapa().getEmisora().getEmisora_id())) {
+                if (tran.getMovimiento().getMovimiento_id().equals(mov.getId())) {
+                    sum= sum.add(tran.getCostoUnitario());
+                }
+            }
+        }
+        return sum;
+    }
+
+    public int totalEntradas(EmisoraDTO emisora) {
+        return calculaCantidadTotal(emisora, MovimientosEnum.COMPRA);
+    }
+
+    public int totalSalidas(EmisoraDTO emisora) {
+        return calculaCantidadTotal(emisora, MovimientosEnum.VENTA);
+    }
+
+    public BigDecimal totalPrecioCompras(EmisoraDTO emisora) {
+        return calculaCostoUnitarioTotal(emisora, MovimientosEnum.COMPRA);
+    }
+
+    public BigDecimal totalPrecioVentas(EmisoraDTO emisora) {
+        return calculaCostoUnitarioTotal(emisora, MovimientosEnum.VENTA);
+    }
+
+    public BigDecimal totalTotales(EmisoraDTO emisora) {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (TransaccionDTO tran : transacciones) {
+            if (emisora.getEmisora_id().equals(tran.getCapaAccion().getCapa().getEmisora().getEmisora_id())) {
+                sum=sum.add(tran.getTotal());
+            }
+        }
+        return sum.setScale(4, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal totalUtilidades(EmisoraDTO emisora) {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (TransaccionDTO tran : transacciones) {
+            if (emisora.getEmisora_id().equals(tran.getCapaAccion().getCapa().getEmisora().getEmisora_id())) {
+                sum=sum.add(tran.getUtilidad());
+            }
+        }
+        return sum;
+    }
+
+    public BigDecimal porcentajeTotales(EmisoraDTO emisora) {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (TransaccionDTO tran : transacciones) {
+            if (emisora.getEmisora_id().equals(tran.getCapaAccion().getCapa().getEmisora().getEmisora_id())) {
+                sum=sum.add(tran.getPorcentajeMovimiento());
+            }
+        }
+        return sum.setScale(4, RoundingMode.HALF_UP);
     }
 
     /* getters and setters */

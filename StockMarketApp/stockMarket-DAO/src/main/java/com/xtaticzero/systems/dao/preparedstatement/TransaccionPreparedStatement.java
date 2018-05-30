@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.xtaticzero.systems.dao.preparedstatement;
 
 import com.xtaticzero.systems.base.dto.TransaccionDTO;
@@ -18,7 +17,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
  *
  * @author Juan Antonio Perez Ramos | dev.juan.perez@gmail.com
  */
-public class TransaccionPreparedStatement extends PreparedStatementBase implements PreparedStatementCreator{
+public class TransaccionPreparedStatement extends PreparedStatementBase implements PreparedStatementCreator {
 
     private final TransaccionDTO transaccion;
 
@@ -26,20 +25,21 @@ public class TransaccionPreparedStatement extends PreparedStatementBase implemen
         super();
         this.transaccion = transaccion;
     }
-    
+
     @Override
     public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-     int numParametro = PARAMETRO_INICIAL;
+        int numParametro = PARAMETRO_INICIAL;
         try {
-                ps = connection.prepareStatement(TransaccionSQL.INSERT_TRANSACCION, new String[]{TransaccionSQL.TABLE_TRANSACCION});
-            //Se asignan id's de la propuesta
-            
+            ps = connection.prepareStatement(TransaccionSQL.INSERT_TRANSACCION, new String[]{TransaccionSQL.TABLE_TRANSACCION});
+
             ps.setObject(numParametro++, transaccion.getCapaAccion().getCaId());
             ps.setObject(numParametro++, transaccion.getMovimiento().getMovimiento_id());
-            ps.setObject(numParametro++, transaccion.getImporte());
-            ps.setObject(numParametro++, transaccion.getCosto());
+            ps.setObject(numParametro++, transaccion.getCantidad());
+            ps.setObject(numParametro++, transaccion.getCostoUnitario());
+            ps.setObject(numParametro++, transaccion.getTotal());
             ps.setObject(numParametro++, transaccion.getUtilidad());
-            ps.setObject(numParametro++, transaccion.getPorcentajeVenta());
+            ps.setObject(numParametro++, transaccion.getPorcentajeMovimiento());
+
             fail = false;
         } catch (SQLException ex) {
             logger.error("No se pudo realizar la incercion:");
