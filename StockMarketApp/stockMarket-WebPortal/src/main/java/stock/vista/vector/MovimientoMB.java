@@ -28,6 +28,7 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -72,6 +73,10 @@ public class MovimientoMB extends VistaAbstractMB {
     private BigDecimal totalCompra = BigDecimal.ZERO;
     private CapitalDTO capital;
     private BigDecimal capitalInit = BigDecimal.ZERO;
+    private TransaccionDTO tranSelect;
+
+    private Integer cantidadVenta;
+    private BigDecimal totalVenta = BigDecimal.ZERO;
 
     @PostConstruct
     public void init() throws FrontException {
@@ -97,8 +102,6 @@ public class MovimientoMB extends VistaAbstractMB {
     }
 
     public void calculaTotalCompra() {
-        System.out.println("### Cost Unit: " + accion.getCostoUnitario());
-        System.out.println("### Existencia: " + accion.getExistencia());
         totalCompra = accion.getCostoUnitario().multiply(new BigDecimal(accion.getExistencia() * 1.00174));
     }
 
@@ -167,6 +170,55 @@ public class MovimientoMB extends VistaAbstractMB {
         }
     }
 
+    public void calculaCotizacion() {
+        try {
+            cotizacion = cotizacionService.findCotizacionDiariaByEmisora(tranSelect.getCapaAccion().getCapa().getEmisora().getEmisora_id());
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('ventaDialog').show();");
+        } catch (BusinessException ex) {
+            logger.error(ex);
+        }
+    }
+
+    public void calculaTotalVenta() {
+        try {
+            cotizacion = cotizacionService.findCotizacionDiariaByEmisora(tranSelect.getCapaAccion().getCapa().getEmisora().getEmisora_id());
+            BigDecimal subTotal = cotizacion.getCostoAlDia().multiply(new BigDecimal(cantidadVenta));
+            totalVenta = subTotal.subtract(subTotal.multiply(new BigDecimal(0.00174)));
+            BigDecimal utilidad = totalVenta.subtract(tranSelect.getTotal());
+            tranSelect.setTotal(totalVenta);
+            tranSelect.setUtilidad(utilidad.setScale(6, RoundingMode.HALF_UP));
+            tranSelect.setPorcentajeMovimiento(tranSelect.getUtilidad().divide(tranSelect.getTotal(), 6, RoundingMode.HALF_UP));
+            totalVenta = tranSelect.getTotal();
+        } catch (BusinessException ex) {
+            logger.error(ex);
+        }
+    }
+
+    public void registraVenta() {
+        try {
+            if (cantidadVenta > tranSelect.getCapaAccion().getAccion().getExistencia()) {
+                msgWarn("No puedes vender más de las existentes, verfica el dato");
+            } else {
+                tranSelect.setMovimiento(MovimientosEnum.getMovimiento(MovimientosEnum.VENTA));
+                tranSelect.setCantidad(cantidadVenta);
+                tranSelect.setCostoUnitario(cotizacion.getCostoAlDia());
+
+                transaccionService.guardarTransaccion(tranSelect);
+                transacciones = transaccionService.obtenerTransacciones();
+
+                capital.setMontoEntrada(capitalInit.add(tranSelect.getTotal()));
+                capital = capitalService.agregarEntrada(capital);
+                capitalInit = capital.getMontoEntrada();
+
+                totalVenta = BigDecimal.ZERO;
+                msgInfo("Venta Realizada!");
+            }
+        } catch (BusinessException ex) {
+            logger.error(ex);
+        }
+    }
+
     private int calculaCantidadTotal(EmisoraDTO emisora, MovimientosEnum mov) {
         int sum = 0;
         for (TransaccionDTO tran : transacciones) {
@@ -184,7 +236,7 @@ public class MovimientoMB extends VistaAbstractMB {
         for (TransaccionDTO tran : transacciones) {
             if (emisora.getEmisora_id().equals(tran.getCapaAccion().getCapa().getEmisora().getEmisora_id())) {
                 if (tran.getMovimiento().getMovimiento_id().equals(mov.getId())) {
-                    sum= sum.add(tran.getCostoUnitario());
+                    sum = sum.add(tran.getCostoUnitario());
                 }
             }
         }
@@ -211,7 +263,7 @@ public class MovimientoMB extends VistaAbstractMB {
         BigDecimal sum = BigDecimal.ZERO;
         for (TransaccionDTO tran : transacciones) {
             if (emisora.getEmisora_id().equals(tran.getCapaAccion().getCapa().getEmisora().getEmisora_id())) {
-                sum=sum.add(tran.getTotal());
+                sum = sum.add(tran.getTotal());
             }
         }
         return sum.setScale(4, RoundingMode.HALF_UP);
@@ -221,17 +273,17 @@ public class MovimientoMB extends VistaAbstractMB {
         BigDecimal sum = BigDecimal.ZERO;
         for (TransaccionDTO tran : transacciones) {
             if (emisora.getEmisora_id().equals(tran.getCapaAccion().getCapa().getEmisora().getEmisora_id())) {
-                sum=sum.add(tran.getUtilidad());
+                sum = sum.add(tran.getUtilidad());
             }
         }
-        return sum;
+        return sum.setScale(4, RoundingMode.HALF_UP);
     }
 
     public BigDecimal porcentajeTotales(EmisoraDTO emisora) {
         BigDecimal sum = BigDecimal.ZERO;
         for (TransaccionDTO tran : transacciones) {
             if (emisora.getEmisora_id().equals(tran.getCapaAccion().getCapa().getEmisora().getEmisora_id())) {
-                sum=sum.add(tran.getPorcentajeMovimiento());
+                sum = sum.add(tran.getPorcentajeMovimiento());
             }
         }
         return sum.setScale(4, RoundingMode.HALF_UP);
@@ -256,6 +308,10 @@ public class MovimientoMB extends VistaAbstractMB {
 
     public void setAccion(AccionDTO accion) {
         this.accion = accion;
+    }
+
+    public CotizacionDiariaDTO getCotizacion() {
+        return cotizacion;
     }
 
     public List<TransaccionDTO> getTransacciones() {
@@ -288,6 +344,30 @@ public class MovimientoMB extends VistaAbstractMB {
 
     public void setCapitalInit(BigDecimal capitalInit) {
         this.capitalInit = capitalInit;
+    }
+
+    public TransaccionDTO getTranSelect() {
+        return tranSelect;
+    }
+
+    public void setTranSelect(TransaccionDTO tranSelect) {
+        this.tranSelect = tranSelect;
+    }
+
+    public Integer getCantidadVenta() {
+        return cantidadVenta;
+    }
+
+    public void setCantidadVenta(Integer cantidadVenta) {
+        this.cantidadVenta = cantidadVenta;
+    }
+
+    public BigDecimal getTotalVenta() {
+        return totalVenta;
+    }
+
+    public void setTotalVenta(BigDecimal totalVenta) {
+        this.totalVenta = totalVenta;
     }
 
 }

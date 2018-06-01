@@ -99,4 +99,5 @@ public class TransaccionDTO extends BaseModel {
     public void setPorcentajeMovimiento(BigDecimal porcentajeMovimiento) {
         this.porcentajeMovimiento = porcentajeMovimiento;
     }
+    
 }
