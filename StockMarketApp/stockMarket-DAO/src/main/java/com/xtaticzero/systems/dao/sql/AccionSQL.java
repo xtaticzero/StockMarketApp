@@ -15,5 +15,7 @@ public interface AccionSQL {
     String INSERT_ACCION = "INSERT ".concat(TABLE_ACCION)
             .concat("(fechaCompra,fechaVenta,costoUnitario,existencia) ")
             .concat("VALUES(SYSDATE(),null,?,?)");
+    String UPDATE_ACCION = "UPDATE ".concat(TABLE_ACCION).concat(" SET existencia = ?, fechaVenta = SYSDATE() \n"
+            + "WHERE accion_id = ?");
 
 }

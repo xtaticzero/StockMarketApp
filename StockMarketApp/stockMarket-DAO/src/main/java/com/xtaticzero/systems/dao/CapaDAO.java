@@ -17,13 +17,11 @@ public interface CapaDAO {
 
     CapaDTO insert(CapaDTO nuevaCapa) throws DAOException;
 
-    int delete(CapaDTO viejaCapa) throws DAOException;
+    int desactivaCapa(CapaDTO capa) throws DAOException;
 
-    int update(CapaDTO capa) throws DAOException;
-    
     BigInteger existeCapaActiva(BigInteger idEmisora) throws DAOException;
-    
+
+    boolean isExistencia(BigInteger idCapa) throws DAOException;
+
     CapaDTO findEmisoraById(BigInteger idCapa) throws DAOException;
-    
-    CapaDTO findCapa(CapaDTO capa) throws DAOException;
 }

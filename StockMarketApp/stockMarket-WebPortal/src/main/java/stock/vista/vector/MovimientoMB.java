@@ -94,8 +94,10 @@ public class MovimientoMB extends VistaAbstractMB {
 
     public void changeEmisora() {
         try {
-            cotizacion = cotizacionService.findCotizacionDiariaByEmisora(selectEmisora);
-            accion.setCostoUnitario(cotizacion.getCostoAlDia());
+            if (selectEmisora.intValue() > 0) {
+                cotizacion = cotizacionService.findCotizacionDiariaByEmisora(selectEmisora);
+                accion.setCostoUnitario(cotizacion.getCostoAlDia());
+            }
         } catch (BusinessException ex) {
             logger.error(ex);
         }
@@ -173,8 +175,7 @@ public class MovimientoMB extends VistaAbstractMB {
     public void calculaCotizacion() {
         try {
             cotizacion = cotizacionService.findCotizacionDiariaByEmisora(tranSelect.getCapaAccion().getCapa().getEmisora().getEmisora_id());
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('ventaDialog').show();");
+            RequestContext.getCurrentInstance().execute("PF('ventaDialog').show();");
         } catch (BusinessException ex) {
             logger.error(ex);
         }
@@ -200,6 +201,10 @@ public class MovimientoMB extends VistaAbstractMB {
             if (cantidadVenta > tranSelect.getCapaAccion().getAccion().getExistencia()) {
                 msgWarn("No puedes vender más de las existentes, verfica el dato");
             } else {
+
+                tranSelect.getCapaAccion().getAccion().setExistencia(tranSelect.getCapaAccion().getAccion().getExistencia() - cantidadVenta);
+                accionService.update(tranSelect.getCapaAccion().getAccion());
+
                 tranSelect.setMovimiento(MovimientosEnum.getMovimiento(MovimientosEnum.VENTA));
                 tranSelect.setCantidad(cantidadVenta);
                 tranSelect.setCostoUnitario(cotizacion.getCostoAlDia());
@@ -259,14 +264,24 @@ public class MovimientoMB extends VistaAbstractMB {
         return calculaCostoUnitarioTotal(emisora, MovimientosEnum.VENTA);
     }
 
-    public BigDecimal totalTotales(EmisoraDTO emisora) {
+    private BigDecimal totalMovimiento(EmisoraDTO emisora, MovimientosEnum mov) {
         BigDecimal sum = BigDecimal.ZERO;
         for (TransaccionDTO tran : transacciones) {
             if (emisora.getEmisora_id().equals(tran.getCapaAccion().getCapa().getEmisora().getEmisora_id())) {
-                sum = sum.add(tran.getTotal());
+                if (tran.getMovimiento().getMovimiento_id().equals(mov.getId())) {
+                    sum = sum.add(tran.getTotal());
+                }
             }
         }
         return sum.setScale(4, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal totalCompra(EmisoraDTO emisora) {
+        return totalMovimiento(emisora, MovimientosEnum.COMPRA);
+    }
+
+    public BigDecimal totalVenta(EmisoraDTO emisora) {
+        return totalMovimiento(emisora, MovimientosEnum.VENTA);
     }
 
     public BigDecimal totalUtilidades(EmisoraDTO emisora) {

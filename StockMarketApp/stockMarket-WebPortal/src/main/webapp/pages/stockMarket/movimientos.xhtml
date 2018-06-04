@@ -4,13 +4,6 @@
     <html>
         <h:head>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous"/>
-            <style type="text/css">
-                .ui-growl-image-info ~ .ui-growl-message, .ui-growl-item, .ui-growl-item-container{
-                    border: #e4e4e4;    
-                    background: #e4e4e4;
-                    color:#0073ea;
-                }
-            </style>
         </h:head>
         <h:body>
             <ui:include src="../background.xhtml"/>
@@ -41,7 +34,8 @@
                                     <p:column>
                                         <p:selectOneMenu id="emisoras" value="#{movimientoMB.selectEmisora}"
                                                          style="width:125px" >
-                                            <p:ajax listener="#{movimientoMB.changeEmisora}" update="iTCostUnit"/>
+                                            <p:ajax listener="#{movimientoMB.changeEmisora}" update="costoUnitario"/>
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
                                             <f:selectItems value="#{movimientoMB.emisoras}" var="emisora" 
                                                            itemLabel="#{emisora.nombre}" itemValue="#{emisora.emisora_id}" />
                                         </p:selectOneMenu>
@@ -50,7 +44,8 @@
                                 <p:row>
                                     <p:column style="font-weight: bold;">Costo Unitario:</p:column>
                                     <p:column>
-                                        <p:inputText id="iTCostUnit" value="#{movimientoMB.accion.costoUnitario}" style="width:165px">
+                                        <p:inputText id="costoUnitario" value="#{movimientoMB.accion.costoUnitario}" style="width:165px">
+                                            <f:convertNumber maxFractionDigits="4" locale="es_MX" integerOnly="true" for="costoUnitario"/>
                                             <p:ajax update="oLTotal" listener="#{movimientoMB.calculaTotalCompra}" />
                                         </p:inputText>
                                     </p:column>
@@ -64,7 +59,8 @@
                                 <p:row>
                                     <p:column style="font-weight: bold;">Cantidad:</p:column>
                                     <p:column>
-                                        <p:inputText value="#{movimientoMB.accion.existencia}" style="width:165px">
+                                        <p:inputText id="cantidad" value="#{movimientoMB.accion.existencia}" style="width:165px">
+                                            <f:convertNumber maxFractionDigits="4" locale="es_MX" integerOnly="true" for="cantidad"/>
                                             <p:ajax update="oLTotal" listener="#{movimientoMB.calculaTotalCompra}" />
                                         </p:inputText>
                                     </p:column>
@@ -73,13 +69,14 @@
                                     <p:column style="font-weight: bold;">Total:</p:column>
                                     <p:column>
                                         <p:outputLabel id="oLTotal" value="#{movimientoMB.totalCompra}">
-                                            <f:convertNumber maxFractionDigits="4" />
+                                            <f:convertNumber maxFractionDigits="4" locale="es_MX" />
                                         </p:outputLabel>
                                     </p:column>
                                 </p:row>
                                 <p:row>
                                     <p:column colspan="2">
-                                        <p:commandButton value="Comprar" action="#{movimientoMB.agregaCompra}" update="growl,dtCapAcc,iTCapInit"/>
+                                        <p:commandButton value="Comprar" action="#{movimientoMB.agregaCompra}" 
+                                                         update="growl,dtCapAcc,efectivo"/>
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -89,13 +86,13 @@
                             <p:panelGrid style="margin-top:20px">
                                 <f:facet name="header">
                                     <p:row>
-                                        <p:column>Capital Inicial</p:column>
+                                        <p:column>Efectivo</p:column>
                                     </p:row>
                                 </f:facet>
                                 <p:row>
                                     <p:column>
-                                        <p:inputText id="iTCapInit" value="#{movimientoMB.capitalInit}" style="width:165px">
-                                            <f:convertNumber maxFractionDigits="4" locale="es_MX"/>
+                                        <p:inputText id="efectivo" value="#{movimientoMB.capitalInit}" style="width:165px">
+                                            <f:convertNumber maxFractionDigits="4" locale="es_MX" integerOnly="true" for="efectivo"/>
                                         </p:inputText>
                                     </p:column>
                                 </p:row>
@@ -104,9 +101,10 @@
                     </div>
 
                     <p:dataTable id="dtCapAcc" value="#{movimientoMB.transacciones}" var="tran"
-                                 expandableRowGroups="true" sortBy="#{tran.capaAccion.capa.emisora.nombre}">
+                                 expandableRowGroups="true" sortBy="#{tran.capaAccion.capa.emisora.nombre}"
+                                 emptyMessage="No se encontrarón resultados">
                         <p:headerRow>
-                            <p:column colspan="9">
+                            <p:column colspan="11">
                                 <h:outputText value="#{tran.capaAccion.capa.emisora.nombre}" />
                             </p:column>
                         </p:headerRow>
@@ -115,8 +113,11 @@
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Entrada">
+                        <p:column headerText="Existencia">
                             <h:outputText value="#{tran.capaAccion.accion.existencia}" rendered="#{tran.movimiento.movimiento_id==1}" />
+                        </p:column>
+                        <p:column headerText="Entrada">
+                            <h:outputText value="#{tran.cantidad}" rendered="#{tran.movimiento.movimiento_id==1}" />
                         </p:column>
                         <p:column headerText="Salida">
                             <h:outputText value="#{tran.cantidad}" rendered="#{tran.movimiento.movimiento_id==2}" />
@@ -127,8 +128,13 @@
                         <p:column headerText="Precio Venta">
                             <h:outputText value="$#{tran.costoUnitario}" rendered="#{tran.movimiento.movimiento_id==2}"/>
                         </p:column>
-                        <p:column headerText="Total">
-                            <h:outputText value="#{tran.total}" >
+                        <p:column headerText="Total Compra">
+                            <h:outputText value="#{tran.total}" rendered="#{tran.movimiento.movimiento_id==1}">
+                                <f:convertNumber maxFractionDigits="4" locale="es_MX"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Total Venta">
+                            <h:outputText value="#{tran.total}" rendered="#{tran.movimiento.movimiento_id==2}">
                                 <f:convertNumber maxFractionDigits="4" locale="es_MX"/>
                             </h:outputText>
                         </p:column>
@@ -145,7 +151,7 @@
 
                         <p:column style="width:50px;text-align: center">
                             <p:commandButton update="ventaDetail"
-                                             rendered="#{tran.movimiento.movimiento_id==1}"
+                                             rendered="#{tran.movimiento.movimiento_id==1 and tran.capaAccion.accion.existencia>0 }"
                                              action="#{movimientoMB.calculaCotizacion}"
                                              icon="fa fa-fw fa-dollar-sign" title="Venta">
                                 <f:setPropertyActionListener value="#{tran}" 
@@ -154,7 +160,7 @@
                         </p:column>
 
                         <p:summaryRow>
-                            <p:column style="text-align:right">
+                            <p:column colspan="2" style="text-align:right">
                                 <h:outputText value="Total:" />
                             </p:column>
                             <p:column>
@@ -178,7 +184,12 @@
                                 </h:outputText>
                             </p:column>
                             <p:column>
-                                <h:outputText value="$#{movimientoMB.totalTotales(tran.capaAccion.capa.emisora)}">
+                                <h:outputText value="$#{movimientoMB.totalCompra(tran.capaAccion.capa.emisora)}">
+                                    <f:convertNumber maxFractionDigits="4" locale="es_MX"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="$#{movimientoMB.totalVenta(tran.capaAccion.capa.emisora)}">
                                     <f:convertNumber maxFractionDigits="4" locale="es_MX"/>
                                 </h:outputText>
                             </p:column>
@@ -222,7 +233,8 @@
                                 <p:row>
                                     <p:column style="font-weight: bold;">Cantidad:</p:column>
                                     <p:column>
-                                        <p:inputText value="#{movimientoMB.cantidadVenta}">
+                                        <p:inputText id="cantidadVenta" value="#{movimientoMB.cantidadVenta}">
+                                            <f:convertNumber maxFractionDigits="4" locale="es_MX" for="cantidadVenta"/>
                                             <p:ajax update="oLTotalV, oLUtiliV, oLPorcentajeV" 
                                                     listener="#{movimientoMB.calculaTotalVenta}" />
                                         </p:inputText>
@@ -255,7 +267,7 @@
                                 <p:row>
                                     <p:column colspan="2">
                                         <p:commandButton value="Vender" action="#{movimientoMB.registraVenta}" 
-                                                         update="growl,dtCapAcc,iTCapInit"
+                                                         update="growl,dtCapAcc,efectivo"
                                                          oncomplete="PF('ventaDialog').hide();"/>
                                     </p:column>
                                 </p:row>

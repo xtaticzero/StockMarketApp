@@ -16,5 +16,6 @@ import com.xtaticzero.systems.base.dto.AccionDTO;
 public interface AccionDAO {
     
     AccionDTO insert(AccionDTO nuevaAccion) throws DAOException;
+    Integer update(AccionDTO updateAccion) throws DAOException;
 
 }

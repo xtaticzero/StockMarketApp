@@ -25,8 +25,9 @@ public interface TransaccionSQL {
             + "from TRANSACCION TRA\n"
             + "JOIN MOVIMIENTO MOV ON MOV.movimiento_id = TRA.movimiento_id\n"
             + "JOIN CAPA_ACCION CA ON CA.ca_id= TRA.ca_id\n"
-            + "JOIN CAPA CP ON CP.capa_id = CA.capa_id\n"
+            + "JOIN CAPA CP ON CP.capa_id = CA.capa_id and CP.activo=true\n"
             + "JOIN ACCION AC ON AC.accion_id = CA.accion_id\n"
-            + "JOIN EMISORA EMI on EMI.emisora_id = CP.emisora_id";
+            + "JOIN EMISORA EMI on EMI.emisora_id = CP.emisora_id\n"
+            + "ORDER BY TRA.cantidad DESC";
 
 }
