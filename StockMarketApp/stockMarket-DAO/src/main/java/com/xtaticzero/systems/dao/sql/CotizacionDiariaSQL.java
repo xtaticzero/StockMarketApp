@@ -59,7 +59,28 @@ public interface CotizacionDiariaSQL extends BaseSQL {
             + "AND \n"
             + "EMI.emisora_id = ?\n"
             + "AND\n"
-            + "(COT_H.diaCotizacion between  DATE_FORMAT(NOW() ,'%Y-%m-01') AND SYSDATE() )\n"
+            + "(COT_H.diaCotizacion between  DATE_FORMAT({DATE_FILTER} ,'%Y-%m-01') AND SYSDATE() )\n"
             + "ORDER BY COT_H.diaCotizacion DESC";
+
+    String SQL_INDICE_COTIZACION_HEADER = "SELECT\n"
+            + "EMI.nombre,\n"
+            + "COT.costo_al_dia,\n"
+            + "COT_H.costo_al_dia\n"
+            + "FROM COTIZACION_DIARIA COT\n"
+            + "INNER JOIN EMISORA EMI ON COT.emisora_id = EMI.emisora_id\n"
+            + "LEFT JOIN COTIZACION_DIARIA_HISTORY COT_H ON COT.emisora_id = COT_H.emisora_id\n"
+            + "WHERE COT.emisora_id = ?";
+    
+    String SQL_INDICE_COTIZACION_FOOTER_DAY = "AND\n"
+            + "DATE_FORMAT(?, '%Y-%m-%d 00:00:00') \n"
+            + "AND DATE_FORMAT(?, '%Y-%m-%d 23:59:59') ORDER BY COT_H.diaCotizacion ASC LIMIT 1";
+    
+    String SQL_INDICE_COTIZACION_FOOTER_YEAR = "AND\n"
+            + "DATE_FORMAT(?, '%Y-01-01 00:00:00') \n"
+            + "AND DATE_FORMAT(?, '%Y-%m-%d 23:59:59') ORDER BY COT_H.diaCotizacion ASC LIMIT 1";
+
+    String INDICE_COTIZACION_X_DIA = SQL_INDICE_COTIZACION_HEADER.concat(AND).concat(SQL_INDICE_COTIZACION_FOOTER_DAY);
+
+    String INDICE_COTIZACION_X_YEAR = SQL_INDICE_COTIZACION_HEADER.concat(AND).concat(SQL_INDICE_COTIZACION_FOOTER_YEAR);
 
 }
