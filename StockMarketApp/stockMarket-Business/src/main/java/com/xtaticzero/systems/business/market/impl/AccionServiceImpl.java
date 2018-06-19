@@ -38,4 +38,14 @@ public class AccionServiceImpl extends BaseBusinessServices implements AccionSer
         }
     }
 
+    @Override
+    public Integer update(AccionDTO updateAccion) throws BusinessException {
+        try {
+            return accionDAO.update(updateAccion);
+        } catch (DAOException daoEx) {
+            logger.error(daoEx.getMessage());
+            throw new BusinessException(ERR_GENERAL_DESCRIPCION, daoEx, "No se pudo actualizar la accion ");
+        }
+    }
+
 }

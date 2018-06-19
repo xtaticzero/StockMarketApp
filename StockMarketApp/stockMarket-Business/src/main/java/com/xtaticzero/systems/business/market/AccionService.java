@@ -15,4 +15,5 @@ import com.xtaticzero.systems.base.dto.AccionDTO;
 public interface AccionService {
 
     AccionDTO guardarAccion(AccionDTO nuevaAccion) throws BusinessException;
+    Integer update(AccionDTO updateAccion) throws BusinessException;
 }

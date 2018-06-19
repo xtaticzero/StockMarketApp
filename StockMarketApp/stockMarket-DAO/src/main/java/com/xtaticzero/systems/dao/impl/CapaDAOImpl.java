@@ -11,6 +11,7 @@ import com.xtaticzero.systems.dao.BaseJDBCDao;
 import com.xtaticzero.systems.dao.CapaDAO;
 import com.xtaticzero.systems.dao.mapper.CapaMapper;
 import com.xtaticzero.systems.dao.preparedstatement.CapaPreparedStatement;
+import static com.xtaticzero.systems.dao.sql.AccionSQL.UPDATE_ACCION;
 import com.xtaticzero.systems.dao.sql.CapaSQL;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class CapaDAOImpl extends BaseJDBCDao<CapaDTO> implements CapaDAO, CapaSQ
     @Override
     public CapaDTO insert(CapaDTO nuevaCapa) throws DAOException {
 
-        if (nuevaCapa != null && findCapa(nuevaCapa) == null) {
+        if (nuevaCapa != null) {
 
             KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -49,18 +50,24 @@ public class CapaDAOImpl extends BaseJDBCDao<CapaDTO> implements CapaDAO, CapaSQ
             }
 
         }
-        return findCapa(nuevaCapa);
+        return null;
 
     }
 
     @Override
-    public int delete(CapaDTO viejaCapa) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public int desactivaCapa(CapaDTO capa) throws DAOException {
+        if (capa == null || capa.getCapa_id() == null) {
+            throw new DAOException(ERR_GENERAL);
+        }
+        try {
+            List<Object> params = new ArrayList<>();
+            params.add(capa.getCapa_id());
 
-    @Override
-    public int update(CapaDTO capa) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return getJdbcTemplateBase().update(DESACTIVA_CAPA, params.toArray());
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            throw new DAOException(ERR_GENERAL, ex.getMessage(), ex);
+        }
     }
 
     @Override
@@ -91,23 +98,16 @@ public class CapaDAOImpl extends BaseJDBCDao<CapaDTO> implements CapaDAO, CapaSQ
     }
 
     @Override
-    public CapaDTO findCapa(CapaDTO capa) throws DAOException {
+    public boolean isExistencia(BigInteger idCapa) throws DAOException {
         try {
-            if (capa != null && capa.getEmisora() != null) {
-                List<Object> params = new ArrayList<>();
-                params.add(capa.getEmisora().getEmisora_id() != null ? capa.getEmisora().getEmisora_id() : BigInteger.ZERO);
-
-                List<CapaDTO> lstResult = getJdbcTemplateBase().query(
-                        CapaSQL.HEDER_SELECT_CAPA.concat(AND).concat(CapaSQL.EMISORA_BY_ID),
-                        params.toArray(), new CapaMapper());
-                if (lstResult != null && !lstResult.isEmpty()) {
-                    return lstResult.get(0);
+            List<Integer> lstResult = getJdbcTemplateBase().queryForList(CapaSQL.EXISTENCIA_X_CAPA, Integer.class, idCapa);
+            boolean existe = false;
+            for (Integer res : lstResult) {
+                if (res > 0) {
+                    existe = true;
                 }
             }
-            return null;
-        } catch (EmptyResultDataAccessException emty) {
-            logger.error(emty.getMessage(), emty);
-            return null;
+            return existe;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new DAOException(ERR_GENERAL, e.getMessage(), e);

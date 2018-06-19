@@ -13,10 +13,10 @@ public interface TransaccionSQL {
 
     String TABLE_TRANSACCION = "TRANSACCION";
     String INSERT_TRANSACCION = "INSERT ".concat(TABLE_TRANSACCION)
-            .concat("(ca_id, movimiento_id, fechaTransaccion, importe, costo, utilidad, porcentaje_Movimiento) ")
-            .concat("VALUES(?,?,SYSDATE(),?,?,?,?)");
+            .concat("(ca_id, movimiento_id, fechaTransaccion, cantidad, costoUnitario, total,utilidad, porcentajeMovimiento) ")
+            .concat("VALUES(?,?,SYSDATE(),?,?,?,?,?)");
 
-    String SELECT_ALL_TRANSACCION = "select TRA.transaccion_id, TRA.fechaTransaccion,TRA.importe,TRA.costo,TRA.utilidad,TRA.porcentaje_Movimiento,\n"
+    String SELECT_ALL_TRANSACCION = "select TRA.transaccion_id, TRA.fechaTransaccion,TRA.cantidad, TRA.costoUnitario, TRA.total, TRA.utilidad, TRA.porcentajeMovimiento,\n"
             + "MOV.movimiento_id,MOV.descripcion,\n"
             + "CA.ca_id,\n"
             + "CP.capa_id,CP.activo,\n"
@@ -25,8 +25,9 @@ public interface TransaccionSQL {
             + "from TRANSACCION TRA\n"
             + "JOIN MOVIMIENTO MOV ON MOV.movimiento_id = TRA.movimiento_id\n"
             + "JOIN CAPA_ACCION CA ON CA.ca_id= TRA.ca_id\n"
-            + "JOIN CAPA CP ON CP.capa_id = CA.capa_id\n"
+            + "JOIN CAPA CP ON CP.capa_id = CA.capa_id and CP.activo=true\n"
             + "JOIN ACCION AC ON AC.accion_id = CA.accion_id\n"
-            + "JOIN EMISORA EMI on EMI.emisora_id = CP.emisora_id";
+            + "JOIN EMISORA EMI on EMI.emisora_id = CP.emisora_id\n"
+            + "ORDER BY TRA.cantidad DESC";
 
 }

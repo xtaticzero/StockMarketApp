@@ -12,13 +12,22 @@ package com.xtaticzero.systems.dao.sql;
 public interface CapaSQL extends BaseSQL {
 
     String TABLE_CAPA = "CAPA";
-    String INSERT_CAPA = "INSERT ".concat(TABLE_CAPA).concat("(emisora_id,activo) VALUES(?,1)");
+    String INSERT_CAPA = "INSERT ".concat(TABLE_CAPA).concat("(emisora_id,activo) VALUES(?,true)");
 
     String EXISTE_CAPA_ACTIVA = "select capa_id\n"
             + "from capa capa\n"
             + "join emisora emi\n"
             + "    on emi.emisora_id = capa.emisora_id\n"
-            + "    and emi.emisora_id = ?";
+            + "    and emi.emisora_id = ?"
+            + "    and capa.activo=true";
+
+    String EXISTENCIA_X_CAPA = "SELECT  AC.existencia\n"
+            + "from CAPA_ACCION CA\n"
+            + "JOIN CAPA CP\n"
+            + "    ON CP.capa_id = CA.capa_id\n"
+            + "JOIN ACCION AC\n"
+            + "    ON AC.accion_id = CA.accion_id\n"
+            + "where CP.capa_id=?";
 
     String EXISTE_CAPA = "select capa_id\n"
             + "from capa capa\n"
@@ -47,4 +56,7 @@ public interface CapaSQL extends BaseSQL {
             + "from CAPA CP\n"
             + "INNER JOIN EMISORA EMI ON CP.emisora_id = EMI.emisora_id\n"
             + "WHERE 1=1";
+
+    String DESACTIVA_CAPA = "UPDATE CAPA SET activo = false\n"
+            + "WHERE capa_id=?";
 }
