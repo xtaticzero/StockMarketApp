@@ -26,6 +26,8 @@ import org.springframework.stereotype.Repository;
 @Repository("accionDAO")
 public class AccionDAOImpl extends BaseJDBCDao<AccionDTO> implements AccionDAO {
 
+    private static final long serialVersionUID = 8310743835188211947L;
+
     @Override
     public AccionDTO insert(AccionDTO nuevaAccion) throws DAOException {
         KeyHolder keyHolder = new GeneratedKeyHolder();
