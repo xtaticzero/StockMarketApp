@@ -267,7 +267,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>6.2</version>
+            <version>${primefaces.version}</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

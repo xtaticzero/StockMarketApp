@@ -21,7 +21,7 @@
         <!-- Test -->
         <junit.version>4.11</junit.version>
         <!-- primefaces -->
-        <primefaces.version>5.0</primefaces.version>
+        <primefaces.version>6.2</primefaces.version>
         <primefaces.extensions.version>0.7.1</primefaces.extensions.version>
         <jsf.version>2.1.20</jsf.version>        
         <sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
