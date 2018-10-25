@@ -9,11 +9,13 @@ import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
 import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
 import com.xtaticzero.systems.base.dto.CotizacionHistoricoDTO;
+import com.xtaticzero.systems.base.dto.IPCDto;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.business.BaseBusinessServices;
 import com.xtaticzero.systems.business.bo.impl.CotizacionVectorBO;
 import com.xtaticzero.systems.business.market.CotizacionDiariaService;
 import com.xtaticzero.systems.business.util.ExcelReaderService;
+import com.xtaticzero.systems.business.util.TipoArchivoCargaEnum;
 import com.xtaticzero.systems.dao.CotizacionDiariaDAO;
 import com.xtaticzero.systems.dao.IpcDao;
 import java.io.File;
@@ -22,8 +24,7 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -162,9 +163,9 @@ public class CotizacionDiariaServiceImpl extends BaseBusinessServices implements
         try {
 
             if (fileCarga != null) {
-                cotizacionDiariaBO.setLstIpcCargaExcel(excelReaderService.getLstOfIpc(fileCarga));
+                cotizacionDiariaBO.setLstIpcCargaExcel((List<IPCDto>) excelReaderService.getLstOfIpc(fileCarga,TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC));
             } else if (fileIS != null) {
-                cotizacionDiariaBO.setLstIpcCargaExcel(excelReaderService.getLstOfIpc(fileIS));
+                cotizacionDiariaBO.setLstIpcCargaExcel((List<IPCDto>) excelReaderService.getLstOfIpc(fileIS,TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC));
             }
 
             int[] result = ipcDao.inserBatch(cotizacionDiariaBO.getLstIpcCargaExcel());

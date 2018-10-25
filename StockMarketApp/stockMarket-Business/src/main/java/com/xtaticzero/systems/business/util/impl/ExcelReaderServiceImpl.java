@@ -5,10 +5,12 @@
  */
 package com.xtaticzero.systems.business.util.impl;
 
+import com.xtaticzero.systems.base.BaseModel;
 import com.xtaticzero.systems.base.dto.IPCDto;
 import com.xtaticzero.systems.business.BaseBusinessServices;
 import com.xtaticzero.systems.business.util.ExcelConstant;
 import com.xtaticzero.systems.business.util.ExcelReaderService;
+import com.xtaticzero.systems.business.util.TipoArchivoCargaEnum;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,18 +49,18 @@ public class ExcelReaderServiceImpl extends BaseBusinessServices implements Exce
     }
 
     @Override
-    public List<IPCDto> getLstOfIpc(File file) throws IOException, InvalidFormatException {
-        return process(init(file));
+    public List<? extends BaseModel> getLstOfIpc(File file, TipoArchivoCargaEnum tipoArchivo) throws IOException, InvalidFormatException {
+        return process(init(file), tipoArchivo);
     }
 
     @Override
-    public List<IPCDto> getLstOfIpc(InputStream file) throws IOException, InvalidFormatException {
-        return process(init(file));
+    public List<? extends BaseModel> getLstOfIpc(InputStream file, TipoArchivoCargaEnum tipoArchivo) throws IOException, InvalidFormatException {
+        return process(init(file), tipoArchivo);
     }
 
-    private List<IPCDto> process(Workbook wb) {
+    private List<? extends BaseModel> process(Workbook wb, TipoArchivoCargaEnum tipoArchivo) {
         List<IPCDto> lstIpc = new ArrayList<>();
-        IPCDto ipc;
+        BaseModel objCarga = null;
 
         Sheet sheet = wb.getSheetAt(0);
         FormulaEvaluator evaluator = wb.getCreationHelper().createFormulaEvaluator();
@@ -72,7 +74,9 @@ public class ExcelReaderServiceImpl extends BaseBusinessServices implements Exce
                 continue;
             }
 
-            ipc = new IPCDto();
+            if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC)) {
+                objCarga = new IPCDto();
+            }
 
             // Now let's iterate over the columns of the current row
             Iterator<Cell> cellIterator = row.cellIterator();
@@ -81,21 +85,33 @@ public class ExcelReaderServiceImpl extends BaseBusinessServices implements Exce
                 Cell cell = cellIterator.next();
 
                 if (evaluator.evaluateFormulaCell(cell) != Cell.CELL_TYPE_BLANK) {
-                    if (cell != null) {
+                    if (cell != null && objCarga != null) {
                         logger.debug("cell.getColumnIndex()" + cell.getColumnIndex());
 
                         switch (cell.getColumnIndex()) {
                             case ExcelConstant.COLUM_0:
                                 logger.debug(cell.getDateCellValue());
-                                ipc.setDiaMovimiento(cell.getDateCellValue());
+
+                                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC)) {
+                                    ((IPCDto) objCarga).setDiaMovimiento(cell.getDateCellValue());
+                                }
+
                                 break;
                             case ExcelConstant.COLUM_1:
                                 logger.debug(cell.getNumericCellValue());
-                                ipc.setValorIPC(new BigDecimal(cell.getNumericCellValue()));
+
+                                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC)) {
+                                    ((IPCDto) objCarga).setValorIPC(new BigDecimal(cell.getNumericCellValue()));
+                                }
+
                                 break;
                             case ExcelConstant.COLUM_2:
                                 logger.debug(cell.getNumericCellValue());
-                                ipc.setPorcentajeCotizacion(new BigDecimal(cell.getNumericCellValue()));
+
+                                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC)) {
+                                    ((IPCDto) objCarga).setPorcentajeCotizacion(new BigDecimal(cell.getNumericCellValue()));
+                                }
+
                                 break;
                             default:
                                 break;
@@ -105,13 +121,20 @@ public class ExcelReaderServiceImpl extends BaseBusinessServices implements Exce
                 }
 
             }
-            if(ipc.getValorIPC()!=null){
-                lstIpc.add(ipc);
+
+            if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC)) {
+                if (((IPCDto) objCarga).getValorIPC() != null) {
+                    lstIpc.add(((IPCDto) objCarga));
+                }
             }
-            
+
         }
 
-        return lstIpc;
+        if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC)) {
+            return lstIpc;
+        } else {
+            return new ArrayList<BaseModel>();
+        }
     }
 
 }

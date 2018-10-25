@@ -5,7 +5,7 @@
  */
 package com.xtaticzero.systems.business.util;
 
-import com.xtaticzero.systems.base.dto.IPCDto;
+import com.xtaticzero.systems.base.BaseModel;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +18,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
  */
 public interface ExcelReaderService {
 
-    List<IPCDto> getLstOfIpc(File file) throws IOException, InvalidFormatException;
+    List<? extends BaseModel> getLstOfIpc(File file, TipoArchivoCargaEnum tipoArchivo) throws IOException, InvalidFormatException;
 
-    List<IPCDto> getLstOfIpc(InputStream file) throws IOException, InvalidFormatException;
+    List<? extends BaseModel> getLstOfIpc(InputStream file, TipoArchivoCargaEnum tipoArchivo) throws IOException, InvalidFormatException;
 }
