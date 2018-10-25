@@ -24,6 +24,18 @@ public class IPCDto extends BaseModel {
     private BigDecimal porcentajeCotizacion;
     private Date diaMovimiento;
 
+    public IPCDto() {
+    }
+
+    public IPCDto(IPCDto ipc) {
+        if (ipc != null) {
+            indiceCotizacion_id = ipc.getIndiceCotizacion_id();
+            valorIPC = ipc.getValorIPC();
+            porcentajeCotizacion = ipc.getPorcentajeCotizacion();
+            diaMovimiento = ipc.getDiaMovimiento();
+        }
+    }
+
     public BigInteger getIndiceCotizacion_id() {
         return indiceCotizacion_id;
     }
@@ -48,12 +60,12 @@ public class IPCDto extends BaseModel {
         this.porcentajeCotizacion = porcentajeCotizacion;
     }
 
-    public Date getDiaMovimiento() {        
-        return diaMovimiento!=null?(Date)diaMovimiento.clone():null;
+    public Date getDiaMovimiento() {
+        return diaMovimiento != null ? (Date) diaMovimiento.clone() : null;
     }
 
     public void setDiaMovimiento(Date diaMovimiento) {
-        this.diaMovimiento = diaMovimiento!=null?(Date)diaMovimiento.clone():null;
+        this.diaMovimiento = diaMovimiento != null ? (Date) diaMovimiento.clone() : null;
     }
 
     @Override
@@ -85,5 +97,4 @@ public class IPCDto extends BaseModel {
         return true;
     }
 
-    
 }

@@ -18,7 +18,6 @@ import java.util.Iterator;
 import java.util.List;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -83,6 +82,7 @@ public class ExcelReaderServiceImpl extends BaseBusinessServices implements Exce
 
                 if (evaluator.evaluateFormulaCell(cell) != Cell.CELL_TYPE_BLANK) {
                     if (cell != null) {
+                        logger.debug("cell.getColumnIndex()" + cell.getColumnIndex());
 
                         switch (cell.getColumnIndex()) {
                             case ExcelConstant.COLUM_0:
@@ -103,9 +103,12 @@ public class ExcelReaderServiceImpl extends BaseBusinessServices implements Exce
 
                     }
                 }
-            }
 
-            lstIpc.add(ipc);
+            }
+            if(ipc.getValorIPC()!=null){
+                lstIpc.add(ipc);
+            }
+            
         }
 
         return lstIpc;

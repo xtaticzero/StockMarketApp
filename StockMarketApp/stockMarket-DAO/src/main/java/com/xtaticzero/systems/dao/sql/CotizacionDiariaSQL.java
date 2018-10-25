@@ -61,7 +61,7 @@ public interface CotizacionDiariaSQL extends BaseSQL {
             + "AND \n"
             + "EMI.emisora_id = ?\n"
             + "AND\n"
-            + "(COT_H.diaCotizacion between  DATE_FORMAT({DATE_FILTER} ,'%Y-%m-01') AND SYSDATE() )\n"
+            + "(COT_H.diaCotizacion between  DATE_FORMAT({DATE_FILTER} ,'%Y-01-01') AND SYSDATE() )\n"
             + "ORDER BY COT_H.diaCotizacion DESC"; 
     
 

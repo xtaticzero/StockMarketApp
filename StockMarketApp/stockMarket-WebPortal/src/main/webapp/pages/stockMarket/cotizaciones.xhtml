@@ -3,10 +3,12 @@
         xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" >
     <html>
         <h:head>
+            <h:outputScript library="js" name="stockMarket.js"/>            
         </h:head>
         <h:body>
             <ui:include src="../background.xhtml"/>
             <ui:include src="menuHeader.xhtml"/>
+
             <div id="panelCentral"
                  style="position: absolute;
                  top: 75px;
@@ -17,6 +19,8 @@
                  /*margin-left:auto;*/
                  /*margin-right:auto;*/">
                 <h:form id="cotizacionDiaria" enctype="multipart/form-data">
+                    <ui:include src="statusLoad.xhtml"/>
+
                     <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
                     <f:event listener="#{cotizacionesMB.preRender}" type="preRenderView" />                    
                     <h:panelGrid columns="3">
@@ -60,6 +64,25 @@
                         </p:dialog>
                         <p:accordionPanel style="width: 1529.0px;">
                             <p:tab title="VECTOR Cotizaciones">
+                                <div style="text-align: left;">
+                                    <p:outputLabel value="Plantilla De Carga : "/>
+                                    <p:commandLink ajax="false">
+                                        <h:graphicImage value="/resources/images/excel.jpg" width="30px"/>
+                                        <p:fileDownload value="#{cotizacionesMB.plantilla}" contentDisposition="attachment"/>                                                                               
+                                    </p:commandLink>
+                                    <div style="width: 500px">
+                                        <p:fileUpload id="idFileCargaIpc" fileUploadListener="#{cotizacionesMB.handleFileUpload}" 
+                                                      mode="advanced"
+                                                      skinSimple="true"
+                                                      auto="true" sizeLimit="#{msj['size.excel.carga']}" 
+                                                      allowTypes="/(\.|\/)(xls?x)$/" 
+                                                      label="Archivo Carga IPC" 
+                                                      invalidFileMessage="#{msj['msg.error.formato.excel']}"
+                                                      invalidSizeMessage="#{msj['msg.error.size.file']}"
+                                                      update="@form" 
+                                                      onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"/>
+                                    </div>                                    
+                                </div>
                                 <div style="text-align: center;">
                                     <p:panelGrid style="margin-top:1px">
                                         <p:row>
@@ -78,12 +101,6 @@
 
                                                     <p:ajax event="rowEdit" listener="#{cotizacionesMB.onRowEdit}" />
                                                     <p:ajax event="rowEditCancel" listener="#{cotizacionesMB.onRowCancel}" />
-
-                                                    <!--                                        <p:column headerText="ID" style="width:32px">
-                                                                                                <div style="text-align: right;">
-                                                                                                    <h:outputText value="{cotizacion.cotizacionId}" />
-                                                                                                </div>                                            
-                                                                                            </p:column>-->
 
                                                     <p:column headerText="HISTORICO" style="width:70px;text-align: center">
                                                         <p:commandButton update=":cotizacionDiaria:cotizacionDetail" action="#{cotizacionesMB.buscarHistorialCotizacion}" onsuccess="PF('cotizacionDialog').show()" icon="ui-icon-search" title="View">
@@ -127,6 +144,7 @@
                                                 </p:dataTable>
                                             </p:column>
                                             <p:column>
+
                                                 <div>
                                                     <p:panelGrid style="margin-top: 20px">
                                                         <f:facet name="header">
@@ -143,7 +161,7 @@
                                                             <p:column colspan="3">
                                                                 <div id="divTblIPC" style="width: 100%; height: 460px; overflow-y: scroll;">
                                                                     <p:dataTable id="tblIPC" var="ipc" value="#{cotizacionesMB.lstIndiceCotizacion}" 
-                                                                                 >
+                                                                                 emptyMessage="#{msj['label.lista.vacia']}">
                                                                         <p:column style="width: 34%;">
                                                                             <div style="text-align: center;">
                                                                                 <h:outputText value="#{ipc.diaMovimiento}">
@@ -161,7 +179,7 @@
                                                                         </p:column>
 
                                                                         <p:column>
-                                                                            <div style="text-align: right;">
+                                                                            <div style="text-align: right; #{ipc.style}}">
                                                                                 <h:outputText value="#{ipc.porcentajeCotizacion}">
                                                                                     <f:convertNumber type="percent"
                                                                                                      maxIntegerDigits="5"
@@ -177,26 +195,6 @@
                                                 </div>
                                             </p:column>                                            
                                         </p:row>
-                                        <f:facet name="footer">
-                                            <p:row>
-                                                <p:column  colspan="2" style="text-align: center">
-
-                                                    <p:fileUpload fileUploadListener="#{cotizacionesMB.handleFileUpload}" 
-                                                                  mode="advanced"
-                                                                  auto="true" sizeLimit="#{msj['size.excel.carga']}" 
-                                                                  allowTypes="/(\.|\/)(xls?x)$/" 
-                                                                  label="Archivo Carga IPC" 
-                                                                  invalidFileMessage="#{msj['msg.error.formato.excel']}"
-                                                                  invalidSizeMessage="#{msj['msg.error.size.file']}"
-                                                                  update=":cotizacionDiaria:j_idt21:tblIPC"
-                                                                  />
-
-                                                    <p:commandButton value="Plantilla" ajax="false" icon="ui-icon-arrowthick-1-s">
-                                                        <p:fileDownload value="#{cotizacionesMB.plantilla}" />
-                                                    </p:commandButton>
-                                                </p:column>                                                
-                                            </p:row>
-                                        </f:facet>
                                     </p:panelGrid>
                                 </div>
                             </p:tab>
