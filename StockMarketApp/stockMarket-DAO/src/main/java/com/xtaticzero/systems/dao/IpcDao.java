@@ -7,7 +7,6 @@ package com.xtaticzero.systems.dao;
 
 import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.IPCDto;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,9 +16,11 @@ import java.util.List;
 public interface IpcDao {
 
     IPCDto insert(IPCDto newIpc) throws DAOException;
+
+    IPCDto findLastOfYear() throws DAOException;
+
+    List<IPCDto> findAll(int numYears) throws DAOException;
     
-    IPCDto findByYear(Date date) throws DAOException;
-    
-    List<IPCDto> findAll(boolean active) throws DAOException;    
-    
+    int[] inserBatch(List<IPCDto> lstIpc) throws DAOException;
+
 }

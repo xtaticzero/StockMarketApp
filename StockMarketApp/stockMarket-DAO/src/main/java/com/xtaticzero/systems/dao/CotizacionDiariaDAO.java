@@ -9,6 +9,7 @@ import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
 import com.xtaticzero.systems.base.dto.CotizacionHistoricoDTO;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,7 +26,9 @@ public interface CotizacionDiariaDAO {
 
     CotizacionDiariaDTO findCotizacionDiariaByEmisora(BigInteger idEmisora) throws DAOException;
 
-    List<CotizacionHistoricoDTO> findCotizacionHistoryByEmisora(BigInteger idEmisora) throws DAOException;
+    List<CotizacionHistoricoDTO> findCotizacionHistoryByEmisoraCurrentYear(BigInteger idEmisora) throws DAOException;
+
+    List<CotizacionHistoricoDTO> findCotizacionHistoryByEmisoraFilter(BigInteger idEmisora, Date year) throws DAOException;
 
     List<CotizacionDiariaDTO> findAllCotizacionDiaria() throws DAOException;
 

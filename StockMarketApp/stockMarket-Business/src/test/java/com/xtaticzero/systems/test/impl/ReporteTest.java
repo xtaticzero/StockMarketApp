@@ -26,30 +26,26 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class ReporteTest extends BaseTest {
 
     @Autowired
-    @Qualifier("userLogginService")
-    private UserLogginService userService;
-
-    @Autowired
     @Qualifier("reporterService")
     private ReporterService reporterService;
-    
+
     @Autowired
     @Qualifier("pruebaDao")
     private PruebaDao pruebaDao;
-    
+
     private UsuarioDTO usr;
-    
+
     @Before
-    public void init(){
+    public void init() {
         usr = new UsuarioDTO();
-        
+
         usr.setDisplay_name("admin");
-        usr.setPassword("paaa");
-        
-        if(pruebaDao!=null){
-            System.out.println("todo ok "+pruebaDao.getTime());
+        usr.setPassword("admin123");
+
+        if (pruebaDao != null) {
+            System.out.println("todo ok " + pruebaDao.getTime());
         }
-        
+
         File files = new File("/WebApps/tmp");
         if (!files.exists()) {
             if (files.mkdirs()) {
@@ -72,10 +68,10 @@ public class ReporteTest extends BaseTest {
                     fos.write(byt);
                     //fos.close(); There is no more need for this line since you had created the instance of "fos" inside the try. And this will automatically close the OutputStream
                 } catch (Exception ex) {
-                    logger.error("Error al crear archivo",ex);
+                    logger.error("Error al crear archivo", ex);
                 }
 
-                throw new BusinessException("general", "prueba", "01");
+                throw new BusinessException("general.descripcion", "prueba", "01");
             } else {
                 logger.error("userService is null");
             }

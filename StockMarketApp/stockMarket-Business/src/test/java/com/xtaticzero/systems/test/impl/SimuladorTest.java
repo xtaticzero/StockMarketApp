@@ -13,6 +13,7 @@ import com.xtaticzero.systems.business.market.SimuladorService;
 import com.xtaticzero.systems.test.base.BaseTest;
 import java.math.BigInteger;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,6 +39,7 @@ public class SimuladorTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void inicializaciosBOTest() {
         if (simuladorService != null) {
             try {

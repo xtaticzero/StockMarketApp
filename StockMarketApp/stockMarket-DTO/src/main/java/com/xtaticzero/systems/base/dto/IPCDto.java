@@ -9,6 +9,7 @@ import com.xtaticzero.systems.base.BaseModel;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
@@ -55,4 +56,34 @@ public class IPCDto extends BaseModel {
         this.diaMovimiento = diaMovimiento!=null?(Date)diaMovimiento.clone():null;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.valorIPC);
+        hash = 17 * hash + Objects.hashCode(this.diaMovimiento);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final IPCDto other = (IPCDto) obj;
+        if (!Objects.equals(this.valorIPC, other.valorIPC)) {
+            return false;
+        }
+        if (!Objects.equals(this.diaMovimiento, other.diaMovimiento)) {
+            return false;
+        }
+        return true;
+    }
+
+    
 }

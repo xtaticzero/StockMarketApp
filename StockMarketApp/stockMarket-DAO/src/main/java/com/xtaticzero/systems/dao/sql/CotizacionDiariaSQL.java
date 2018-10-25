@@ -39,6 +39,8 @@ public interface CotizacionDiariaSQL extends BaseSQL {
 
     String FIND_COTIZACION_BY_EMISORA = FIND_COTIZACION_ALL.concat(WHERE)
             .concat(PARAMETRO_EMISORA_ID).concat(ORDER_BY_EMISORA_ID);
+    
+    String DATE_FILTER = "{DATE_FILTER}";
 
     String FIND_COTIZACION_HISTORY_BY_EMISORA = "SELECT \n"
             + "COT_H.cotizacion_history_id,\n"
@@ -60,7 +62,8 @@ public interface CotizacionDiariaSQL extends BaseSQL {
             + "EMI.emisora_id = ?\n"
             + "AND\n"
             + "(COT_H.diaCotizacion between  DATE_FORMAT({DATE_FILTER} ,'%Y-%m-01') AND SYSDATE() )\n"
-            + "ORDER BY COT_H.diaCotizacion DESC";
+            + "ORDER BY COT_H.diaCotizacion DESC"; 
+    
 
     String SQL_INDICE_COTIZACION_HEADER = "SELECT\n"
             + "EMI.nombre,\n"

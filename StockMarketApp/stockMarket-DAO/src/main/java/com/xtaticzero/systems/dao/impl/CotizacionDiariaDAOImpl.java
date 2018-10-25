@@ -18,6 +18,7 @@ import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -128,12 +129,28 @@ public class CotizacionDiariaDAOImpl extends BaseJDBCDao<CotizacionDiariaDTO> im
     }
 
     @Override
-    public List<CotizacionHistoricoDTO> findCotizacionHistoryByEmisora(BigInteger idEmisora) throws DAOException {
+    public List<CotizacionHistoricoDTO> findCotizacionHistoryByEmisoraCurrentYear(BigInteger idEmisora) throws DAOException {
         try {
             List<Object> params = new ArrayList<>();
             params.add(idEmisora);
+            params.add(new Date());
+            
+            return getJdbcTemplateBase().query(FIND_COTIZACION_HISTORY_BY_EMISORA.replace(DATE_FILTER, "?"), params.toArray(),new CotizacionHistoryMapper());
 
-            return getJdbcTemplateBase().query(FIND_COTIZACION_HISTORY_BY_EMISORA, params.toArray(),new CotizacionHistoryMapper());
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            throw new DAOException(ERR_GENERAL, ex.getMessage(), ex);
+        }
+    }
+    
+    @Override
+    public List<CotizacionHistoricoDTO> findCotizacionHistoryByEmisoraFilter(BigInteger idEmisora, Date year) throws DAOException {
+        try {
+            List<Object> params = new ArrayList<>();
+            params.add(idEmisora);
+            params.add(year);
+            
+            return getJdbcTemplateBase().query(FIND_COTIZACION_HISTORY_BY_EMISORA.replace(DATE_FILTER, "?"), params.toArray(),new CotizacionHistoryMapper());
 
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);

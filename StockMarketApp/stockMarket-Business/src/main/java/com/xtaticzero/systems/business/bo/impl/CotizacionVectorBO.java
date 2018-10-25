@@ -7,6 +7,7 @@ package com.xtaticzero.systems.business.bo.impl;
 
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
 import com.xtaticzero.systems.base.dto.CotizacionHistoricoDTO;
+import com.xtaticzero.systems.base.dto.IPCDto;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.business.bo.BO;
 import java.util.List;
@@ -22,6 +23,11 @@ public class CotizacionVectorBO extends BO<CotizacionVectorBO> {
     private List<CotizacionDiariaDTO> lstCotizacionesDiarias;
     private List<CotizacionHistoricoDTO> lstHistoricoCotizacion;
     private CotizacionDiariaDTO cotizacionSeleccionada;
+    private CotizacionDiariaDTO cotizacionAnual;
+    private List<IPCDto> lstIpc;
+    private List<IPCDto> lstIpcCargaExcel;
+    private IPCDto ipcNew;
+    private IPCDto ipcUltimoAnual;
 
     private CotizacionVectorBO(UsuarioDTO usuario) {
         super(usuario);
@@ -56,6 +62,46 @@ public class CotizacionVectorBO extends BO<CotizacionVectorBO> {
 
     public void setLstHistoricoCotizacion(List<CotizacionHistoricoDTO> lstHistoricoCotizacion) {
         this.lstHistoricoCotizacion = lstHistoricoCotizacion;
+    }
+
+    public List<IPCDto> getLstIpc() {
+        return lstIpc;
+    }
+
+    public void setLstIpc(List<IPCDto> lstIpc) {
+        this.lstIpc = lstIpc;
+    }
+
+    public List<IPCDto> getLstIpcCargaExcel() {
+        return lstIpcCargaExcel;
+    }
+
+    public void setLstIpcCargaExcel(List<IPCDto> lstIpcCargaExcel) {
+        this.lstIpcCargaExcel = lstIpcCargaExcel;
+    }
+
+    public CotizacionDiariaDTO getCotizacionAnual() {
+        return cotizacionAnual;
+    }
+
+    public void setCotizacionAnual(CotizacionDiariaDTO cotizacionAnual) {
+        this.cotizacionAnual = cotizacionAnual;
+    }
+
+    public IPCDto getIpcNew() {
+        return ipcNew;
+    }
+
+    public void setIpcNew(IPCDto ipcNew) {
+        this.ipcNew = ipcNew;
+    }
+
+    public IPCDto getIpcUltimoAnual() {
+        return ipcUltimoAnual;
+    }
+
+    public void setIpcUltimoAnual(IPCDto ipcUltimoAnual) {
+        this.ipcUltimoAnual = ipcUltimoAnual;
     }
 
 }

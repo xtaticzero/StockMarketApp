@@ -55,6 +55,11 @@ public interface RowsNames {
     String CAPITAL_MONTO_ENTRADA = "CAP.montoEntrada";
     String CAPITAL_MONTO_SALIDA = "CAP.montoSalida";
     String CAPITAL_DIA_MOVIMIENTO = "CAP.diaMovimiento";
+    
+    String IPC_ID = "indiceCotizacion_id";
+    String IPC_VALOR = "valorIPC";
+    String IPC_PORCENTAJE = "porcentajeCotizacion";
+    String IPC_DIA_MOVIMIENTO = "diaMovimiento";
 
     String TOTAL = "total";
 }

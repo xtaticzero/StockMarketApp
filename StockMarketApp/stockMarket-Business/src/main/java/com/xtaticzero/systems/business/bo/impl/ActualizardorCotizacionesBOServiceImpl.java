@@ -12,8 +12,6 @@ import com.xtaticzero.systems.business.BaseBusinessServices;
 import com.xtaticzero.systems.business.bo.ActualizardorCotizacionesBOService;
 import com.xtaticzero.systems.dao.CotizacionDiariaDAO;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
