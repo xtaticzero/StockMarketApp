@@ -64,4 +64,8 @@ public class CotizacionDiariaDTO extends BaseModel {
         this.emisora = emisora;
     }
 
+    @Override
+    public String toString() {
+        return "CotizacionDiariaDTO{" + "cotizacionId=" + cotizacionId + ", costoAlDia=" + costoAlDia + ", diaCotizacion=" + diaCotizacion + ", fechaTermino=" + fechaTermino + ", emisora=" + emisora + '}';
+    }
 }

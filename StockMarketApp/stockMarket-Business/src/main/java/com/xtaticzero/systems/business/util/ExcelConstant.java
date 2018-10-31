@@ -20,4 +20,7 @@ public interface ExcelConstant {
     int COLUM_7 = 7;
     int COLUM_8 = 8;
     int COLUM_9 = 9;
+    int COLUM_10 = 10;
+    int COLUM_91 = 11;
+    int COLUM_12 = 12;
 }

@@ -20,7 +20,7 @@
                  /*margin-right:auto;*/">
                 <h:form id="cotizacionDiaria" enctype="multipart/form-data">
                     <ui:include src="statusLoad.xhtml"/>
-
+                    <!--<p:poll interval="15"/>-->
                     <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
                     <f:event listener="#{cotizacionesMB.preRender}" type="preRenderView" />                    
                     <h:panelGrid columns="3">
@@ -32,63 +32,90 @@
                                   hideEffect="fade" 
                                   resizable="false" 
                                   draggable="false">
-                            <p:outputPanel id="cotizacionDetail" style="text-align:center;">
-                                <p:dataTable var="cotizacionH" value="#{cotizacionesMB.cotizacionBO.lstHistoricoCotizacion}" 
-                                             rows="4"
-                                             paginator="true"
-                                             emptyMessage="#{msj['label.lista.vacia']}"
-                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             rowsPerPageTemplate="5,10,15"
-                                             style="width: 900px">
+                            <div style="width: 100%; height: 600px; overflow-y: scroll;">
+                                <p:panel id="cotizacionDetail" style="text-align:center;">
+                                    <p:dataTable var="cotizacionH" value="#{cotizacionesMB.cotizacionBO.lstHistoricoCotizacion}" 
+                                                 emptyMessage="#{msj['label.lista.vacia']}"
+                                                 style="width: 900px">
 
 
-                                    <p:column headerText="EMISORA" style="width: 75px;">
-                                        <h:outputText value="#{cotizacionH.cotizacionDiariaDTO.emisora.nombre}" />
-                                    </p:column>
+                                        <p:column headerText="EMISORA" style="width: 75px;">
+                                            <h:outputText value="#{cotizacionH.cotizacionDiariaDTO.emisora.nombre}" />
+                                        </p:column>
 
-                                    <p:column headerText="COTIZACIÓN" filterBy="#{cotizacionH.cotizacionDiariaDTO.costoAlDia}">
-                                        <div style="text-align: right;">
-                                            <h:outputText value="#{cotizacionH.cotizacionDiariaDTO.costoAlDia}">
-                                                <f:convertNumber pattern="$ #,##0.00" />
+                                        <p:column headerText="COTIZACIÓN" filterBy="#{cotizacionH.cotizacionDiariaDTO.costoAlDia}">
+                                            <div style="text-align: right;">
+                                                <h:outputText value="#{cotizacionH.cotizacionDiariaDTO.costoAlDia}">
+                                                    <f:convertNumber pattern="$ #,##0.00" />
+                                                </h:outputText>
+                                            </div>
+                                        </p:column>
+
+                                        <p:column headerText="FECHA">
+                                            <h:outputText value="#{cotizacionH.cotizacionDiariaDTO.diaCotizacion}">
+                                                <f:convertDateTime pattern="EEEE dd/MMMM/yyyy hh:mm a" type="date" timeZone="America/Mexico_City"/>
                                             </h:outputText>
-                                        </div>
-                                    </p:column>
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:panel>                                
+                            </div>
 
-                                    <p:column headerText="FECHA">
-                                        <h:outputText value="#{cotizacionH.cotizacionDiariaDTO.diaCotizacion}">
-                                            <f:convertDateTime pattern="EEEE dd/MMMM/yyyy hh:mm a" type="date" timeZone="America/Mexico_City"/>
-                                        </h:outputText>
-                                    </p:column>
-                                </p:dataTable>
-                            </p:outputPanel>
                         </p:dialog>
                         <p:accordionPanel style="width: 1529.0px;">
                             <p:tab title="VECTOR Cotizaciones">
-                                <div style="text-align: left;">
-                                    <p:outputLabel value="Plantilla De Carga : "/>
-                                    <p:commandLink ajax="false">
-                                        <h:graphicImage value="/resources/images/excel.jpg" width="30px"/>
-                                        <p:fileDownload value="#{cotizacionesMB.plantilla}" contentDisposition="attachment"/>                                                                               
-                                    </p:commandLink>
-                                    <div style="width: 500px">
-                                        <p:fileUpload id="idFileCargaIpc" fileUploadListener="#{cotizacionesMB.handleFileUpload}" 
-                                                      mode="advanced"
-                                                      skinSimple="true"
-                                                      auto="true" sizeLimit="#{msj['size.excel.carga']}" 
-                                                      allowTypes="/(\.|\/)(xls?x)$/" 
-                                                      label="Archivo Carga IPC" 
-                                                      invalidFileMessage="#{msj['msg.error.formato.excel']}"
-                                                      invalidSizeMessage="#{msj['msg.error.size.file']}"
-                                                      update="@form" 
-                                                      onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"/>
-                                    </div>                                    
-                                </div>
+                                <p:panelGrid>
+                                    <p:row>
+                                        <p:column>
+                                            <div style="text-align: left;">
+                                                <p:outputLabel value="Plantilla De Carga Cotizacion Diaria : "/>
+                                                <p:commandLink ajax="false">
+                                                    <h:graphicImage value="/resources/images/excel.jpg" width="30px"/>
+                                                    <p:fileDownload value="#{cotizacionesMB.plantillaCotDiaria}" contentDisposition="attachment"/>                                                                               
+                                                </p:commandLink>
+                                                <div style="width: 500px">
+                                                    <p:fileUpload id="idFileCargaCotizacion" fileUploadListener="#{cotizacionesMB.handleFileUploadCotizacion}" 
+                                                                  mode="advanced"
+                                                                  skinSimple="true"
+                                                                  auto="true" sizeLimit="#{msj['size.excel.carga']}" 
+                                                                  allowTypes="/(\.|\/)(xls?x)$/" 
+                                                                  label="Archivo Carga IPC" 
+                                                                  invalidFileMessage="#{msj['msg.error.formato.excel']}"
+                                                                  invalidSizeMessage="#{msj['msg.error.size.file']}"
+                                                                  update="@form" 
+                                                                  onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"/>
+                                                </div>                                    
+                                            </div> 
+                                        </p:column>
+                                        <p:column>
+                                            <div style="text-align: left;">
+                                                <p:outputLabel value="Plantilla De Carga IPC : "/>
+                                                <p:commandLink ajax="false">
+                                                    <h:graphicImage value="/resources/images/excel.jpg" width="30px"/>
+                                                    <p:fileDownload value="#{cotizacionesMB.plantilla}" contentDisposition="attachment"/>                                                                               
+                                                </p:commandLink>
+                                                <div style="width: 500px">
+                                                    <p:fileUpload id="idFileCargaIpc" fileUploadListener="#{cotizacionesMB.handleFileUpload}" 
+                                                                  mode="advanced"
+                                                                  skinSimple="true"
+                                                                  auto="true" sizeLimit="#{msj['size.excel.carga']}" 
+                                                                  allowTypes="/(\.|\/)(xls?x)$/" 
+                                                                  label="Archivo Carga IPC" 
+                                                                  invalidFileMessage="#{msj['msg.error.formato.excel']}"
+                                                                  invalidSizeMessage="#{msj['msg.error.size.file']}"
+                                                                  update="@form" 
+                                                                  onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"/>
+                                                </div>                                    
+                                            </div>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>                                
                                 <div style="text-align: center;">
                                     <p:panelGrid style="margin-top:1px">
                                         <p:row>
                                             <p:column >
                                                 <p:dataTable id="cellEditingTable" var="cotizacion" value="#{cotizacionesMB.cotizacionBO.lstCotizacionesDiarias}"  
-                                                             filteredValue="#{cotizacionesMB.filteredCotizaciones}" 
+                                                             filteredValue="#{cotizacionesMB.filteredCotizaciones}"
+                                                             emptyMessage="#{msj['label.lista.vacia']}"
                                                              paginator="true"                                                         
                                                              paginatorPosition="bottom"  
                                                              editable="true"
@@ -108,11 +135,15 @@
                                                         </p:commandButton>
                                                     </p:column>
 
-                                                    <p:column headerText="EMISORA" filterBy="#{cotizacion.emisora.nombre}" style="width:150px">
+                                                    <p:column headerText="ID" style="width:10px">
+                                                        <h:outputText value="#{cotizacion.emisora.emisora_id}" />
+                                                    </p:column>
+
+                                                    <p:column headerText="EMISORA" style="width:100px">
                                                         <h:outputText value="#{cotizacion.emisora.nombre}" />
                                                     </p:column>
 
-                                                    <p:column headerText="COSTO UNITARIO" filterBy="#{cotizacion.costoAlDia}" style="width:110px">
+                                                    <p:column headerText="COSTO UNITARIO" style="width:110px">
                                                         <p:cellEditor>
                                                             <f:facet name="output">
                                                                 <div style="text-align: right;">
@@ -144,7 +175,6 @@
                                                 </p:dataTable>
                                             </p:column>
                                             <p:column>
-
                                                 <div>
                                                     <p:panelGrid style="margin-top: 20px">
                                                         <f:facet name="header">
@@ -152,9 +182,9 @@
                                                                 <p:column colspan="3">Indice Cotización</p:column>
                                                             </p:row>
                                                             <p:row>
-                                                                <p:column style="width: 34%;">Fecha</p:column>
-                                                                <p:column style="width: 33%;">IPC</p:column>
-                                                                <p:column style="width: 33%;">Acomulado</p:column>
+                                                                <p:column style="width: 37%;">Fecha</p:column>
+                                                                <p:column style="width: 37%;">IPC</p:column>
+                                                                <p:column style="width: 26%;">Acomulado</p:column>
                                                             </p:row>
                                                         </f:facet>
                                                         <p:row>
@@ -194,6 +224,245 @@
                                                     </p:panelGrid>  
                                                 </div>
                                             </p:column>                                            
+                                        </p:row>
+                                        <p:row>
+                                            <p:column colspan="2">
+                                                <p:panelGrid>
+                                                    <p:row>
+                                                        <p:column>
+                                                            <p:panelGrid style="width:100%">
+                                                                <f:facet name="header">
+                                                                    <p:row>
+                                                                        <p:column colspan="10"><p:outputLabel value="Promedios Anuales" /></p:column> 
+                                                                    </p:row>
+                                                                    <p:row>
+                                                                        <p:column><p:outputLabel value="FILTRO"/></p:column>
+                                                                        <p:column><p:outputLabel value="#{cotizacionesMB.getNombreEmisoraById(1)}"/></p:column>
+                                                                        <p:column><p:outputLabel value="#{cotizacionesMB.getNombreEmisoraById(2)}"/></p:column>
+                                                                        <p:column><p:outputLabel value="#{cotizacionesMB.getNombreEmisoraById(3)}"/></p:column>
+                                                                        <p:column><p:outputLabel value="#{cotizacionesMB.getNombreEmisoraById(4)}"/></p:column>
+                                                                        <p:column><p:outputLabel value="#{cotizacionesMB.getNombreEmisoraById(5)}"/></p:column>
+                                                                        <p:column><p:outputLabel value="#{cotizacionesMB.getNombreEmisoraById(6)}"/></p:column>
+                                                                        <p:column><p:outputLabel value="#{cotizacionesMB.getNombreEmisoraById(7)}"/></p:column>
+                                                                        <p:column><p:outputLabel value="#{cotizacionesMB.getNombreEmisoraById(8)}"/></p:column>
+                                                                        <p:column><p:outputLabel value="#{cotizacionesMB.getNombreEmisoraById(9)}"/></p:column>
+                                                                    </p:row>
+                                                                </f:facet>
+                                                                <p:row>
+                                                                    <p:column>
+                                                                        <p:outputLabel value="% del 1o de enero "/>                                                    
+                                                                        <p:selectOneMenu id="idYearFilter" value="#{cotizacionesMB.cotizacionBO.yearFiltro}" >
+                                                                            <f:selectItem itemLabel="#{msj['label.combo.vacio']}" itemValue="" noSelectionOption="true" />
+                                                                            <f:selectItems value="#{cotizacionesMB.lstComboYears}" var="year" itemLabel="#{year}" itemValue="#{year}"/>
+                                                                            <p:ajax event="change" listener="#{cotizacionesMB.processAverage}" update="@form"/>
+                                                                        </p:selectOneMenu>
+                                                                        <p:outputLabel value=" a la fecha:"/>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(1).styleManyYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(1).promedioManyYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+
+                                                                            </h:outputText>
+                                                                        </div>
+
+                                                                    </p:column>
+                                                                    <p:column>
+
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(2).styleManyYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(2).promedioManyYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(3).styleManyYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(3).promedioManyYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+
+                                                                            </h:outputText>
+                                                                        </div>
+
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(4).styleManyYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(4).promedioManyYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(5).styleManyYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(5).promedioManyYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(6).styleManyYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(6).promedioManyYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(7).styleManyYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(7).promedioManyYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(8).styleManyYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(8).promedioManyYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+
+
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(9).styleManyYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(9).promedioManyYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+
+
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                </p:row>
+                                                                <p:row>
+                                                                    <p:column>
+                                                                        <p:outputLabel value="% Ultimo de Diciembre "/>                                                    
+                                                                        <p:selectOneMenu id="idLastYear" disabled="true" value="#{cotizacionesMB.lastYear}">
+                                                                            <f:selectItem itemLabel="#{msj['label.combo.vacio']}" itemValue="" noSelectionOption="true" />
+                                                                            <f:selectItems value="#{cotizacionesMB.lstComboYears}" var="year" itemLabel="#{year}" itemValue="#{year}"/>                                                                            
+                                                                        </p:selectOneMenu>
+                                                                        <p:outputLabel value=" a la fecha:"/>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(1).styleLastYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(1).promedioLastYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+
+
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(2).styleLastYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(2).promedioLastYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+
+
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(3).styleLastYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(3).promedioLastYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+
+
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(4).styleLastYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(4).promedioLastYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+
+
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(5).styleLastYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(5).promedioLastYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+
+
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(6).styleLastYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(6).promedioLastYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+
+
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(7).styleLastYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(7).promedioLastYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+
+
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(8).styleLastYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(8).promedioLastYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+
+
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <div style="text-align: right; #{cotizacionesMB.getCotizacionPromedio(9).styleLastYear}}">
+                                                                            <h:outputText value="#{cotizacionesMB.getCotizacionPromedio(9).promedioLastYear}">
+                                                                                <f:convertNumber type="percent"
+                                                                                                 maxIntegerDigits="5"
+                                                                                                 maxFractionDigits="2"/>
+
+
+                                                                            </h:outputText>
+                                                                        </div>
+                                                                    </p:column>
+                                                                </p:row>
+                                                            </p:panelGrid>
+                                                        </p:column>
+                                                    </p:row>
+                                                </p:panelGrid>
+                                            </p:column>
                                         </p:row>
                                     </p:panelGrid>
                                 </div>

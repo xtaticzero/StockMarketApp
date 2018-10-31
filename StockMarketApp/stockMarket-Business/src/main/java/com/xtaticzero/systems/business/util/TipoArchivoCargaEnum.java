@@ -10,7 +10,8 @@ package com.xtaticzero.systems.business.util;
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
 public enum TipoArchivoCargaEnum {
-    ARCHIVO_CARGA_IPC(1,"Archivo de carga IPC");
+    ARCHIVO_CARGA_IPC(1,"Archivo de carga IPC"),
+    ARCHIVO_CARGA_COTIZACION_DIARIA(2,"Archivo de carga Cotizacion Diaria EMISORA ID");
     private final String descTipo;
     private final int idTipo;
 

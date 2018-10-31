@@ -9,6 +9,7 @@ import com.xtaticzero.systems.base.constants.excepcion.impl.BusinessException;
 import com.xtaticzero.systems.base.constants.excepcion.impl.DAOException;
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
 import com.xtaticzero.systems.base.dto.CotizacionHistoricoDTO;
+import com.xtaticzero.systems.base.dto.CotizacionPromedioDTO;
 import com.xtaticzero.systems.base.dto.IPCDto;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.business.BaseBusinessServices;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,8 +155,39 @@ public class CotizacionDiariaServiceImpl extends BaseBusinessServices implements
     }
 
     @Override
-    public CotizacionVectorBO calcularPromediosAnuales(CotizacionVectorBO cotizacionDiariaBO, Date anioEnCurso) throws BusinessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public CotizacionVectorBO calcularPromediosAnuales(CotizacionVectorBO cotizacionDiariaBO, int anioEnCurso) throws BusinessException {
+        try {
+            if (cotizacionDiariaBO != null) {
+                if (cotizacionDiariaBO.getLstCotizacionesDiarias() == null || cotizacionDiariaBO.getLstCotizacionesDiarias().isEmpty()) {
+                    getLstCotizaciones(cotizacionDiariaBO);
+
+                }
+
+                int lastYear = anioEnCurso - 1;
+
+                if (cotizacionDiariaBO.getLstCotizacionesDiarias() != null) {
+                    cotizacionDiariaBO.setMapCotizacionPromedio(new HashMap<BigInteger, CotizacionPromedioDTO>());
+                    for (CotizacionDiariaDTO cotizacionesDiaria : cotizacionDiariaBO.getLstCotizacionesDiarias()) {
+                        CotizacionPromedioDTO cotPromedio = new CotizacionPromedioDTO();
+
+                        CotizacionHistoricoDTO cotizacionHistoricaManyYear = cotizacionDAO.findLastCotizacionHistoricaByDate(cotizacionesDiaria.getEmisora().getEmisora_id(), cotizacionDiariaBO.getYearFiltro()!=null?cotizacionDiariaBO.getYearFiltro():lastYear);
+                        CotizacionHistoricoDTO cotizacionHistoricaOneYear = cotizacionDAO.findLastCotizacionHistoricaByDate(cotizacionesDiaria.getEmisora().getEmisora_id(), lastYear);
+
+                        cotPromedio.setCotizacionActual(cotizacionesDiaria);
+                        cotPromedio.setCotizacionHistoricaLastYear(cotizacionHistoricaOneYear);
+                        cotPromedio.setCotizacionHistoricaManyYear(cotizacionHistoricaManyYear);
+
+                        cotizacionDiariaBO.getMapCotizacionPromedio().put(cotizacionesDiaria.getEmisora().getEmisora_id(), cotPromedio);
+
+                    }
+
+                }
+            }
+            return cotizacionDiariaBO;
+        } catch (Exception daoEx) {
+            logger.error(daoEx.getMessage());
+            throw new BusinessException(ERR_GENERAL_DESCRIPCION, daoEx, "No se pudo obtener la cotizacion diaria ");
+        }
     }
 
     @Override
@@ -163,9 +195,9 @@ public class CotizacionDiariaServiceImpl extends BaseBusinessServices implements
         try {
 
             if (fileCarga != null) {
-                cotizacionDiariaBO.setLstIpcCargaExcel((List<IPCDto>) excelReaderService.getLstOfIpc(fileCarga,TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC));
+                cotizacionDiariaBO.setLstIpcCargaExcel((List<IPCDto>) excelReaderService.getLstCargaByType(fileCarga, TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC));
             } else if (fileIS != null) {
-                cotizacionDiariaBO.setLstIpcCargaExcel((List<IPCDto>) excelReaderService.getLstOfIpc(fileIS,TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC));
+                cotizacionDiariaBO.setLstIpcCargaExcel((List<IPCDto>) excelReaderService.getLstCargaByType(fileIS, TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC));
             }
 
             int[] result = ipcDao.inserBatch(cotizacionDiariaBO.getLstIpcCargaExcel());
@@ -180,6 +212,50 @@ public class CotizacionDiariaServiceImpl extends BaseBusinessServices implements
         } catch (InvalidFormatException ex) {
             logger.error(ex);
             throw new BusinessException(ERR_GENERAL_DESCRIPCION, ex, "Formato invalido del archivo");
+        }
+    }
+
+    @Override
+    public CotizacionVectorBO getLstOfYearsHistory(CotizacionVectorBO cotizacionDiariaBO) throws BusinessException {
+        try {
+            if (cotizacionDiariaBO != null) {
+                cotizacionDiariaBO.setLstYearsHistorico(cotizacionDAO.findAllYearsHistory());
+            }
+            return cotizacionDiariaBO;
+        } catch (DAOException daoEx) {
+            logger.error(daoEx.getMessage());
+            throw new BusinessException(ERR_GENERAL_DESCRIPCION, daoEx, "Error al cargar datos del Excel");
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new BusinessException(ERR_GENERAL_DESCRIPCION, e, "Error al obtener lista de años historicos ");
+        }
+    }
+
+    @Override
+    public CotizacionVectorBO getLstCotizacionesFromExcel(CotizacionVectorBO cotizacionDiariaBO, InputStream file) throws BusinessException {
+        try {
+            if (cotizacionDiariaBO != null) {
+                cotizacionDiariaBO.setLstCotizacionesDiariasFromExcel((List<CotizacionDiariaDTO>) excelReaderService.getLstCargaByType(file, TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA));
+                return cotizacionDiariaBO;
+            }
+            return cotizacionDiariaBO;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new BusinessException(ERR_GENERAL_DESCRIPCION, e, "Error al obtener lista de cotizaciones de Excel ");
+        }
+    }
+
+    @Override
+    public CotizacionVectorBO insertLstCotizacionesFromExcel(CotizacionVectorBO cotizacionDiariaBO) throws BusinessException {
+        try {
+            if (cotizacionDiariaBO != null) {
+                cotizacionDAO.updateFromExcel(cotizacionDiariaBO.getLstCotizacionesDiariasFromExcel());
+                return cotizacionDiariaBO;
+            }
+            return cotizacionDiariaBO;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new BusinessException(ERR_GENERAL_DESCRIPCION, e, "Error al obtener lista de cotizaciones de Excel ");
         }
     }
 

@@ -62,4 +62,6 @@ public interface RowsNames {
     String IPC_DIA_MOVIMIENTO = "diaMovimiento";
 
     String TOTAL = "total";
+    
+    String COTIZACION_HISTORY_YEAR = "YEAR"; 
 }

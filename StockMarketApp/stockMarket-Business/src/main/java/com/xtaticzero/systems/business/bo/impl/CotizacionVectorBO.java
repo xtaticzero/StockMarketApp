@@ -7,10 +7,13 @@ package com.xtaticzero.systems.business.bo.impl;
 
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
 import com.xtaticzero.systems.base.dto.CotizacionHistoricoDTO;
+import com.xtaticzero.systems.base.dto.CotizacionPromedioDTO;
 import com.xtaticzero.systems.base.dto.IPCDto;
 import com.xtaticzero.systems.base.dto.UsuarioDTO;
 import com.xtaticzero.systems.business.bo.BO;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -21,13 +24,16 @@ public class CotizacionVectorBO extends BO<CotizacionVectorBO> {
     private static final long serialVersionUID = -7941723588237593411L;
 
     private List<CotizacionDiariaDTO> lstCotizacionesDiarias;
+    private List<CotizacionDiariaDTO> lstCotizacionesDiariasFromExcel;
     private List<CotizacionHistoricoDTO> lstHistoricoCotizacion;
     private CotizacionDiariaDTO cotizacionSeleccionada;
-    private CotizacionDiariaDTO cotizacionAnual;
+    private Map<BigInteger, CotizacionPromedioDTO> mapCotizacionPromedio;
     private List<IPCDto> lstIpc;
     private List<IPCDto> lstIpcCargaExcel;
+    private List<Integer> lstYearsHistorico;
     private IPCDto ipcNew;
     private IPCDto ipcUltimoAnual;
+    private Integer yearFiltro;
 
     private CotizacionVectorBO(UsuarioDTO usuario) {
         super(usuario);
@@ -48,12 +54,28 @@ public class CotizacionVectorBO extends BO<CotizacionVectorBO> {
         this.lstCotizacionesDiarias = lstCotizacionesDiarias;
     }
 
+    public List<CotizacionDiariaDTO> getLstCotizacionesDiariasFromExcel() {
+        return lstCotizacionesDiariasFromExcel;
+    }
+
+    public void setLstCotizacionesDiariasFromExcel(List<CotizacionDiariaDTO> lstCotizacionesDiariasFromExcel) {
+        this.lstCotizacionesDiariasFromExcel = lstCotizacionesDiariasFromExcel;
+    }
+
     public CotizacionDiariaDTO getCotizacionSeleccionada() {
         return cotizacionSeleccionada;
     }
 
     public void setCotizacionSeleccionada(CotizacionDiariaDTO cotizacionSeleccionada) {
         this.cotizacionSeleccionada = cotizacionSeleccionada;
+    }
+
+    public Map<BigInteger, CotizacionPromedioDTO> getMapCotizacionPromedio() {
+        return mapCotizacionPromedio;
+    }
+
+    public void setMapCotizacionPromedio(Map<BigInteger, CotizacionPromedioDTO> mapCotizacionPromedio) {
+        this.mapCotizacionPromedio = mapCotizacionPromedio;
     }
 
     public List<CotizacionHistoricoDTO> getLstHistoricoCotizacion() {
@@ -80,12 +102,12 @@ public class CotizacionVectorBO extends BO<CotizacionVectorBO> {
         this.lstIpcCargaExcel = lstIpcCargaExcel;
     }
 
-    public CotizacionDiariaDTO getCotizacionAnual() {
-        return cotizacionAnual;
+    public List<Integer> getLstYearsHistorico() {
+        return lstYearsHistorico;
     }
 
-    public void setCotizacionAnual(CotizacionDiariaDTO cotizacionAnual) {
-        this.cotizacionAnual = cotizacionAnual;
+    public void setLstYearsHistorico(List<Integer> lstYearsHistorico) {
+        this.lstYearsHistorico = lstYearsHistorico;
     }
 
     public IPCDto getIpcNew() {
@@ -102,6 +124,19 @@ public class CotizacionVectorBO extends BO<CotizacionVectorBO> {
 
     public void setIpcUltimoAnual(IPCDto ipcUltimoAnual) {
         this.ipcUltimoAnual = ipcUltimoAnual;
+    }
+
+    public Integer getYearFiltro() {
+        return yearFiltro;
+    }
+
+    public void setYearFiltro(Integer yearFiltro) {
+        this.yearFiltro = yearFiltro;
+    }
+
+    @Override
+    public String toString() {
+        return "CotizacionVectorBO{" + "lstCotizacionesDiarias=" + lstCotizacionesDiarias + ", lstHistoricoCotizacion=" + lstHistoricoCotizacion + ", cotizacionSeleccionada=" + cotizacionSeleccionada + ", mapCotizacionPromedio=" + mapCotizacionPromedio + ", lstIpc=" + lstIpc + ", lstIpcCargaExcel=" + lstIpcCargaExcel + ", ipcNew=" + ipcNew + ", ipcUltimoAnual=" + ipcUltimoAnual + ", yearFiltro=" + yearFiltro + '}';
     }
 
 }

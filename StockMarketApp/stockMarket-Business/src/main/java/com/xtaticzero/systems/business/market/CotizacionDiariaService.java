@@ -12,7 +12,6 @@ import com.xtaticzero.systems.business.bo.impl.CotizacionVectorBO;
 import java.io.File;
 import java.io.InputStream;
 import java.math.BigInteger;
-import java.util.Date;
 
 /**
  *
@@ -34,8 +33,14 @@ public interface CotizacionDiariaService {
 
     CotizacionVectorBO getLstIPC(CotizacionVectorBO cotizacionDiariaBO, Integer numYears) throws BusinessException;
 
-    CotizacionVectorBO calcularPromediosAnuales(CotizacionVectorBO cotizacionDiariaBO, Date anioEnCurso) throws BusinessException;
-    
+    CotizacionVectorBO calcularPromediosAnuales(CotizacionVectorBO cotizacionDiariaBO, int anioEnCurso) throws BusinessException;
+
     CotizacionVectorBO insertIPCFromExcel(CotizacionVectorBO cotizacionDiariaBO, File fileCarga, InputStream file) throws BusinessException;
+
+    CotizacionVectorBO getLstOfYearsHistory(CotizacionVectorBO cotizacionDiariaBO) throws BusinessException;
+    
+    CotizacionVectorBO getLstCotizacionesFromExcel(CotizacionVectorBO cotizacionDiariaBO, InputStream file) throws BusinessException;
+    
+    CotizacionVectorBO insertLstCotizacionesFromExcel(CotizacionVectorBO cotizacionDiariaBO) throws BusinessException;
 
 }

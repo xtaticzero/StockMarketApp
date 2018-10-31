@@ -23,11 +23,14 @@ import stock.vista.model.IpcModel;
  *
  * @author Ing. Emmanuel Estrada Gonzalez <emmanuel.estradag.ipn@gmail.com>
  */
-public class CotizacionAbstractMB extends VistaAbstractMB {
+public abstract class CotizacionAbstractMB extends VistaAbstractMB {
 
     private static final long serialVersionUID = -2690236031783823971L;
 
     private StreamedContent plantilla;
+    private StreamedContent plantillaCotDiaria;
+
+    private Integer yearFilter;
 
     private List<ExistenciaInicial> existencias;
     private List<Utilidad> utilidades;
@@ -44,6 +47,18 @@ public class CotizacionAbstractMB extends VistaAbstractMB {
 
     public StreamedContent getPlantilla() {
         return plantilla;
+    }
+
+    public StreamedContent getPlantillaCotDiaria() {
+        return plantillaCotDiaria;
+    }
+
+    public Integer getYearFilter() {
+        return yearFilter;
+    }
+
+    public void setYearFilter(Integer yearFilter) {
+        this.yearFilter = yearFilter;
     }
 
     public CotizacionVectorBO getCotizacionBO() {
@@ -119,6 +134,10 @@ public class CotizacionAbstractMB extends VistaAbstractMB {
 
     public void setPlantilla(StreamedContent plantilla) {
         this.plantilla = plantilla;
+    }
+
+    public void setPlantillaCotDiaria(StreamedContent plantillaCotDiaria) {
+        this.plantillaCotDiaria = plantillaCotDiaria;
     }
 
 }

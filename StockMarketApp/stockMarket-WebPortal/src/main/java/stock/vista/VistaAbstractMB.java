@@ -77,7 +77,7 @@ public abstract class VistaAbstractMB implements Serializable {
             BusinessException bEx = new BusinessException("usr.invalido", "usuario desconocido");
             FrontException fEx = new FrontException(ExceptionConstant.ERR_GENERAL, bEx, CatalogoErroresEnum.ERROR_USUARIO_INVALIDO.getTipo(), CatalogoErroresEnum.ERROR_USUARIO_INVALIDO.getCodigo());
             setAttributeSession(ConstantesVista.MSG_ERROR_SESSION, fEx);
-            logger.error(fEx.getMessage(),fEx);
+            logger.error(fEx.getMessage(), fEx);
             throw fEx;
         }
     }
@@ -116,6 +116,11 @@ public abstract class VistaAbstractMB implements Serializable {
     public void setUserProfile(UsuarioDTO userProfile) {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                 .put(ConstantesVista.USER_PROFILE, userProfile);
+    }
+
+    public Object getAttributeSession(String nameAttrib) {
+        return FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                .get(nameAttrib);
     }
 
     public void setAttributeSession(String nameAttrib, Object newAttrib) {

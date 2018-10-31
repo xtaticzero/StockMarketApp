@@ -18,7 +18,8 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
  */
 public interface ExcelReaderService {
 
-    List<? extends BaseModel> getLstOfIpc(File file, TipoArchivoCargaEnum tipoArchivo) throws IOException, InvalidFormatException;
+    List<? extends BaseModel> getLstCargaByType(File file, TipoArchivoCargaEnum tipoArchivo) throws IOException, InvalidFormatException;
 
-    List<? extends BaseModel> getLstOfIpc(InputStream file, TipoArchivoCargaEnum tipoArchivo) throws IOException, InvalidFormatException;
+    List<? extends BaseModel> getLstCargaByType(InputStream file, TipoArchivoCargaEnum tipoArchivo) throws IOException, InvalidFormatException;   
+    
 }

@@ -33,4 +33,10 @@ public interface CotizacionDiariaDAO {
     List<CotizacionDiariaDTO> findAllCotizacionDiaria() throws DAOException;
 
     int[] updateBatch(List<CotizacionDiariaDTO> lstCotizaciones) throws DAOException;
+    
+    int[] updateFromExcel(List<CotizacionDiariaDTO> lstCotizaciones) throws DAOException;
+
+    CotizacionHistoricoDTO findLastCotizacionHistoricaByDate(BigInteger idEmisora, Integer yearFiltro) throws DAOException;
+    
+    List<Integer> findAllYearsHistory() throws DAOException;
 }

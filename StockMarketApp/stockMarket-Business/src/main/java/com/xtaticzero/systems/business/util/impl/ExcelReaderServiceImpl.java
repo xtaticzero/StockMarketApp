@@ -6,6 +6,8 @@
 package com.xtaticzero.systems.business.util.impl;
 
 import com.xtaticzero.systems.base.BaseModel;
+import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
+import com.xtaticzero.systems.base.dto.EmisoraDTO;
 import com.xtaticzero.systems.base.dto.IPCDto;
 import com.xtaticzero.systems.business.BaseBusinessServices;
 import com.xtaticzero.systems.business.util.ExcelConstant;
@@ -15,7 +17,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -49,17 +53,18 @@ public class ExcelReaderServiceImpl extends BaseBusinessServices implements Exce
     }
 
     @Override
-    public List<? extends BaseModel> getLstOfIpc(File file, TipoArchivoCargaEnum tipoArchivo) throws IOException, InvalidFormatException {
+    public List<? extends BaseModel> getLstCargaByType(File file, TipoArchivoCargaEnum tipoArchivo) throws IOException, InvalidFormatException {
         return process(init(file), tipoArchivo);
     }
 
     @Override
-    public List<? extends BaseModel> getLstOfIpc(InputStream file, TipoArchivoCargaEnum tipoArchivo) throws IOException, InvalidFormatException {
+    public List<? extends BaseModel> getLstCargaByType(InputStream file, TipoArchivoCargaEnum tipoArchivo) throws IOException, InvalidFormatException {
         return process(init(file), tipoArchivo);
     }
 
     private List<? extends BaseModel> process(Workbook wb, TipoArchivoCargaEnum tipoArchivo) {
         List<IPCDto> lstIpc = new ArrayList<>();
+        List<CotizacionDiariaDTO> lstCotizacionDiaria = new ArrayList<>();
         BaseModel objCarga = null;
 
         Sheet sheet = wb.getSheetAt(0);
@@ -80,10 +85,12 @@ public class ExcelReaderServiceImpl extends BaseBusinessServices implements Exce
 
             // Now let's iterate over the columns of the current row
             Iterator<Cell> cellIterator = row.cellIterator();
-
+            Date fechaCarga = null;
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
-
+                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA)) {
+                    objCarga = new CotizacionDiariaDTO();
+                }
                 if (evaluator.evaluateFormulaCell(cell) != Cell.CELL_TYPE_BLANK) {
                     if (cell != null && objCarga != null) {
                         logger.debug("cell.getColumnIndex()" + cell.getColumnIndex());
@@ -95,6 +102,9 @@ public class ExcelReaderServiceImpl extends BaseBusinessServices implements Exce
                                 if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC)) {
                                     ((IPCDto) objCarga).setDiaMovimiento(cell.getDateCellValue());
                                 }
+                                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA)) {
+                                    fechaCarga = (cell.getDateCellValue());
+                                }
 
                                 break;
                             case ExcelConstant.COLUM_1:
@@ -102,6 +112,12 @@ public class ExcelReaderServiceImpl extends BaseBusinessServices implements Exce
 
                                 if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC)) {
                                     ((IPCDto) objCarga).setValorIPC(new BigDecimal(cell.getNumericCellValue()));
+                                }
+
+                                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA)) {
+                                    ((CotizacionDiariaDTO) objCarga).setEmisora(new EmisoraDTO());
+                                    ((CotizacionDiariaDTO) objCarga).getEmisora().setEmisora_id(new BigInteger(String.valueOf(ExcelConstant.COLUM_1)));
+                                    ((CotizacionDiariaDTO) objCarga).setCostoAlDia(new BigDecimal(cell.getNumericCellValue()));
                                 }
 
                                 break;
@@ -112,11 +128,92 @@ public class ExcelReaderServiceImpl extends BaseBusinessServices implements Exce
                                     ((IPCDto) objCarga).setPorcentajeCotizacion(new BigDecimal(cell.getNumericCellValue()));
                                 }
 
+                                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA)) {
+                                    ((CotizacionDiariaDTO) objCarga).setEmisora(new EmisoraDTO());
+                                    ((CotizacionDiariaDTO) objCarga).getEmisora().setEmisora_id(new BigInteger(String.valueOf(ExcelConstant.COLUM_2)));
+                                    ((CotizacionDiariaDTO) objCarga).setCostoAlDia(new BigDecimal(cell.getNumericCellValue()));
+                                }
+
+                                break;
+                            case ExcelConstant.COLUM_3:
+                                logger.debug(cell.getNumericCellValue());
+
+                                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA)) {
+                                    ((CotizacionDiariaDTO) objCarga).setEmisora(new EmisoraDTO());
+                                    ((CotizacionDiariaDTO) objCarga).getEmisora().setEmisora_id(new BigInteger(String.valueOf(ExcelConstant.COLUM_3)));
+                                    ((CotizacionDiariaDTO) objCarga).setCostoAlDia(new BigDecimal(cell.getNumericCellValue()));
+                                }
+
+                                break;
+                            case ExcelConstant.COLUM_4:
+                                logger.debug(cell.getNumericCellValue());
+
+                                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA)) {
+                                    ((CotizacionDiariaDTO) objCarga).setEmisora(new EmisoraDTO());
+                                    ((CotizacionDiariaDTO) objCarga).getEmisora().setEmisora_id(new BigInteger(String.valueOf(ExcelConstant.COLUM_4)));
+                                    ((CotizacionDiariaDTO) objCarga).setCostoAlDia(new BigDecimal(cell.getNumericCellValue()));
+                                }
+
+                                break;
+                            case ExcelConstant.COLUM_5:
+                                logger.debug(cell.getNumericCellValue());
+
+                                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA)) {
+                                    ((CotizacionDiariaDTO) objCarga).setEmisora(new EmisoraDTO());
+                                    ((CotizacionDiariaDTO) objCarga).getEmisora().setEmisora_id(new BigInteger(String.valueOf(ExcelConstant.COLUM_5)));
+                                    ((CotizacionDiariaDTO) objCarga).setCostoAlDia(new BigDecimal(cell.getNumericCellValue()));
+                                }
+
+                                break;
+                            case ExcelConstant.COLUM_6:
+                                logger.debug(cell.getNumericCellValue());
+
+                                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA)) {
+                                    ((CotizacionDiariaDTO) objCarga).setEmisora(new EmisoraDTO());
+                                    ((CotizacionDiariaDTO) objCarga).getEmisora().setEmisora_id(new BigInteger(String.valueOf(ExcelConstant.COLUM_6)));
+                                    ((CotizacionDiariaDTO) objCarga).setCostoAlDia(new BigDecimal(cell.getNumericCellValue()));
+                                }
+
+                                break;
+                            case ExcelConstant.COLUM_7:
+                                logger.debug(cell.getNumericCellValue());
+
+                                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA)) {
+                                    ((CotizacionDiariaDTO) objCarga).setEmisora(new EmisoraDTO());
+                                    ((CotizacionDiariaDTO) objCarga).getEmisora().setEmisora_id(new BigInteger(String.valueOf(ExcelConstant.COLUM_7)));
+                                    ((CotizacionDiariaDTO) objCarga).setCostoAlDia(new BigDecimal(cell.getNumericCellValue()));
+                                }
+
+                                break;
+                            case ExcelConstant.COLUM_8:
+                                logger.debug(cell.getNumericCellValue());
+
+                                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA)) {
+                                    ((CotizacionDiariaDTO) objCarga).setEmisora(new EmisoraDTO());
+                                    ((CotizacionDiariaDTO) objCarga).getEmisora().setEmisora_id(new BigInteger(String.valueOf(ExcelConstant.COLUM_8)));
+                                    ((CotizacionDiariaDTO) objCarga).setCostoAlDia(new BigDecimal(cell.getNumericCellValue()));
+                                }
+
+                                break;
+                            case ExcelConstant.COLUM_9:
+                                logger.debug(cell.getNumericCellValue());
+
+                                if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA)) {
+                                    ((CotizacionDiariaDTO) objCarga).setEmisora(new EmisoraDTO());
+                                    ((CotizacionDiariaDTO) objCarga).getEmisora().setEmisora_id(new BigInteger(String.valueOf(ExcelConstant.COLUM_9)));
+                                    ((CotizacionDiariaDTO) objCarga).setCostoAlDia(new BigDecimal(cell.getNumericCellValue()));
+                                }
+
                                 break;
                             default:
                                 break;
                         }
-
+                        if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA)) {
+                            ((CotizacionDiariaDTO) objCarga).setDiaCotizacion(fechaCarga);
+                            if (((CotizacionDiariaDTO) objCarga).getEmisora() != null && ((CotizacionDiariaDTO) objCarga).getEmisora().getEmisora_id() != null && !(((CotizacionDiariaDTO) objCarga).getCostoAlDia().equals(BigDecimal.ZERO)) ) {
+                                lstCotizacionDiaria.add(((CotizacionDiariaDTO) objCarga));
+                            }
+                        }
                     }
                 }
 
@@ -132,6 +229,9 @@ public class ExcelReaderServiceImpl extends BaseBusinessServices implements Exce
 
         if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_IPC)) {
             return lstIpc;
+        }
+        if (tipoArchivo.equals(TipoArchivoCargaEnum.ARCHIVO_CARGA_COTIZACION_DIARIA)) {
+            return lstCotizacionDiaria;
         } else {
             return new ArrayList<BaseModel>();
         }
