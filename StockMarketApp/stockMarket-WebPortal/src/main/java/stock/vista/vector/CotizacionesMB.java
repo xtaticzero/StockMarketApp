@@ -10,6 +10,7 @@ import com.xtaticzero.systems.base.constants.excepcion.impl.FrontException;
 import com.xtaticzero.systems.base.dto.CotizacionDiariaDTO;
 import com.xtaticzero.systems.base.dto.CotizacionHistoricoDTO;
 import com.xtaticzero.systems.base.dto.CotizacionPromedioDTO;
+import com.xtaticzero.systems.base.dto.IPCDto;
 import com.xtaticzero.systems.base.util.FechaUtil;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,11 +55,13 @@ public class CotizacionesMB extends CotizacionAbstractMB {
         getCotizacionService().getLstCotizaciones(getCotizacionBO());
         getCotizacionBO().setLstHistoricoCotizacion(new ArrayList<CotizacionHistoricoDTO>());
         setLstIndiceCotizacion(getCotizacionBO().getLstIpc());
-
+        getCotizacionBO().setNewIPC(new IPCDto());
+        
         setExistencias(new ArrayList());
         setUtilidades(new ArrayList());
         setLstCotizacionDTO(new ArrayList());
         setLstCotizacionAcciones(new ArrayList());
+        
 
         try {
             if (((Integer) getAttributeSession(ATTRIB_YEAR_FILTER)) != null) {
@@ -216,23 +219,15 @@ public class CotizacionesMB extends CotizacionAbstractMB {
         return getCotizacionBO().getMapCotizacionPromedio().get(new BigInteger(String.valueOf(id)));
     }
 
-    public double getPromedioLastYear1() {
-        CotizacionPromedioDTO res = getCotizacionPromedio(1);
-
-        if (res != null) {
-            return res.getPromedioLastYear() != null ? res.getPromedioLastYear().floatValue() : 0.0;
+    public void insertNewIPC(){
+        try {
+            getCotizacionService().insertNewIPC(getCotizacionBO());
+            getCotizacionBO().setIpcNew(new IPCDto());
+            getCotizacionService().getLstIPC(getCotizacionBO(), 0);
+            setLstIndiceCotizacion(getCotizacionBO().getLstIpc());
+        } catch (Exception e) {
+            logger.error(e);
+            msgError("No se puede cargar IPC");
         }
-
-        return 0.0;
-    }
-
-    public double getPromedioManyYear1() {
-        CotizacionPromedioDTO res = getCotizacionPromedio(1);
-
-        if (res != null) {
-            return res.getPromedioManyYear() != null ? res.getPromedioManyYear().floatValue() : 0.0;
-        }
-
-        return 0.0;
     }
 }

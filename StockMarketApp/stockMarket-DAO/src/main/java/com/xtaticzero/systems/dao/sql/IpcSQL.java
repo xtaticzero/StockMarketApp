@@ -16,7 +16,7 @@ public interface IpcSQL {
     String ORDER_BY_DATE = " ORDER BY diaMovimiento DESC ";
     String LIMIT_1 = " LIMIT 1";
 
-    String INSERT = "INSERT INTO ".concat(TABLE_INDICE_COTIZACION).concat(" (volorIPC, "
+    String INSERT = "INSERT INTO ".concat(TABLE_INDICE_COTIZACION).concat(" (valorIPC, "
             + "porcentajeCotizacion, "
             + "diaMovimiento )\n"
             + "VALUES(?,?,SYSDATE())");

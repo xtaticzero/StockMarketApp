@@ -22,6 +22,7 @@ import com.xtaticzero.systems.dao.IpcDao;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -170,7 +171,7 @@ public class CotizacionDiariaServiceImpl extends BaseBusinessServices implements
                     for (CotizacionDiariaDTO cotizacionesDiaria : cotizacionDiariaBO.getLstCotizacionesDiarias()) {
                         CotizacionPromedioDTO cotPromedio = new CotizacionPromedioDTO();
 
-                        CotizacionHistoricoDTO cotizacionHistoricaManyYear = cotizacionDAO.findLastCotizacionHistoricaByDate(cotizacionesDiaria.getEmisora().getEmisora_id(), cotizacionDiariaBO.getYearFiltro()!=null?cotizacionDiariaBO.getYearFiltro():lastYear);
+                        CotizacionHistoricoDTO cotizacionHistoricaManyYear = cotizacionDAO.findLastCotizacionHistoricaByDate(cotizacionesDiaria.getEmisora().getEmisora_id(), cotizacionDiariaBO.getYearFiltro() != null ? cotizacionDiariaBO.getYearFiltro() : lastYear);
                         CotizacionHistoricoDTO cotizacionHistoricaOneYear = cotizacionDAO.findLastCotizacionHistoricaByDate(cotizacionesDiaria.getEmisora().getEmisora_id(), lastYear);
 
                         cotPromedio.setCotizacionActual(cotizacionesDiaria);
@@ -256,6 +257,21 @@ public class CotizacionDiariaServiceImpl extends BaseBusinessServices implements
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw new BusinessException(ERR_GENERAL_DESCRIPCION, e, "Error al obtener lista de cotizaciones de Excel ");
+        }
+    }
+
+    @Override
+    public CotizacionVectorBO insertNewIPC(CotizacionVectorBO cotizacionDiariaBO) throws BusinessException {
+        try {
+            if (cotizacionDiariaBO != null && cotizacionDiariaBO.getNewIPC() != null && cotizacionDiariaBO.getNewIPC().getValorIPC() != null) {
+                cotizacionDiariaBO.getNewIPC().setPorcentajeCotizacion(BigDecimal.ZERO);
+                ipcDao.insert(cotizacionDiariaBO.getNewIPC());
+                cotizacionDiariaBO.setNewIPC(new IPCDto());                
+            }
+            return cotizacionDiariaBO;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new BusinessException(ERR_GENERAL_DESCRIPCION, e, "Error al insertar ipc ");
         }
     }
 

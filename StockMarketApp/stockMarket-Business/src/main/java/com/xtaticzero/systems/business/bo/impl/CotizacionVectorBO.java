@@ -34,6 +34,7 @@ public class CotizacionVectorBO extends BO<CotizacionVectorBO> {
     private IPCDto ipcNew;
     private IPCDto ipcUltimoAnual;
     private Integer yearFiltro;
+    private IPCDto newIPC;
 
     private CotizacionVectorBO(UsuarioDTO usuario) {
         super(usuario);
@@ -134,9 +135,19 @@ public class CotizacionVectorBO extends BO<CotizacionVectorBO> {
         this.yearFiltro = yearFiltro;
     }
 
+    public IPCDto getNewIPC() {
+        return newIPC;
+    }
+
+    public void setNewIPC(IPCDto newIPC) {
+        this.newIPC = newIPC;
+    }
+
     @Override
     public String toString() {
-        return "CotizacionVectorBO{" + "lstCotizacionesDiarias=" + lstCotizacionesDiarias + ", lstHistoricoCotizacion=" + lstHistoricoCotizacion + ", cotizacionSeleccionada=" + cotizacionSeleccionada + ", mapCotizacionPromedio=" + mapCotizacionPromedio + ", lstIpc=" + lstIpc + ", lstIpcCargaExcel=" + lstIpcCargaExcel + ", ipcNew=" + ipcNew + ", ipcUltimoAnual=" + ipcUltimoAnual + ", yearFiltro=" + yearFiltro + '}';
+        return "CotizacionVectorBO{" + "lstCotizacionesDiarias=" + lstCotizacionesDiarias + ", lstCotizacionesDiariasFromExcel=" + lstCotizacionesDiariasFromExcel + ", lstHistoricoCotizacion=" + lstHistoricoCotizacion + ", cotizacionSeleccionada=" + cotizacionSeleccionada + ", mapCotizacionPromedio=" + mapCotizacionPromedio + ", lstIpc=" + lstIpc + ", lstIpcCargaExcel=" + lstIpcCargaExcel + ", lstYearsHistorico=" + lstYearsHistorico + ", ipcNew=" + ipcNew + ", ipcUltimoAnual=" + ipcUltimoAnual + ", yearFiltro=" + yearFiltro + ", newIPC=" + newIPC + '}';
     }
+    
+    
 
 }

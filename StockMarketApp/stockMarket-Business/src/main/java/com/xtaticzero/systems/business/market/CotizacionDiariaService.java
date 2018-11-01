@@ -42,5 +42,7 @@ public interface CotizacionDiariaService {
     CotizacionVectorBO getLstCotizacionesFromExcel(CotizacionVectorBO cotizacionDiariaBO, InputStream file) throws BusinessException;
     
     CotizacionVectorBO insertLstCotizacionesFromExcel(CotizacionVectorBO cotizacionDiariaBO) throws BusinessException;
+    
+    CotizacionVectorBO insertNewIPC(CotizacionVectorBO cotizacionDiariaBO) throws BusinessException;
 
 }

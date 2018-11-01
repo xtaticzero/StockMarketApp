@@ -3,7 +3,12 @@
         xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" >
     <html>
         <h:head>
-            <h:outputScript library="js" name="stockMarket.js"/>            
+            <h:outputScript library="js" name="stockMarket.js"/> 
+            <script>
+                $(document).ready(function () {
+                    myFunction(1);
+                });
+            </script>
         </h:head>
         <h:body>
             <ui:include src="../background.xhtml"/>
@@ -176,6 +181,11 @@
                                             </p:column>
                                             <p:column>
                                                 <div>
+                                                    <h:panelGrid columns="3" cellpadding="5">
+                                                        <p:outputLabel for="idIPCNew" value="Valor IPC : " />
+                                                        <p:inputNumber id="idIPCNew" value="#{cotizacionesMB.cotizacionBO.newIPC.valorIPC}"/>
+                                                        <p:commandButton value="Guardar" actionListener="#{cotizacionesMB.insertNewIPC}" update="@form"/>
+                                                    </h:panelGrid>
                                                     <p:panelGrid style="margin-top: 20px">
                                                         <f:facet name="header">
                                                             <p:row>
