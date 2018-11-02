@@ -67,7 +67,7 @@ public class CotizacionesMB extends CotizacionAbstractMB {
             if (((Integer) getAttributeSession(ATTRIB_YEAR_FILTER)) != null) {
                 setYearFilter(((Integer) getAttributeSession(ATTRIB_YEAR_FILTER)));
                 getCotizacionBO().setYearFiltro(getYearFilter());
-                getCotizacionService().calcularPromediosAnuales(getCotizacionBO(), getCotizacionBO().getYearFiltro());
+                getCotizacionService().calcularPromediosAnuales(getCotizacionBO(), FechaUtil.getCurrentYear());
             } else {
                 getCotizacionBO().setYearFiltro(-1);
                 getCotizacionService().calcularPromediosAnuales(getCotizacionBO(), FechaUtil.getCurrentYear());
